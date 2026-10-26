@@ -37,7 +37,7 @@ html[data-style="cream"][data-dark="true"] {
   --glass-bg: rgba(42, 42, 42, 0.9); --glass-border: rgba(255,255,255,0.1);
 }
 
-/* 液态玻璃变量 - 深度透明版 */
+/* 液态玻璃变量 */
 html[data-style="glass"] {
   --glass-bg: rgba(255, 255, 255, 0.25);
   --glass-border: rgba(255, 255, 255, 0.6);
@@ -93,7 +93,7 @@ button { cursor: pointer; }
 .empty { text-align: center; color: var(--text-dim); font-size: 14px; padding: 56px 0; display: flex; flex-direction: column; align-items: center; gap: 14px; }
 .empty svg { opacity: .4; }
 
-/* ================= 记账主页：共享结构 ================= */
+/* 记账主页 */
 .ledger-header { padding: 10px 0 16px; }
 .ledger-header h2 { margin: 0 0 6px; font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
 .ledger-header p { margin: 0; font-size: 13px; color: var(--text-dim); }
@@ -109,7 +109,6 @@ button { cursor: pointer; }
 .main-illustration { width: 80px; height: 80px; border-radius: 20px; display: grid; place-items: center; font-size: 40px; animation: float 3s ease-in-out infinite; }
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 
-/* 奶油风特定样式 */
 html[data-style="cream"] .main-card { background: linear-gradient(135deg, #FFF6E5, #FFEAC5); box-shadow: 0 10px 30px rgba(255, 200, 100, 0.15); }
 html[data-style="cream"] .main-card .lbl { color: #8C7A5B; }
 html[data-style="cream"] .main-card .amt { color: #2C2416; }
@@ -118,7 +117,6 @@ html[data-dark="true"][data-style="cream"] .main-card { background: linear-gradi
 html[data-dark="true"][data-style="cream"] .main-card .lbl { color: #b0a58a; }
 html[data-dark="true"][data-style="cream"] .main-card .amt { color: #fff; }
 
-/* 液态玻璃特定样式 */
 html[data-style="glass"] .main-card {
   background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.8), rgba(var(--primary-rgb), 0.4));
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -134,7 +132,6 @@ html[data-style="glass"] .main-illustration { background: rgba(255,255,255,0.2);
 .sub-card { flex: 1; border-radius: 20px; padding: 14px; display: flex; flex-direction: column; gap: 6px; }
 .sub-card .k { font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 4px; }
 .sub-card .v { font-size: 14px; font-weight: 800; }
-
 html[data-style="cream"] .sub-card { background: var(--surface); box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
 html[data-style="cream"] .sub-card .k { color: var(--text-dim); }
 html[data-style="glass"] .sub-card { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); }
@@ -145,7 +142,6 @@ html[data-style="glass"] .sub-card .k { color: var(--text); opacity: .7; }
 .cat-item { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 0 0 auto; }
 .cat-ico { width: 52px; height: 52px; border-radius: 18px; display: grid; place-items: center; font-size: 24px; overflow: hidden; }
 .cat-name { font-size: 12px; font-weight: 600; }
-
 html[data-style="cream"] .cat-ico { background: var(--surface); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
 html[data-style="cream"] .cat-name { color: var(--text-dim); }
 html[data-style="glass"] .cat-ico { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); }
@@ -155,7 +151,6 @@ html[data-style="glass"] .cat-name { color: var(--text); }
 .recent-header h3 { margin: 0; font-size: 18px; font-weight: 800; }
 .recent-header span { font-size: 12px; color: var(--text-dim); }
 
-/* 记账流水卡片 */
 .led-item { padding: 0; display: flex; flex-direction: column; overflow: hidden; cursor: pointer; }
 .led-header-row { display: flex; align-items: center; gap: 12px; padding: 16px; }
 .led-ico { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; font-size: 20px; background: rgba(var(--primary-rgb), .12); flex: 0 0 auto; overflow: hidden; }
@@ -171,7 +166,7 @@ html[data-style="glass"] .cat-name { color: var(--text); }
 .led-detail-img { width: 100%; border-radius: 14px; max-height: 260px; object-fit: cover; }
 .led-detail-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-dim); }
 
-/* 表单与其它组件 */
+/* 表单与组件 */
 .form { display: flex; flex-direction: column; gap: 16px; padding-top: 8px; }
 .field label { display: block; font-size: 13px; font-weight: 700; color: var(--text-dim); margin-bottom: 8px; }
 .input, .textarea { width: 100%; border: 1.5px solid var(--border); background: var(--surface); border-radius: 16px; padding: 14px; font-size: 16px; outline: none; transition: border-color .2s; }
@@ -202,23 +197,31 @@ html[data-style="glass"] .cat-name { color: var(--text); }
 .checkbox { width: 26px; height: 26px; border-radius: 10px; border: 2px solid rgba(var(--primary-rgb),.4); display: grid; place-items: center; flex: 0 0 auto; transition: all .2s; }
 .checkbox.checked { background: var(--primary); border-color: var(--primary); }
 
-/* 菜单 & 弹窗 */
-.scrim { position: fixed; inset: 0; background: rgba(0,0,0,.4); opacity: 0; pointer-events: none; transition: opacity .3s; z-index: 40; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+/* ================= 侧边栏修复：层级与底部防遮挡 ================= */
+.scrim { position: fixed; inset: 0; background: rgba(0,0,0,.4); opacity: 0; pointer-events: none; transition: opacity .3s; z-index: 900; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
 .scrim.show { opacity: 1; pointer-events: auto; }
-.drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background: var(--glass-bg); border-right: 1px solid var(--glass-border); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); z-index: 50; transform: translateX(-102%); transition: transform .38s cubic-bezier(.32,.72,0,1); display: flex; flex-direction: column; padding: calc(20px + var(--safe-t)) 12px calc(20px + var(--safe-b)); }
+.drawer { 
+  position: fixed; top: 0; left: 0; bottom: 0; width: 280px; 
+  background: var(--glass-bg); border-right: 1px solid var(--glass-border); 
+  backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); 
+  z-index: 950; transform: translateX(-102%); 
+  transition: transform .38s cubic-bezier(.32,.72,0,1); 
+  display: flex; flex-direction: column; 
+  padding: calc(20px + var(--safe-t)) 12px calc(90px + var(--safe-b)); /* 底部留出 90px 避免被导航栏遮挡 */
+}
 .drawer.show { transform: none; }
 .drawer-item { display: flex; align-items: center; gap: 12px; padding: 12px 10px; border-radius: 14px; font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px; transition: background .2s; }
 .drawer-item.active { background: rgba(var(--primary-rgb), .15); color: var(--primary); }
 .drawer-item .di { width: 32px; height: 32px; border-radius: 10px; background: var(--surface); display: grid; place-items: center; color: var(--primary); }
 .drawer-item.active .di { background: var(--primary); color: var(--on-primary); }
 
-.ctx-menu { position: fixed; z-index: 200; min-width: 150px; background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(24px); border-radius: 16px; box-shadow: var(--glass-shadow); padding: 6px; display: flex; flex-direction: column; gap: 2px; animation: popIn .25s cubic-bezier(.34,1.56,.64,1); }
+.ctx-menu { position: fixed; z-index: 1000; min-width: 150px; background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(24px); border-radius: 16px; box-shadow: var(--glass-shadow); padding: 6px; display: flex; flex-direction: column; gap: 2px; animation: popIn .25s cubic-bezier(.34,1.56,.64,1); }
 @keyframes popIn { 0% { opacity: 0; transform: scale(.8); } 100% { opacity: 1; transform: scale(1); } }
 .ctx-menu button { padding: 12px 14px; border-radius: 10px; font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
 .ctx-menu button.danger { color: var(--danger); }
-.modal-scrim { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 300; display: grid; place-items: center; padding: 20px; backdrop-filter: blur(4px); animation: fadeIn .2s; }
+.modal-scrim { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 1000; display: grid; place-items: center; padding: 20px; backdrop-filter: blur(4px); animation: fadeIn .2s; }
 .modal { background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(30px); border-radius: 24px; padding: 24px; width: 100%; max-width: 340px; box-shadow: var(--glass-shadow); animation: popIn .3s cubic-bezier(.34,1.56,.64,1); }
-.banner { position: fixed; top: calc(-100px - var(--safe-t)); left: 50%; transform: translateX(-50%); background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(20px); padding: 14px 24px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,.15); z-index: 1000; display: flex; align-items: center; gap: 10px; font-weight: 700; transition: top .4s cubic-bezier(.34,1.56,.64,1); }
+.banner { position: fixed; top: calc(-100px - var(--safe-t)); left: 50%; transform: translateX(-50%); background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(20px); padding: 14px 24px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,.15); z-index: 1100; display: flex; align-items: center; gap: 10px; font-weight: 700; transition: top .4s cubic-bezier(.34,1.56,.64,1); }
 .banner.show { top: calc(10px + var(--safe-t)); }
 </style>
 </head>
@@ -260,7 +263,7 @@ function startOfDay(d) { var t = new Date(d); t.setHours(0, 0, 0, 0); return t; 
 function daysBetween(a, b) { return Math.round((startOfDay(b) - startOfDay(a)) / 86400000); }
 function compressImage(file, maxSize, quality) { maxSize = maxSize || 900; quality = quality || 0.72; return new Promise(function (resolve) { var reader = new FileReader(); reader.onload = function () { var img = new Image(); img.onload = function () { var w = img.width, h = img.height; var scale = Math.min(1, maxSize / Math.max(w, h)); w = Math.round(w * scale); h = Math.round(h * scale); var cvs = document.createElement('canvas'); cvs.width = w; cvs.height = h; cvs.getContext('2d').drawImage(img, 0, 0, w, h); resolve(cvs.toDataURL('image/jpeg', quality)); }; img.onerror = function () { resolve(null); }; img.src = reader.result; }; reader.onerror = function () { resolve(null); }; reader.readAsDataURL(file); }); }
 
-var S = JSON.parse(localStorage.getItem('wennote_v4') || '{}');
+var S = JSON.parse(localStorage.getItem('wennote_v5') || '{}');
 if (!S.settings) {
   S = {
     currentModule: 'ledger',
@@ -272,7 +275,7 @@ if (!S.settings) {
   };
 }
 if (!S.ledger.selectedDate) S.ledger.selectedDate = todayStr();
-function save() { localStorage.setItem('wennote_v4', JSON.stringify(S)); }
+function save() { localStorage.setItem('wennote_v5', JSON.stringify(S)); }
 
 var mql = window.matchMedia('(prefers-color-scheme: dark)');
 function isDark() { return mql.matches; }
@@ -295,7 +298,7 @@ function applyTheme() {
     root.style.setProperty('--surface-2', style === 'cream' ? '#f5f5f5' : mixHex(bg, '#ffffff', 0.5)); 
   } 
   
-  // 背景处理
+  // 壁纸处理
   if (S.settings.bgImage) { 
     document.body.classList.add('custom-bg'); 
     document.body.style.backgroundImage = 'url(' + S.settings.bgImage + ')'; 
@@ -370,7 +373,6 @@ function renderNav() {
   if (S.currentModule === 'ledger') tabs = [{ key: 'home', icon: 'home', label: '主页' }, { key: 'stats', icon: 'stats', label: '统计' }];
   else tabs = [{ key: 'home', icon: 'home', label: '主页' }, { key: 'archive', icon: 'archive', label: '存档' }];
   
-  // 修复：移除强制重置 tab 的逻辑
   currentTab = S[S.currentModule].tab || 'home';
 
   navLeftEl.innerHTML = '<div class="pill"></div>' + tabs.map(function(tb) {
@@ -387,7 +389,7 @@ function renderNav() {
       pill.style.width = (tabEls[idx].offsetWidth - 6) + 'px'; 
       pill.style.transform = 'translateX(' + (tabEls[idx].offsetLeft + 3) + 'px)';
     } else if (pill) {
-      pill.style.opacity = '0'; // 进入添加页时隐藏滑块
+      pill.style.opacity = '0';
     }
   });
 }
@@ -410,7 +412,7 @@ function renderContent() {
   bindDrag();
 }
 
-/* ---------------- 记账模块 (双主题功能同步) ---------------- */
+/* ---------------- 记账模块 ---------------- */
 var expandedLedgerIds = new Set();
 function renderLedgerHome() {
   var inc = 0, exp = 0;
@@ -420,23 +422,19 @@ function renderLedgerHome() {
 
   var html = '';
   
-  // 头部
   if (style === 'cream') {
     html += '<div class="ledger-header"><h2>记账本</h2><p>记录每一笔，生活更有条理</p></div>';
   }
 
-  // 主卡
   html += '<div class="main-card" id="balanceCard">' +
     '<div><div class="lbl">本月总消费 👁️</div><div class="amt"><span>¥</span>' + fmtMoney(exp) + '</div></div>' +
     '<div class="main-illustration">🐹</div></div>';
     
-  // 副卡
   html += '<div class="sub-cards">' +
     '<div class="sub-card"><div class="k">📘 本月收入</div><div class="v" style="color:var(--primary)">¥' + fmtMoney(inc) + '</div></div>' +
     '<div class="sub-card"><div class="k">🟡 初始资金</div><div class="v">¥' + fmtMoney(S.ledger.initial||0) + '</div></div>' +
     '<div class="sub-card"><div class="k">💚 剩余余额</div><div class="v">¥' + fmtMoney(balance) + '</div></div></div>';
   
-  // 快捷分类 (两个主题共享)
   var recentCats = [], catMap = {};
   S.ledger.items.slice(0, 5).forEach(function(it) { if(!catMap[it.cat]) { catMap[it.cat] = true; recentCats.push(it); } });
   html += '<div class="cat-list">';
@@ -446,7 +444,6 @@ function renderLedgerHome() {
   });
   html += '<div class="cat-item" onclick="document.getElementById(\'fabAdd\').click()"><div class="cat-ico" style="font-size:20px;">+</div><div class="cat-name">全部</div></div></div>';
   
-  // 最近记录
   html += '<div class="recent-header"><h3>最近记录</h3><span>全部账单 ></span></div>';
 
   if (!S.ledger.items.length) return html + '<div class="empty">暂无记录</div>';
@@ -685,9 +682,9 @@ function renderSettings() {
     '<div class="card"><h3 style="margin:0 0 12px;font-size:13px;color:var(--text-dim)">颜色定制</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">' +
       colorCell('lightPrimary','浅色主色',th.lightPrimary) + colorCell('lightBg','浅色背景',th.lightBg) + colorCell('darkPrimary','深色主色',th.darkPrimary) + colorCell('darkBg','深色背景',th.darkBg) + '</div>' +
       '<button class="btn ghost" style="margin-top:16px;" onclick="resetTheme(event)">恢复默认主题</button></div>' +
-    '<div class="card"><h3 style="margin:0 0 12px;font-size:13px;color:var(--text-dim)">全局背景图</h3>' +
-      '<label class="upload-box" style="width:100%;height:80px;flex-direction:row;gap:10px;" for="bgImageInput">' + (S.settings.bgImage ? '<img src="'+S.settings.bgImage+'" style="width:60px;height:60px;border-radius:10px;object-fit:cover;"> 点击更换背景' : '点击上传背景图片') + '</label><input type="file" id="bgImageInput" hidden accept="image/*" onchange="uploadBgImage(this)">' +
-      (S.settings.bgImage ? '<button class="btn ghost" style="margin-top:12px;" onclick="removeBg()">移除背景图</button>' : '') +
+    '<div class="card"><h3 style="margin:0 0 12px;font-size:13px;color:var(--text-dim)">自定义壁纸 (主题背景)</h3>' +
+      '<label class="upload-box" style="width:100%;height:80px;flex-direction:row;gap:10px;" for="bgImageInput">' + (S.settings.bgImage ? '<img src="'+S.settings.bgImage+'" style="width:60px;height:60px;border-radius:10px;object-fit:cover;"> 点击更换壁纸' : '点击上传图片作为全局壁纸') + '</label><input type="file" id="bgImageInput" hidden accept="image/*" onchange="uploadBgImage(this)">' +
+      (S.settings.bgImage ? '<button class="btn ghost" style="margin-top:12px;" onclick="removeBg()">移除壁纸</button>' : '') +
     '</div>' +
     '<div class="card"><h3 style="margin:0 0 12px;font-size:13px;color:var(--text-dim)">应用图标</h3><label class="upload-box" style="width:100%;height:60px;flex-direction:row;gap:10px;" for="appIconInput">' + (S.settings.appIcon ? '<img src="'+S.settings.appIcon+'" style="width:40px;height:40px;border-radius:8px;">' : '点击上传图标') + '</label><input type="file" id="appIconInput" hidden accept="image/*" onchange="uploadAppIcon(this)"></div>';
 }
@@ -699,7 +696,7 @@ window.uploadBgImage = function(inp) { if(inp.files[0]) compressImage(inp.files[
 window.removeBg = function() { S.settings.bgImage = null; save(); applyTheme(); renderSettings(); };
 window.uploadAppIcon = function(inp) { if(inp.files[0]) compressImage(inp.files[0],512,0.9).then(function(u){ S.settings.appIcon=u; save(); setupPWA(); render(); }); };
 
-/* ---------------- 交互逻辑 (拖拽、长按、弹窗) ---------------- */
+/* ---------------- 交互逻辑 ---------------- */
 var press = null, dragRAF = null, lastMoveEvent = null;
 function bindDrag() {
   $$('.list').forEach(function(list) { list.addEventListener('pointerdown', onPointerDown); });
