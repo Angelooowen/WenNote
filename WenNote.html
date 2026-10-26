@@ -3,51 +3,223 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#26A69A">
+<meta name="theme-color" content="#F9F6EE">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="WenNote">
 <title>WenNote</title>
 <link rel="manifest" id="pwaManifest">
 <style>
-:root{--primary:#26A69A;--primary-rgb:38,166,154;--on-primary:#fff;--bg:#F2FBF9;--surface:#fff;--surface-2:#eaf6f4;--text:#14201f;--text-dim:rgba(20,32,31,.55);--border:rgba(20,32,31,.08);--shadow:0 2px 14px rgba(20,32,31,.07);--shadow-lg:0 14px 40px rgba(20,32,31,.22);--radius:18px;--font:"Source Han Sans SC","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;--safe-b:env(safe-area-inset-bottom,0px);--safe-t:env(safe-area-inset-top,0px)}
-html[data-dark="true"]{--surface:#1e1e1e;--surface-2:#282828;--text:#e8efee;--text-dim:rgba(232,239,238,.55);--border:rgba(255,255,255,.09);--shadow:0 2px 14px rgba(0,0,0,.45);--shadow-lg:0 14px 40px rgba(0,0,0,.65)}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{height:100%;margin:0}body{font-family:var(--font);background:var(--bg);color:var(--text);overflow:hidden;-webkit-font-smoothing:antialiased;transition:background .35s,color .35s;overscroll-behavior:none}button,input,select,textarea{font-family:inherit;color:inherit}button{cursor:pointer;border:none;background:none;padding:0}
-.app{display:flex;flex-direction:column;height:100%;height:100dvh}
-.topbar{flex:0 0 auto;display:flex;align-items:center;gap:6px;padding:calc(6px + var(--safe-t)) 10px 6px;position:relative;z-index:6}.topbar h1{flex:1;margin:0;font-size:17px;font-weight:700;text-align:center;letter-spacing:.02em}.icon-btn{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;color:var(--text);transition:background .2s,transform .2s}.icon-btn:active{background:rgba(var(--primary-rgb),.14);transform:scale(.94)}
-.content{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;padding:2px 16px 28px;-webkit-overflow-scrolling:touch;position:relative}@keyframes panelIn{from{opacity:0;transform:translateX(var(--push,14px))}to{opacity:1;transform:none}}.content.anim > *{animation:panelIn .4s cubic-bezier(.22,1,.36,1)}
-.tabbar{flex:0 0 auto;display:flex;position:relative;margin:0 12px calc(10px + var(--safe-b));padding:6px;background:var(--surface);border-radius:22px;box-shadow:var(--shadow);overflow:hidden;transition:background .35s}.tabbar[hidden]{display:none}.pill{position:absolute;top:6px;left:0;height:44px;border-radius:16px;background:var(--primary);z-index:1;will-change:transform}.tab{flex:1;position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:6px;height:44px;font-size:13px;font-weight:700;color:var(--text-dim);border-radius:16px;overflow:hidden;padding:0 2px;transition:color .28s}.tab.active{color:var(--on-primary)}.tab .tab-icon{display:flex;align-items:center;justify-content:center;flex:0 0 auto}.tab.active .tab-icon{animation:iconPop .4s cubic-bezier(.34,1.56,.64,1)}@keyframes iconPop{0%{transform:scale(1)}32%{transform:scale(.78)}66%{transform:scale(1.14)}100%{transform:scale(1)}}.tab .tab-label{max-width:90px;opacity:.9;white-space:nowrap;overflow:hidden;display:inline-block;transition:max-width .35s cubic-bezier(.34,1.56,.64,1),opacity .22s}.tab.active .tab-label{max-width:0;opacity:0}
-.list{display:flex;flex-direction:column;gap:10px;padding-top:6px}.item{position:relative;background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px;display:flex;align-items:center;gap:12px;transition:box-shadow .2s,background .35s;touch-action:pan-y;user-select:none;-webkit-user-select:none;will-change:transform}.item.pressed{scale:1.05;box-shadow:var(--shadow-lg);z-index:5}.item.dragging{scale:1.03;box-shadow:var(--shadow-lg);opacity:.96;pointer-events:none;transition:none}.placeholder{border-radius:var(--radius);background:rgba(var(--primary-rgb),.10);border:1.5px dashed rgba(var(--primary-rgb),.45);flex:0 0 auto}.card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin-top:12px;transition:background .35s}.card h3{margin:0 0 12px;font-size:13px;font-weight:700;color:var(--text-dim);letter-spacing:.05em;text-transform:uppercase}.empty{text-align:center;color:var(--text-dim);font-size:14px;padding:56px 0;display:flex;flex-direction:column;align-items:center;gap:14px}.empty svg{opacity:.4}
-.cd-emoji{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:rgba(var(--primary-rgb),.12);font-size:22px;flex:0 0 auto}.cd-main{flex:1;min-width:0}.cd-title{font-size:15px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cd-sub{font-size:12px;color:var(--text-dim);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cd-days{text-align:right;flex:0 0 auto}.cd-days b{font-size:24px;font-weight:800;color:var(--primary);font-variant-numeric:tabular-nums;line-height:1}.cd-days span{font-size:11px;color:var(--text-dim);margin-left:2px}.cd-days small{display:block;font-size:10px;color:var(--text-dim);margin-top:4px}
-.balance-card{background:linear-gradient(135deg,var(--primary),color-mix(in srgb,var(--primary),#000 24%));border-radius:22px;padding:20px;color:var(--on-primary);margin-top:10px;box-shadow:0 10px 26px rgba(var(--primary-rgb),.32);position:relative;overflow:hidden}.balance-card::after{content:'';position:absolute;right:-40px;top:-50px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.12)}.balance-card .lbl{font-size:12px;opacity:.85;letter-spacing:.08em}.balance-card .amt{font-size:34px;font-weight:800;margin-top:6px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}.balance-card .row{display:flex;gap:18px;margin-top:14px;font-size:12px;opacity:.9}.balance-card .row b{font-weight:700;font-size:14px;display:block;margin-top:2px}.balance-card .edit{position:absolute;right:14px;bottom:14px;z-index:2;background:rgba(255,255,255,.2);padding:7px 12px;border-radius:12px;font-size:12px;font-weight:600;backdrop-filter:blur(6px)}
-.led-item{align-items:flex-start}.led-ico{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;font-size:18px;background:rgba(var(--primary-rgb),.12);flex:0 0 auto}.led-main{flex:1;min-width:0}.led-cat{font-size:14px;font-weight:700}.led-note{font-size:12px;color:var(--text-dim);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.led-time{font-size:11px;color:var(--text-dim);margin-top:3px}.led-amt{font-size:16px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}.led-amt.out{color:#E05B4B}.led-amt.in{color:var(--primary)}html[data-dark="true"] .led-amt.out{color:#F08070}.led-thumb{width:44px;height:44px;border-radius:12px;object-fit:cover;flex:0 0 auto}
-.counter-item{align-items:center}.ct-info{flex:1;min-width:0}.ct-title{font-size:15px;font-weight:700}.ct-sub{font-size:12px;color:var(--text-dim);margin-top:3px}.ct-num{font-size:26px;font-weight:800;color:var(--primary);font-variant-numeric:tabular-nums;margin-right:6px;line-height:1}.ct-num.bump{animation:bump .35s cubic-bezier(.34,1.56,.64,1)}@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.3)}100%{transform:scale(1)}}.plus-btn{width:44px;height:44px;border-radius:14px;flex:0 0 auto;background:var(--primary);color:var(--on-primary);display:grid;place-items:center;box-shadow:0 4px 12px rgba(var(--primary-rgb),.28);transition:transform .18s,filter .18s,box-shadow .2s}.plus-btn:active{transform:scale(.9);filter:brightness(1.08)}
-.memo-item{align-items:flex-start;gap:12px}.checkbox{width:24px;height:24px;border-radius:9px;flex:0 0 auto;margin-top:1px;border:2px solid rgba(var(--primary-rgb),.45);display:grid;place-items:center;transition:background .25s,border-color .25s,transform .2s;padding:0}.checkbox:active{transform:scale(.88)}.checkbox.checked{background:var(--primary);border-color:var(--primary)}.checkbox svg{opacity:0;transform:scale(.4);transition:.25s;color:var(--on-primary)}.checkbox.checked svg{opacity:1;transform:scale(1)}.memo-text{flex:1;font-size:15px;line-height:1.5;word-break:break-word;padding-top:1px;transition:color .3s}.memo-text.done{text-decoration:line-through;color:var(--text-dim)}
-.form{display:flex;flex-direction:column;gap:14px;padding-top:8px}.field label{display:block;font-size:12px;font-weight:700;color:var(--text-dim);margin-bottom:7px;letter-spacing:.04em}.input,.textarea{width:100%;border:1.5px solid var(--border);background:var(--surface);border-radius:14px;padding:13px 14px;font-size:15px;outline:none;transition:border-color .2s,background .35s;-webkit-appearance:none;appearance:none}.input:focus,.textarea:focus{border-color:var(--primary)}.textarea{resize:vertical;min-height:92px;line-height:1.5}.big-input{width:100%;border:none;background:transparent;font-size:38px;font-weight:800;outline:none;text-align:center;padding:16px 0;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--text)}.big-input::placeholder{color:var(--text-dim);opacity:.5}.segmented{display:flex;gap:4px;background:var(--surface-2);border-radius:14px;padding:4px}.segmented button{flex:1;padding:10px 6px;border-radius:11px;font-size:14px;font-weight:700;color:var(--text-dim);transition:background .25s,color .25s,transform .2s}.segmented button:active{transform:scale(.97)}.segmented button.on{background:var(--surface);color:var(--primary);box-shadow:0 2px 8px rgba(0,0,0,.08)}html[data-dark="true"] .segmented button.on{background:var(--surface-2);box-shadow:none}
-.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{border:1.5px solid var(--border);background:var(--surface);border-radius:12px;padding:9px 14px;font-size:13px;font-weight:600;color:var(--text-dim);transition:all .2s}.chip.on{background:rgba(var(--primary-rgb),.14);border-color:var(--primary);color:var(--primary)}.btn{border-radius:15px;padding:15px;font-size:15px;font-weight:700;width:100%;background:var(--primary);color:var(--on-primary);transition:transform .18s,filter .2s}.btn:active{transform:scale(.97);filter:brightness(1.06)}.btn.ghost{background:var(--surface-2);color:var(--text)}.btn.danger{background:rgba(224,91,75,.14);color:#E05B4B}.btn:disabled{opacity:.5;pointer-events:none}
-.photo-row{display:flex;gap:10px}.photo-pick{flex:1;border:1.5px dashed var(--border);border-radius:14px;padding:16px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:600;color:var(--text-dim);transition:border-color .2s,background .2s;cursor:pointer}.photo-pick:active{background:rgba(var(--primary-rgb),.06)}.photo-preview{position:relative;margin-top:2px}.photo-preview img{width:100%;border-radius:14px;display:block;max-height:220px;object-fit:cover}.photo-preview button{position:absolute;top:8px;right:8px;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;font-size:16px}
-.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.stat-box{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;transition:background .35s}.stat-box .k{font-size:12px;color:var(--text-dim);font-weight:600}.stat-box .v{font-size:21px;font-weight:800;margin-top:6px;font-variant-numeric:tabular-nums}.stat-box.wide{grid-column:1/-1}.cat-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);font-size:14px}.cat-row:last-child{border-bottom:none}.cat-bar{height:6px;border-radius:3px;background:rgba(var(--primary-rgb),.14);margin-top:8px;overflow:hidden}.cat-bar i{display:block;height:100%;border-radius:3px;background:var(--primary)}
-.toggle{position:relative;width:54px;height:32px;border-radius:16px;flex:0 0 auto;background:rgba(140,140,140,.35);transition:background .35s}.toggle.on{background:var(--primary)}.toggle .knob{position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25);transition:translate .35s cubic-bezier(.34,1.56,.64,1);will-change:translate,scale}.toggle.on .knob{translate:22px 0}.toggle .knob.stretch{animation:knobStretch .35s cubic-bezier(.34,1.56,.64,1)}@keyframes knobStretch{0%{scale:1 1}38%{scale:1.5 .82}70%{scale:.9 1.08}100%{scale:1 1}}.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:4px 0}
-.scrim{position:fixed;inset:0;background:rgba(0,0,0,.42);opacity:0;pointer-events:none;transition:opacity .3s;z-index:40;backdrop-filter:blur(2px)}.scrim.show{opacity:1;pointer-events:auto}.drawer{position:fixed;top:0;left:0;bottom:0;width:282px;max-width:82vw;background:var(--surface);z-index:50;transform:translateX(-102%);transition:transform .38s cubic-bezier(.32,.72,0,1);box-shadow:4px 0 32px rgba(0,0,0,.14);display:flex;flex-direction:column;padding:calc(22px + var(--safe-t)) 12px calc(18px + var(--safe-b));overflow-y:auto}.drawer.show{transform:none}.drawer-title{font-size:22px;font-weight:800;letter-spacing:.01em;padding:2px 10px 22px;color:var(--primary);display:flex;align-items:center;gap:10px}.drawer-title::before{content:'';width:10px;height:10px;border-radius:3px;background:var(--primary);box-shadow:0 0 0 4px rgba(var(--primary-rgb),.18)}.drawer-item{display:flex;align-items:center;gap:12px;padding:9px 10px;border-radius:16px;color:var(--text);font-size:15px;font-weight:600;width:100%;text-align:left;transition:background .2s,color .2s}.drawer-item:active{background:rgba(var(--primary-rgb),.1)}.drawer-item.active{background:rgba(var(--primary-rgb),.13);color:var(--primary)}.drawer-item .di{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;flex:0 0 auto;background:rgba(var(--primary-rgb),.12);color:var(--primary);transition:background .22s,color .22s,box-shadow .22s}.drawer-item.active .di{background:var(--primary);color:var(--on-primary);box-shadow:0 4px 12px rgba(var(--primary-rgb),.35)}
-.ctx-menu{position:fixed;z-index:200;min-width:150px;background:var(--surface);border-radius:15px;box-shadow:var(--shadow-lg);padding:6px;display:flex;flex-direction:column;gap:2px;border:1px solid var(--border);animation:ctxIn .18s cubic-bezier(.22,1,.36,1)}@keyframes ctxIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}.ctx-menu button{text-align:left;padding:12px 14px;border-radius:11px;font-size:14px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:10px}.ctx-menu button:active{background:rgba(var(--primary-rgb),.12)}.ctx-menu button.danger{color:#E05B4B}
-.modal-scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;display:grid;place-items:center;padding:22px;animation:fadeIn .2s;backdrop-filter:blur(3px)}@keyframes fadeIn{from{opacity:0}to{opacity:1}}.modal{background:var(--surface);border-radius:22px;padding:22px;width:100%;max-width:360px;box-shadow:var(--shadow-lg);animation:modalIn .28s cubic-bezier(.22,1,.36,1);max-height:84vh;overflow-y:auto}@keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}.modal h2{margin:0 0 16px;font-size:18px;font-weight:800}.modal .actions{display:flex;gap:10px;margin-top:18px}
-.color-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.color-cell{display:flex;align-items:center;gap:10px;background:var(--surface-2);border-radius:14px;padding:10px 12px}.color-cell span{font-size:12px;font-weight:700;color:var(--text-dim);flex:1;line-height:1.3}.color-cell input[type=color]{width:34px;height:34px;border:none;background:transparent;padding:0;border-radius:10px;cursor:pointer;flex:0 0 auto;overflow:hidden}.color-cell input[type=color]::-webkit-color-swatch-wrapper{padding:0}.color-cell input[type=color]::-webkit-color-swatch{border:2px solid var(--border);border-radius:9px}.acct-row{display:flex;gap:10px}.acct{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:14px;border:1.5px solid var(--border);background:var(--surface);font-size:14px;font-weight:700;color:var(--text-dim);transition:all .22s}.acct.on{border-color:var(--primary);background:rgba(var(--primary-rgb),.1);color:var(--primary)}.qr-wrap{display:grid;place-items:center;padding:14px 0}.qr-wrap canvas{border-radius:14px;background:#fff;padding:8px}.link-box{font-size:12px;word-break:break-all;background:var(--surface-2);border-radius:12px;padding:12px;color:var(--text-dim);line-height:1.5}
-.toast{position:fixed;left:50%;bottom:calc(90px + var(--safe-b));transform:translateX(-50%) translateY(10px);background:rgba(20,32,31,.92);color:#fff;padding:11px 20px;border-radius:14px;font-size:13px;font-weight:600;z-index:500;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;white-space:nowrap;max-width:86vw;overflow:hidden;text-overflow:ellipsis}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.guide-step{font-size:13px;color:var(--text-dim);line-height:1.7;margin:0 0 10px;padding-left:0}.guide-step b{color:var(--text)}
+:root {
+  --primary: #26A69A; --primary-rgb: 38,166,154; --on-primary: #fff;
+  --bg: #F2FBF9; --surface: #fff; --surface-2: #eaf6f4; --text: #14201f;
+  --text-dim: rgba(20,32,31,.55); --border: rgba(20,32,31,.08);
+  --shadow: 0 2px 14px rgba(20,32,31,.07); --shadow-lg: 0 14px 40px rgba(20,32,31,.22);
+  --radius: 22px; --font: "Source Han Sans SC","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+  --safe-b: env(safe-area-inset-bottom,0px); --safe-t: env(safe-area-inset-top,0px);
+  
+  /* 默认：玻璃态变量 */
+  --glass-bg: rgba(255, 255, 255, 0.75); --glass-border: rgba(255, 255, 255, 0.9); --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --danger: #FF5252;
+}
+html[data-dark="true"] {
+  --surface: #1e1e1e; --surface-2: #282828; --text: #e8efee; --text-dim: rgba(232,239,238,.55);
+  --border: rgba(255,255,255,.09); --shadow: 0 2px 14px rgba(0,0,0,.45); --shadow-lg: 0 14px 40px rgba(0,0,0,.65);
+  --glass-bg: rgba(30, 30, 30, 0.7); --glass-border: rgba(255, 255, 255, 0.12); --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* 奶油风专属变量覆盖 */
+html[data-style="cream"] {
+  --radius: 26px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.04);
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 8px 30px rgba(0,0,0,0.06);
+}
+html[data-style="cream"][data-dark="true"] {
+  --surface: #2a2a2a; --surface-2: #333; --bg: #1a1a1a; --text: #fff;
+  --glass-bg: rgba(42, 42, 42, 0.9); --glass-border: rgba(255,255,255,0.1);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; margin: 0; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); overflow: hidden; -webkit-font-smoothing: antialiased; transition: background .35s, color .35s; overscroll-behavior: none; }
+body.custom-bg { background-size: cover; background-position: center; background-attachment: fixed; }
+button, input, select, textarea { font-family: inherit; color: inherit; border: none; background: none; padding: 0; }
+button { cursor: pointer; }
+.app { display: flex; flex-direction: column; height: 100%; height: 100dvh; }
+
+/* 顶栏 */
+.topbar { flex: 0 0 auto; display: flex; align-items: center; gap: 6px; padding: calc(6px + var(--safe-t)) 10px 6px; position: relative; z-index: 6; }
+.topbar h1 { flex: 1; margin: 0; font-size: 20px; font-weight: 800; text-align: center; letter-spacing: -.02em; }
+.icon-btn { width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; color: var(--text); transition: background .2s, transform .2s; }
+.icon-btn:active { background: rgba(var(--primary-rgb), .14); transform: scale(.94); }
+
+/* 内容区 */
+.content { flex: 1 1 auto; overflow-y: auto; overflow-x: hidden; padding: 2px 16px 100px; -webkit-overflow-scrolling: touch; position: relative; }
+@keyframes panelIn { from { opacity: 0; transform: translateX(var(--push, 14px)); } to { opacity: 1; transform: none; } }
+.content.anim > * { animation: panelIn .4s cubic-bezier(.22, 1, .36, 1); }
+
+/* 底部导航 */
+.nav-container { position: fixed; bottom: calc(16px + var(--safe-b)); left: 16px; right: 16px; display: flex; gap: 12px; z-index: 100; }
+.nav-left {
+  flex: 1; display: flex; position: relative; padding: 6px;
+  background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border-radius: 24px; box-shadow: var(--glass-shadow); overflow: hidden;
+}
+.pill { position: absolute; top: 6px; left: 0; height: 44px; border-radius: 18px; background: var(--primary); z-index: 1; will-change: transform; }
+.tab { flex: 1; position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; gap: 6px; height: 44px; font-size: 13px; font-weight: 700; color: var(--text-dim); border-radius: 18px; overflow: hidden; transition: color .28s; }
+.tab.active { color: var(--on-primary); }
+.tab .tab-icon { display: flex; align-items: center; justify-content: center; }
+.tab.active .tab-icon { animation: iconPop .4s cubic-bezier(.34, 1.56, .64, 1); }
+@keyframes iconPop { 0% { transform: scale(1); } 32% { transform: scale(.78); } 66% { transform: scale(1.14); } 100% { transform: scale(1); } }
+.tab .tab-label { max-width: 90px; opacity: .9; white-space: nowrap; overflow: hidden; display: inline-block; transition: max-width .35s, opacity .22s; }
+.tab.active .tab-label { max-width: 0; opacity: 0; }
+.fab-add {
+  width: 56px; height: 56px; border-radius: 50%; flex: 0 0 auto;
+  background: var(--primary); color: var(--on-primary); display: grid; place-items: center;
+  box-shadow: 0 8px 20px rgba(var(--primary-rgb), .4); border: 2px solid var(--glass-border);
+  transition: transform .2s;
+}
+.fab-add:active { transform: scale(.9); }
+
+/* 通用卡片 */
+.card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px; margin-top: 12px; transition: all .3s; }
+.empty { text-align: center; color: var(--text-dim); font-size: 14px; padding: 56px 0; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.empty svg { opacity: .4; }
+
+/* ================= 主题1: 玻璃态记账首页 ================= */
+.glass-balance-card {
+  background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.9), rgba(var(--primary-rgb), 0.6));
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.3); border-radius: 24px; padding: 24px; color: var(--on-primary);
+  margin-top: 10px; box-shadow: 0 10px 26px rgba(var(--primary-rgb), .3); position: relative; overflow: hidden; transition: transform .2s;
+}
+.glass-balance-card:active { transform: scale(0.98); }
+.glass-balance-card::after { content: ''; position: absolute; right: -40px; top: -50px; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,.15); }
+.glass-balance-card .lbl { font-size: 13px; opacity: .9; }
+.glass-balance-card .amt { font-size: 38px; font-weight: 800; margin-top: 6px; letter-spacing: -.02em; }
+.glass-balance-card .row { display: flex; gap: 24px; margin-top: 14px; font-size: 13px; opacity: .9; }
+.glass-balance-card .row b { font-weight: 700; font-size: 16px; display: block; margin-top: 2px; }
+
+/* 记账流水卡片 (通用) */
+.led-item { padding: 0; display: flex; flex-direction: column; overflow: hidden; cursor: pointer; }
+.led-header { display: flex; align-items: center; gap: 12px; padding: 16px; }
+.led-ico { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; font-size: 20px; background: rgba(var(--primary-rgb), .12); flex: 0 0 auto; overflow: hidden; }
+.led-ico img { width: 100%; height: 100%; object-fit: cover; }
+.led-main { flex: 1; min-width: 0; }
+.led-cat { font-size: 16px; font-weight: 800; }
+.led-note-short { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+.led-amt { font-size: 18px; font-weight: 800; white-space: nowrap; }
+.led-amt.out { color: var(--danger); } .led-amt.in { color: var(--primary); }
+.led-body { max-height: 0; opacity: 0; overflow: hidden; transition: max-height .35s ease, opacity .3s ease; background: rgba(var(--primary-rgb), 0.04); }
+.led-item.expanded .led-body { max-height: 600px; opacity: 1; }
+.led-detail { padding: 16px; display: flex; flex-direction: column; gap: 12px; border-top: 1px solid var(--border); }
+.led-detail-img { width: 100%; border-radius: 14px; max-height: 260px; object-fit: cover; }
+.led-detail-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-dim); }
+
+/* ================= 主题2: 奶油风记账首页 ================= */
+.cream-header { padding: 10px 0 16px; }
+.cream-header h2 { margin: 0 0 6px; font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
+.cream-header p { margin: 0; font-size: 13px; color: var(--text-dim); }
+
+.cream-main-card {
+  background: linear-gradient(135deg, #FFF6E5, #FFEAC5); border-radius: 28px; padding: 24px;
+  box-shadow: 0 10px 30px rgba(255, 200, 100, 0.15); position: relative; overflow: hidden;
+  display: flex; justify-content: space-between; align-items: center;
+}
+html[data-dark="true"] .cream-main-card { background: linear-gradient(135deg, #332f27, #28241c); box-shadow: none; }
+.cream-main-card .lbl { font-size: 13px; font-weight: 600; color: #8C7A5B; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+html[data-dark="true"] .cream-main-card .lbl { color: #b0a58a; }
+.cream-main-card .amt { font-size: 40px; font-weight: 900; color: #2C2416; letter-spacing: -1px; }
+html[data-dark="true"] .cream-main-card .amt { color: #fff; }
+.cream-main-card .amt span { font-size: 20px; font-weight: 800; margin-right: 4px; }
+.cream-illustration { width: 80px; height: 80px; border-radius: 20px; background: rgba(255,255,255,0.6); display: grid; place-items: center; font-size: 40px; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+.cream-sub-cards { display: flex; gap: 10px; margin-top: -20px; padding: 0 10px; position: relative; z-index: 2; }
+.cream-sub-card { flex: 1; background: var(--surface); border-radius: 20px; padding: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); display: flex; flex-direction: column; gap: 6px; }
+.cream-sub-card .k { font-size: 11px; color: var(--text-dim); font-weight: 600; display: flex; align-items: center; gap: 4px; }
+.cream-sub-card .v { font-size: 14px; font-weight: 800; }
+
+.cream-cats { display: flex; gap: 16px; margin-top: 24px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; }
+.cream-cats::-webkit-scrollbar { display: none; }
+.cream-cat-item { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 0 0 auto; }
+.cream-cat-ico { width: 52px; height: 52px; border-radius: 18px; display: grid; place-items: center; font-size: 24px; background: var(--surface); box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
+.cream-cat-ico img { width: 100%; height: 100%; object-fit: cover; }
+.cream-cat-name { font-size: 12px; font-weight: 600; color: var(--text-dim); }
+
+.cream-recent-header { display: flex; justify-content: space-between; align-items: center; margin: 24px 0 12px; }
+.cream-recent-header h3 { margin: 0; font-size: 18px; font-weight: 800; }
+.cream-recent-header span { font-size: 12px; color: var(--text-dim); }
+
+/* 表单与通用组件 */
+.form { display: flex; flex-direction: column; gap: 16px; padding-top: 8px; }
+.field label { display: block; font-size: 13px; font-weight: 700; color: var(--text-dim); margin-bottom: 8px; }
+.input, .textarea { width: 100%; border: 1.5px solid var(--border); background: var(--surface); border-radius: 16px; padding: 14px; font-size: 16px; outline: none; transition: border-color .2s; }
+.input:focus, .textarea:focus { border-color: var(--primary); }
+.textarea { resize: none; min-height: 48px; max-height: 200px; line-height: 1.5; overflow-y: hidden; }
+.big-input { font-size: 42px; font-weight: 800; text-align: center; border: none; background: transparent; outline: none; padding: 16px 0; width: 100%; color: var(--text); }
+.segmented { display: flex; gap: 4px; background: var(--surface-2); border-radius: 16px; padding: 4px; }
+.segmented button { flex: 1; padding: 10px; border-radius: 12px; font-size: 14px; font-weight: 700; color: var(--text-dim); transition: all .2s; }
+.segmented button.on { background: var(--surface); color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.btn { border-radius: 16px; padding: 16px; font-size: 16px; font-weight: 700; width: 100%; background: var(--primary); color: var(--on-primary); transition: transform .18s; display: flex; justify-content: center; align-items: center; gap: 8px; }
+.btn:active { transform: scale(.97); }
+.btn.success { background: #2ECC71 !important; animation: flash .5s; }
+.btn.ghost { background: var(--surface-2); color: var(--text); }
+
+.upload-row { display: flex; align-items: center; gap: 12px; }
+.upload-box { width: 60px; height: 60px; border-radius: 16px; border: 2px dashed var(--border); display: grid; place-items: center; overflow: hidden; flex: 0 0 auto; cursor: pointer; color: var(--text-dim); }
+.upload-box img { width: 100%; height: 100%; object-fit: cover; }
+.upload-row .input { flex: 1; }
+
+/* 其它模块卡片 (倒数日、计数器等复用) */
+.cd-card { height: 180px; border-radius: 24px; margin-top: 12px; position: relative; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.4); background-size: cover; background-position: center; }
+.cd-card::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.35); backdrop-filter: blur(2px); }
+.cd-card-content { position: relative; z-index: 2; text-align: center; }
+.ct-card { display: flex; flex-direction: column; align-items: center; padding: 24px 16px; }
+.ct-circle-wrap { position: relative; width: 120px; height: 120px; display: grid; place-items: center; margin-bottom: 20px; }
+.ct-circle-svg { transform: rotate(-90deg); position: absolute; inset: 0; }
+.ct-circle-bg { fill: none; stroke: var(--surface-2); stroke-width: 8; }
+.ct-circle-progress { fill: none; stroke: var(--primary); stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset .3s ease; }
+.memo-item { display: flex; align-items: flex-start; gap: 12px; padding: 16px; }
+.checkbox { width: 26px; height: 26px; border-radius: 10px; border: 2px solid rgba(var(--primary-rgb),.4); display: grid; place-items: center; flex: 0 0 auto; transition: all .2s; }
+.checkbox.checked { background: var(--primary); border-color: var(--primary); }
+
+/* 弹窗与菜单 */
+.scrim { position: fixed; inset: 0; background: rgba(0,0,0,.4); opacity: 0; pointer-events: none; transition: opacity .3s; z-index: 40; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.scrim.show { opacity: 1; pointer-events: auto; }
+.drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background: var(--glass-bg); border-right: 1px solid var(--glass-border); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); z-index: 50; transform: translateX(-102%); transition: transform .38s cubic-bezier(.32,.72,0,1); display: flex; flex-direction: column; padding: calc(20px + var(--safe-t)) 12px; }
+.drawer.show { transform: none; }
+.drawer-item { display: flex; align-items: center; gap: 12px; padding: 12px 10px; border-radius: 14px; font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.drawer-item.active { background: rgba(var(--primary-rgb), .15); color: var(--primary); }
+.ctx-menu { position: fixed; z-index: 200; min-width: 150px; background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(24px); border-radius: 16px; box-shadow: var(--glass-shadow); padding: 6px; display: flex; flex-direction: column; gap: 2px; animation: popIn .25s cubic-bezier(.34,1.56,.64,1); }
+@keyframes popIn { 0% { opacity: 0; transform: scale(.8); } 100% { opacity: 1; transform: scale(1); } }
+.ctx-menu button { padding: 12px 14px; border-radius: 10px; font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+.ctx-menu button.danger { color: var(--danger); }
+.modal-scrim { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 300; display: grid; place-items: center; padding: 20px; backdrop-filter: blur(4px); animation: fadeIn .2s; }
+.modal { background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(24px); border-radius: 24px; padding: 24px; width: 100%; max-width: 340px; box-shadow: var(--glass-shadow); animation: popIn .3s cubic-bezier(.34,1.56,.64,1); }
+.banner { position: fixed; top: calc(-100px - var(--safe-t)); left: 50%; transform: translateX(-50%); background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(20px); padding: 14px 24px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,.15); z-index: 1000; display: flex; align-items: center; gap: 10px; font-weight: 700; transition: top .4s cubic-bezier(.34,1.56,.64,1); }
+.banner.show { top: calc(10px + var(--safe-t)); }
 </style>
 </head>
 <body>
 <div class="app">
   <header class="topbar">
-    <button class="icon-btn" id="menuBtn" aria-label="menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h9"/></svg></button>
-    <h1 id="topTitle">WenNote</h1><div style="width:42px"></div>
+    <button class="icon-btn" id="menuBtn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h9"/></svg></button>
+    <h1 id="topTitle">记账</h1><div style="width:42px"></div>
   </header>
   <main class="content" id="content"></main>
-  <nav class="tabbar" id="tabbar" hidden></nav>
+  <div class="nav-container" id="navContainer">
+    <div class="nav-left" id="navLeft"><div class="pill"></div></div>
+    <button class="fab-add" id="fabAdd"></button>
+  </div>
 </div>
 <div class="scrim" id="scrim"></div>
-<aside class="drawer" id="drawer"><div class="drawer-title">WenNote</div><div id="drawerItems" style="display:flex;flex-direction:column;gap:2px;"></div></aside>
-<div id="modal-root"></div><div class="toast" id="toast"></div>
+<aside class="drawer" id="drawer"><div style="font-size:22px;font-weight:800;padding:0 10px 20px;color:var(--primary)">WenNote</div><div id="drawerItems"></div></aside>
+<div id="modal-root"></div>
+<div class="banner" id="banner"></div>
 
 <script>
 "use strict";
@@ -65,186 +237,556 @@ function todayStr(d) { var t = d ? new Date(d) : new Date(); return t.getFullYea
 function nowLocalInput() { var d = new Date(); function p(n) { return String(n).padStart(2, '0'); } return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + 'T' + p(d.getHours()) + ':' + p(d.getMinutes()); }
 function startOfDay(d) { var t = new Date(d); t.setHours(0, 0, 0, 0); return t; }
 function daysBetween(a, b) { return Math.round((startOfDay(b) - startOfDay(a)) / 86400000); }
-function compressImage(file, maxSize, quality) { maxSize = maxSize || 900; quality = quality || 0.72; return new Promise(function (resolve) { var reader = new FileReader(); reader.onload = function () { var img = new Image(); img.onload = function () { var w = img.width, h = img.height; var scale = Math.min(1, maxSize / Math.max(w, h)); w = Math.round(w * scale); h = Math.round(h * scale); var cvs = document.createElement('canvas'); cvs.width = w; cvs.height = h; cvs.getContext('2d').drawImage(img, 0, 0, w, h); resolve(cvs.toDataURL('image/png', quality)); }; img.onerror = function () { resolve(null); }; img.src = reader.result; }; reader.onerror = function () { resolve(null); }; reader.readAsDataURL(file); }); }
+function compressImage(file, maxSize, quality) { maxSize = maxSize || 900; quality = quality || 0.72; return new Promise(function (resolve) { var reader = new FileReader(); reader.onload = function () { var img = new Image(); img.onload = function () { var w = img.width, h = img.height; var scale = Math.min(1, maxSize / Math.max(w, h)); w = Math.round(w * scale); h = Math.round(h * scale); var cvs = document.createElement('canvas'); cvs.width = w; cvs.height = h; cvs.getContext('2d').drawImage(img, 0, 0, w, h); resolve(cvs.toDataURL('image/jpeg', quality)); }; img.onerror = function () { resolve(null); }; img.src = reader.result; }; reader.onerror = function () { resolve(null); }; reader.readAsDataURL(file); }); }
 
-var I18N = {
-  zh: { m_settings:'设置',m_ledger:'记账',m_countdown:'倒数日',m_counter:'次数记录器',m_memo:'备忘录',tab_home:'主页',tab_stats:'统计',tab_archive:'存档',tab_add_record:'新增记账',tab_add_countdown:'添加',tab_add_counter:'添加项目',tab_add_memo:'添加提醒',s_language:'语言',s_font:'字体',s_theme:'自定义主题',s_appicon:'应用图标',s_uploadicon:'上传自定义图标',s_reseticon:'恢复默认图标',s_account:'账号',s_light_primary:'浅色主色',s_light_bg:'浅色背景',s_dark_primary:'深色主色',s_dark_bg:'深色背景',s_reset_theme:'恢复默认主题',s_wechat:'微信',s_google:'Google',s_share:'分享',s_share_link:'复制分享链接',s_share_qr:'分享二维码',s_save:'保存到桌面',s_download:'下载 HTML',s_download_hint:'下载后可在电脑或手机文件中随时打开',s_add_home:'添加到主屏幕',s_add_home_hint:'像 App 一样从桌面一键打开',s_link_copied:'链接已复制',s_scan_hint:'扫码打开 WenNote',s_qr_hint:'离线模式下二维码仅供演示',save:'保存',cancel:'取消',confirm:'确定',archive:'存档',restore:'恢复',delete:'删除',close:'关闭',ok:'我知道了',empty:'暂无内容',empty_archive:'存档为空',title:'标题',note:'备注',date:'日期',time:'时间',amount:'金额',photo:'照片',take_photo:'拍照',choose_photo:'相册',remove_photo:'移除照片',cd_birthday:'生日',cd_countdown:'倒数日',cd_countup:'正数日',cd_type:'类型',cd_days_until:'还有',cd_days_since:'已经',cd_day:'天',cd_title_ph:'例如：妈妈生日',cd_today:'就是今天',led_initial:'初始金额',led_set_initial:'设置初始金额',led_initial_hint:'请输入你的初始金额，之后可以随时修改',led_modify_initial:'修改初始金额',led_balance:'余额',led_income:'收入',led_expense:'支出',led_category:'分类',led_note_ph:'备注（可选）',led_amount_ph:'0.00',led_total_in:'总收入',led_total_out:'总支出',led_net:'净结余',led_detail:'分类明细',led_no_record:'还没有记账记录',cat_food:'餐饮',cat_transport:'交通',cat_shopping:'购物',cat_daily:'日用',cat_fun:'娱乐',cat_medical:'医疗',cat_salary:'工资',cat_other:'其他',ct_mode:'模式',ct_mode_daily:'每日打卡',ct_mode_plain:'单纯计数',ct_today:'今日',ct_total:'累计',ct_times:'次',ct_title_ph:'例如：喝水',ct_capture:'每次记录拍照',ct_photo_tip:'开启后每次点击 + 都会先拍照再计数',ct_cancel_capture:'已取消拍照，本次未计数',memo_ph:'写点什么…',archive_ok:'已存档',restore_ok:'已恢复',delete_ok:'已删除',saved:'已保存',share_unsupported:'当前环境不支持自动复制，请手动复制链接',dl_tip:'文件已开始下载',guide_ios:'① 点击 Safari 底部「分享」按钮<br>② 向下滚动并选择「添加到主屏幕」<br>③ 右上角点击「添加」',guide_android:'① 点击浏览器右上角菜单（三个点）<br>② 选择「添加到主屏幕」或「安装应用」<br>③ 确认添加',guide_desktop:'电脑端：<br>• Chrome / Edge 可点击地址栏右侧「安装」图标<br>• 或点击右上角菜单 → 更多工具 → 创建快捷方式',guide_title:'添加到主屏幕' },
-  en: { m_settings:'Settings',m_ledger:'Ledger',m_countdown:'Countdown',m_counter:'Counter',m_memo:'Memo',tab_home:'Home',tab_stats:'Stats',tab_archive:'Archive',tab_add_record:'New Entry',tab_add_countdown:'Add',tab_add_counter:'Add Item',tab_add_memo:'Add Memo',s_language:'Language',s_font:'Font',s_theme:'Custom Theme',s_appicon:'App Icon',s_uploadicon:'Upload Icon',s_reseticon:'Reset Icon',s_account:'Account',s_light_primary:'Light primary',s_light_bg:'Light bg',s_dark_primary:'Dark primary',s_dark_bg:'Dark bg',s_reset_theme:'Reset to default',s_wechat:'WeChat',s_google:'Google',s_share:'Share',s_share_link:'Copy link',s_share_qr:'Share QR',s_save:'Save to Desktop',s_download:'Download HTML',s_download_hint:'Open it anytime',s_add_home:'Add to Home Screen',s_add_home_hint:'Open like an app',s_link_copied:'Link copied',s_scan_hint:'Scan to open',s_qr_hint:'QR for demo',save:'Save',cancel:'Cancel',confirm:'OK',archive:'Archive',restore:'Restore',delete:'Delete',close:'Close',ok:'Got it',empty:'Nothing here',empty_archive:'Empty',title:'Title',note:'Note',date:'Date',time:'Time',amount:'Amount',photo:'Photo',take_photo:'Camera',choose_photo:'Library',remove_photo:'Remove',cd_birthday:'Birthday',cd_countdown:'Countdown',cd_countup:'Count up',cd_type:'Type',cd_days_until:'In',cd_days_since:'Since',cd_day:'days',cd_title_ph:'e.g. Birthday',cd_today:'Today',led_initial:'Initial',led_set_initial:'Set Initial',led_initial_hint:'Enter initial balance',led_modify_initial:'Edit Initial',led_balance:'Balance',led_income:'Income',led_expense:'Expense',led_category:'Category',led_note_ph:'Note (optional)',led_amount_ph:'0.00',led_total_in:'Total In',led_total_out:'Total Out',led_net:'Net',led_detail:'Details',led_no_record:'No records',cat_food:'Food',cat_transport:'Transport',cat_shopping:'Shopping',cat_daily:'Daily',cat_fun:'Fun',cat_medical:'Medical',cat_salary:'Salary',cat_other:'Other',ct_mode:'Mode',ct_mode_daily:'Daily',ct_mode_plain:'Plain',ct_today:'Today',ct_total:'Total',ct_times:'times',ct_title_ph:'e.g. Water',ct_capture:'Photo per record',ct_photo_tip:'Take photo each +',ct_cancel_capture:'Cancelled',memo_ph:'Write...',archive_ok:'Archived',restore_ok:'Restored',delete_ok:'Deleted',saved:'Saved',share_unsupported:'Copy not supported',dl_tip:'Download started',guide_ios:'① Tap Share in Safari<br>② "Add to Home Screen"<br>③ Tap "Add"',guide_android:'① Menu (three dots)<br>② "Add to Home screen"<br>③ Confirm',guide_desktop:'Desktop:<br>• Click install icon<br>• Or menu → Create shortcut',guide_title:'Add to Home Screen' },
-  it: { m_settings:'Impostazioni',m_ledger:'Conti',m_countdown:'Countdown',m_counter:'Contatore',m_memo:'Promemoria',tab_home:'Home',tab_stats:'Statistiche',tab_archive:'Archivio',tab_add_record:'Nuovo',tab_add_countdown:'Aggiungi',tab_add_counter:'Nuova voce',tab_add_memo:'Nuovo',s_language:'Lingua',s_font:'Carattere',s_theme:'Tema',s_appicon:'Icona App',s_uploadicon:'Carica Icona',s_reseticon:'Ripristina Icona',s_account:'Account',s_light_primary:'Primario chiaro',s_light_bg:'Sfondo chiaro',s_dark_primary:'Primario scuro',s_dark_bg:'Sfondo scuro',s_reset_theme:'Ripristina',s_wechat:'WeChat',s_google:'Google',s_share:'Condividi',s_share_link:'Copia link',s_share_qr:'Codice QR',s_save:'Salva',s_download:'Scarica HTML',s_download_hint:'Aprilo quando vuoi',s_add_home:'Aggiungi alla Home',s_add_home_hint:'Apri come app',s_link_copied:'Copiato',s_scan_hint:'Scansiona',s_qr_hint:'QR demo',save:'Salva',cancel:'Annulla',confirm:'OK',archive:'Archivia',restore:'Ripristina',delete:'Elimina',close:'Chiudi',ok:'Capito',empty:'Niente qui',empty_archive:'Vuoto',title:'Titolo',note:'Nota',date:'Data',time:'Ora',amount:'Importo',photo:'Foto',take_photo:'Fotocamera',choose_photo:'Galleria',remove_photo:'Rimuovi',cd_birthday:'Compleanno',cd_countdown:'Countdown',cd_countup:'Conteggio',cd_type:'Tipo',cd_days_until:'Mancano',cd_days_since:'Da',cd_day:'giorni',cd_title_ph:'es. Compleanno',cd_today:'Oggi',led_initial:'Iniziale',led_set_initial:'Imposta',led_initial_hint:'Inserisci saldo',led_modify_initial:'Modifica',led_balance:'Saldo',led_income:'Entrate',led_expense:'Uscite',led_category:'Categoria',led_note_ph:'Nota',led_amount_ph:'0.00',led_total_in:'Tot Entrate',led_total_out:'Tot Uscite',led_net:'Netto',led_detail:'Dettagli',led_no_record:'Nessun movimento',cat_food:'Cibo',cat_transport:'Trasporti',cat_shopping:'Shopping',cat_daily:'Quotidiano',cat_fun:'Svago',cat_medical:'Salute',cat_salary:'Stipendio',cat_other:'Altro',ct_mode:'Modalità',ct_mode_daily:'Giornaliero',ct_mode_plain:'Semplice',ct_today:'Oggi',ct_total:'Totale',ct_times:'volte',ct_title_ph:'es. Acqua',ct_capture:'Foto',ct_photo_tip:'Scatta foto',ct_cancel_capture:'Annullato',memo_ph:'Scrivi...',archive_ok:'Archiviato',restore_ok:'Ripristinato',delete_ok:'Eliminato',saved:'Salvato',share_unsupported:'Copia non supportata',dl_tip:'Download avviato',guide_ios:'① Tocca Condividi<br>② "Aggiungi alla Home"<br>③ "Aggiungi"',guide_android:'① Menu<br>② "Aggiungi alla Home"<br>③ Conferma',guide_desktop:'Desktop:<br>• Icona installa<br>• O menu → Crea scorciatoia',guide_title:'Aggiungi alla Home' }
-};
-function t(k) { var lang = S && S.settings ? S.settings.lang : 'zh'; return (I18N[lang] && I18N[lang][k]) || I18N.zh[k] || k; }
-var CURRENCY = { zh: '¥', en: '$', it: '€' };
-function cur() { var lang = S && S.settings ? S.settings.lang : 'zh'; return CURRENCY[lang] || '¥'; }
-
-var STORE_KEY = 'wennote.v1';
-var DEFAULT_THEME = { lightPrimary: '#26A69A', lightBg: '#F2FBF9', darkPrimary: '#4DB6AC', darkBg: '#121212' };
-var FONTS = { source: '"Source Han Sans SC","Noto Sans SC","PingFang SC",sans-serif', nunito: '"Nunito",sans-serif', inter: '"Inter",sans-serif' };
-function defaultState() { return { v: 1, currentModule: 'ledger', settings: { lang: 'zh', font: 'source', theme: Object.assign({}, DEFAULT_THEME), account: null, appIcon: null }, ledger: { initial: null, items: [], archived: [], tab: 'home' }, countdown: { items: [], archived: [], tab: 'home' }, counter: { items: [], archived: [], tab: 'home' }, memo: { items: [], archived: [], tab: 'home' } }; }
-function mergeState(d) { var base = defaultState(); var out = Object.assign({}, base, d || {}); out.settings = Object.assign({}, base.settings, (d && d.settings) || {}); out.settings.theme = Object.assign({}, DEFAULT_THEME, ((d && d.settings) || {}).theme || {}); ['ledger', 'countdown', 'counter', 'memo'].forEach(function (k) { out[k] = Object.assign({}, base[k], (d && d[k]) || {}); out[k].items = Array.isArray(out[k].items) ? out[k].items : []; out[k].archived = Array.isArray(out[k].archived) ? out[k].archived : []; }); return out; }
-function loadState() { try { var raw = localStorage.getItem(STORE_KEY); if (!raw) return defaultState(); return mergeState(JSON.parse(raw)); } catch (e) { return defaultState(); } }
-var S = loadState();
-var saveTimer = null;
-function save(immediate) { clearTimeout(saveTimer); var doSave = function () { try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch (e) {} }; if (immediate) doSave(); else saveTimer = setTimeout(doSave, 60); }
-window.addEventListener('beforeunload', function () { save(true); });
+var S = JSON.parse(localStorage.getItem('wennote_v3') || '{}');
+if (!S.settings) {
+  S = {
+    currentModule: 'ledger',
+    settings: { lang: 'zh', style: 'cream', theme: { lightPrimary: '#FFC107', lightBg: '#F9F6EE', darkPrimary: '#FFD54F', darkBg: '#121212' }, bgImage: null, appIcon: null },
+    ledger: { initial: 0, items: [], tab: 'home', selectedDate: todayStr() },
+    countdown: { items: [], tab: 'home' },
+    counter: { items: [], tab: 'home' },
+    memo: { items: [], tab: 'home' }
+  };
+}
+if (!S.ledger.selectedDate) S.ledger.selectedDate = todayStr();
+function save() { localStorage.setItem('wennote_v3', JSON.stringify(S)); }
 
 var mql = window.matchMedia('(prefers-color-scheme: dark)');
 function isDark() { return mql.matches; }
-function applyTheme() { var dark = isDark(), th = S.settings.theme; var bg = dark ? th.darkBg : th.lightBg; var primary = dark ? th.darkPrimary : th.lightPrimary; var root = document.documentElement; root.dataset.dark = dark ? 'true' : 'false'; root.style.setProperty('--primary', primary); root.style.setProperty('--primary-rgb', rgbStr(primary)); root.style.setProperty('--on-primary', contrastText(primary)); root.style.setProperty('--bg', bg); if (dark) { root.style.setProperty('--surface', mixHex(bg, '#ffffff', 0.075)); root.style.setProperty('--surface-2', mixHex(bg, '#ffffff', 0.14)); } else { root.style.setProperty('--surface', mixHex(bg, '#ffffff', 0.88)); root.style.setProperty('--surface-2', mixHex(bg, '#ffffff', 0.5)); } root.style.setProperty('--font', FONTS[S.settings.font] || FONTS.source); var meta = document.querySelector('meta[name=theme-color]'); if (meta) meta.setAttribute('content', bg); document.documentElement.lang = S.settings.lang; }
+function applyTheme() { 
+  var dark = isDark(), th = S.settings.theme, style = S.settings.style || 'cream'; 
+  var bg = dark ? th.darkBg : th.lightBg; 
+  var primary = dark ? th.darkPrimary : th.lightPrimary; 
+  var root = document.documentElement; 
+  root.dataset.dark = dark ? 'true' : 'false'; 
+  root.dataset.style = style;
+  root.style.setProperty('--primary', primary); 
+  root.style.setProperty('--primary-rgb', rgbStr(primary)); 
+  root.style.setProperty('--on-primary', contrastText(primary)); 
+  root.style.setProperty('--bg', bg); 
+  
+  if (dark) { 
+    root.style.setProperty('--surface', style === 'cream' ? '#2a2a2a' : mixHex(bg, '#ffffff', 0.075)); 
+    root.style.setProperty('--surface-2', style === 'cream' ? '#333' : mixHex(bg, '#ffffff', 0.14)); 
+  } else { 
+    root.style.setProperty('--surface', style === 'cream' ? '#ffffff' : mixHex(bg, '#ffffff', 0.88)); 
+    root.style.setProperty('--surface-2', style === 'cream' ? '#f5f5f5' : mixHex(bg, '#ffffff', 0.5)); 
+  } 
+  
+  if (S.settings.bgImage) { document.body.classList.add('custom-bg'); document.body.style.backgroundImage = 'url(' + S.settings.bgImage + ')'; document.body.style.backgroundColor = bg; }
+  else { document.body.classList.remove('custom-bg'); document.body.style.backgroundImage = 'none'; }
+  
+  var meta = document.querySelector('meta[name=theme-color]'); if (meta) meta.setAttribute('content', bg); 
+}
 mql.addEventListener('change', applyTheme);
 
-/* PWA 与 图标配置 */
 function setupPWA() {
   var icon = S.settings.appIcon;
-  if (!icon) {
-    var cvs = document.createElement('canvas');
-    cvs.width = 512; cvs.height = 512;
-    var ctx = cvs.getContext('2d');
-    var primary = S.settings.theme.lightPrimary;
-    ctx.fillStyle = primary; ctx.fillRect(0, 0, 512, 512);
-    ctx.fillStyle = contrastText(primary);
-    ctx.font = 'bold 280px "Source Han Sans SC","PingFang SC",sans-serif';
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText('W', 256, 256);
-    icon = cvs.toDataURL('image/png');
-  }
-
-  var link = document.querySelector('link[rel="apple-touch-icon"]');
-  if (!link) { link = document.createElement('link'); link.rel = 'apple-touch-icon'; document.head.appendChild(link); }
-  link.href = icon;
-  var fav = document.querySelector('link[rel="icon"]');
-  if (!fav) { fav = document.createElement('link'); fav.rel = 'icon'; document.head.appendChild(fav); }
-  fav.href = icon;
-
-  var manifest = {
-    name: 'WenNote', short_name: 'WenNote', start_url: location.href.split('?')[0], display: 'standalone',
-    background_color: S.settings.theme.lightBg, theme_color: S.settings.theme.lightPrimary,
-    icons: [ { src: icon, sizes: '192x192', type: 'image/png' }, { src: icon, sizes: '512x512', type: 'image/png' } ]
-  };
-  var blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
-  var url = URL.createObjectURL(blob);
-  var man = document.getElementById('pwaManifest');
-  if (man) man.href = url;
+  if (!icon) { var cvs = document.createElement('canvas'); cvs.width = 512; cvs.height = 512; var ctx = cvs.getContext('2d'); var primary = S.settings.theme.lightPrimary; ctx.fillStyle = primary; ctx.fillRect(0, 0, 512, 512); ctx.fillStyle = contrastText(primary); ctx.font = 'bold 280px "Source Han Sans SC","PingFang SC",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('W', 256, 256); icon = cvs.toDataURL('image/png'); }
+  var link = document.querySelector('link[rel="apple-touch-icon"]'); if (!link) { link = document.createElement('link'); link.rel = 'apple-touch-icon'; document.head.appendChild(link); } link.href = icon;
+  var manifest = { name: 'WenNote', short_name: 'WenNote', start_url: location.href.split('?')[0], display: 'standalone', background_color: S.settings.theme.lightBg, theme_color: S.settings.theme.lightPrimary, icons: [ { src: icon, sizes: '192x192', type: 'image/png' }, { src: icon, sizes: '512x512', type: 'image/png' } ] };
+  var blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' }); var url = URL.createObjectURL(blob); var man = document.getElementById('pwaManifest'); if (man) man.href = url;
 }
 
 var ICONS = {
-  menu: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h9"/></svg>', settings: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>', ledger: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="3"/><path d="M2.5 10h19"/><circle cx="17" cy="14.5" r="1.3" fill="currentColor" stroke="none"/></svg>', countdown: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/><path d="M12 13v3l2 1.2"/></svg>', counter: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 4 8 20M16 4l-1.5 16M4.5 9h16M4 15h16"/></svg>', memo: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 4v16"/><path d="M12 9h5M12 13h5M12 17h3"/></svg>', home: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>', stats: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/></svg>', archive: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="5" rx="1.5"/><path d="M5 9v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9"/><path d="M10 13h4"/></svg>', plus: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>', plusBold: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>', camera: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3l1.5-2h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg>', image: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><circle cx="8.5" cy="10" r="1.6"/><path d="m4 17 4.5-4.5 3.5 3.5 3-3L20 17"/></svg>', check: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5 9.5 17.5 19.5 7"/></svg>', empty: '<svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M3 11h18"/><path d="M8 7V4h8v3"/></svg>', restore: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>', trash: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M9 7V4.5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1V7"/><path d="M6 7v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7"/><path d="M10 11v6M14 11v6"/></svg>', download: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>', addhome: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></svg>'
+  menu: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h9"/></svg>',
+  settings: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
+  ledger: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="5.5" width="19" height="13" rx="3"/><path d="M2.5 10h19"/></svg>',
+  countdown: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/></svg>',
+  counter: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.5 4 8 20M16 4l-1.5 16M4.5 9h16M4 15h16"/></svg>',
+  memo: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 4v16"/></svg>',
+  home: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/></svg>',
+  stats: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/></svg>',
+  plus: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+  image: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><circle cx="8.5" cy="10" r="1.6"/><path d="m4 17 4.5-4.5 3.5 3.5 3-3L20 17"/></svg>',
+  archive: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="5" rx="1.5"/><path d="M5 9v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9"/></svg>',
+  trash: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16"/><path d="M9 7V4.5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1V7"/><path d="M6 7v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7"/></svg>',
+  calendar: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/></svg>',
+  left: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>',
+  right: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>'
 };
 
-var MODULES = [{ key: 'settings', label: 'm_settings', icon: 'settings' }, { key: 'ledger', label: 'm_ledger', icon: 'ledger' }, { key: 'countdown', label: 'm_countdown', icon: 'countdown' }, { key: 'counter', label: 'm_counter', icon: 'counter' }, { key: 'memo', label: 'm_memo', icon: 'memo' }];
-var TABS = { countdown: [{ key: 'home', icon: 'home', label: 'tab_home' }, { key: 'archive', icon: 'archive', label: 'tab_archive' }, { key: 'add', icon: 'plus', label: 'tab_add_countdown' }], ledger: [{ key: 'home', icon: 'home', label: 'tab_home' }, { key: 'stats', icon: 'stats', label: 'tab_stats' }, { key: 'add', icon: 'plus', label: 'tab_add_record' }], counter: [{ key: 'home', icon: 'home', label: 'tab_home' }, { key: 'archive', icon: 'archive', label: 'tab_archive' }, { key: 'add', icon: 'plus', label: 'tab_add_counter' }], memo: [{ key: 'home', icon: 'home', label: 'tab_home' }, { key: 'archive', icon: 'archive', label: 'tab_archive' }, { key: 'add', icon: 'plus', label: 'tab_add_memo' }] };
+var MODULES = [
+  { key: 'ledger', label: '记账', icon: 'ledger' },
+  { key: 'countdown', label: '倒数日', icon: 'countdown' },
+  { key: 'counter', label: '次数记录器', icon: 'counter' },
+  { key: 'memo', label: '备忘录', icon: 'memo' },
+  { key: 'settings', label: '设置', icon: 'settings' }
+];
 
-var toastTimer = null;
-function toast(msg) { var el = $('#toast'); el.textContent = msg; el.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(function () { el.classList.remove('show'); }, 1800); }
-function openModal(html, onMount) { $('#modal-root').innerHTML = '<div class="modal-scrim"><div class="modal">' + html + '</div></div>'; var scrim = $('#modal-root .modal-scrim'); scrim.addEventListener('pointerdown', function (ev) { if (ev.target === scrim) closeModal(); }); if (onMount) onMount($('#modal-root .modal')); }
-function closeModal() { $('#modal-root').innerHTML = ''; }
+var bannerTimer;
+function showBanner(msg) { var el = $('#banner'); el.innerHTML = '✅ ' + esc(msg); el.classList.add('show'); clearTimeout(bannerTimer); bannerTimer = setTimeout(function() { el.classList.remove('show'); }, 2000); }
 
-var contentEl = $('#content'), tabbarEl = $('#tabbar');
-function render(opts) { opts = opts || {}; applyTheme(); setupPWA(); var mod = S.currentModule; var modDef = MODULES.filter(function (m) { return m.key === mod; })[0] || MODULES[1]; $('#topTitle').textContent = t(modDef.label); renderDrawer(); renderContent(opts); renderTabs(mod, true); checkInitialLedger(); }
-function renderContent(opts) { opts = opts || {}; contentEl.innerHTML = renderModule(S.currentModule); pendingPhoto = null; bindSortables(); bindPhotoInputs(); contentEl.scrollTop = 0; if (opts.animate !== false) { contentEl.classList.remove('anim'); void contentEl.offsetWidth; contentEl.style.setProperty('--push', (opts.push || 14) + 'px'); contentEl.classList.add('anim'); } }
-function renderTabs(mod, force) { var tabs = TABS[mod]; if (!tabs) { tabbarEl.hidden = true; tabbarEl.innerHTML = ''; return; } var activeKey = S[mod].tab || 'home'; var existing = $$('.tab', tabbarEl); var same = false; if (!force && existing.length === tabs.length) { same = tabs.every(function (tb, i) { var btn = existing[i]; var lbl = btn.querySelector('.tab-label'); return btn.dataset.tab === tb.key && lbl && lbl.textContent === t(tb.label); }); } if (!same) { tabbarEl.hidden = false; tabbarEl.innerHTML = '<div class="pill"></div>' + tabs.map(function (tb) { return '<button class="tab ' + (tb.key === activeKey ? 'active' : '') + '" data-tab="' + tb.key + '"><span class="tab-icon">' + ICONS[tb.icon] + '</span><span class="tab-label">' + esc(t(tb.label)) + '</span></button>'; }).join(''); } else { existing.forEach(function (btn, i) { var on = tabs[i].key === activeKey; if (on && !btn.classList.contains('active')) { btn.classList.add('active'); var ic = btn.querySelector('.tab-icon'); ic.style.animation = 'none'; void ic.offsetWidth; ic.style.animation = ''; } else if (!on) btn.classList.remove('active'); }); } var activeIdx = tabs.findIndex(function (x) { return x.key === activeKey; }); requestAnimationFrame(function () { positionPill(activeIdx); }); }
-function positionPill(idx) { var pill = $('.pill', tabbarEl); var tabEls = $$('.tab', tabbarEl); if (!pill || !tabEls[idx]) return; var barRect = tabbarEl.getBoundingClientRect(); var tr = tabEls[idx].getBoundingClientRect(); var w = tr.width - 6; var x = tr.left - barRect.left + 3; var oldX = parseFloat(pill.dataset.x || '-1'); pill.style.width = w + 'px'; pill.style.height = tr.height + 'px'; pill.dataset.x = x; if (oldX >= 0 && Math.abs(oldX - x) > 1) { var mid = (oldX + x) / 2; pill.animate([{ transform: 'translateX(' + oldX + 'px) scaleX(1)' }, { transform: 'translateX(' + mid + 'px) scaleX(1.22)', offset: 0.5 }, { transform: 'translateX(' + x + 'px) scaleX(1)' }], { duration: 400, easing: 'cubic-bezier(.34,1.56,.64,1)', fill: 'forwards' }); } pill.style.transform = 'translateX(' + x + 'px)'; }
-function switchTab(key) { var mod = S.currentModule; var tabs = TABS[mod]; if (!tabs || S[mod].tab === key) return; var oldIdx = tabs.findIndex(function (x) { return x.key === (S[mod].tab || 'home'); }); var newIdx = tabs.findIndex(function (x) { return x.key === key; }); S[mod].tab = key; save(); renderTabs(mod, false); renderContent({ push: newIdx > oldIdx ? 18 : -18 }); if (mod === 'ledger' && S.ledger.initial == null) checkInitialLedger(); }
-function emptyBox(text) { return '<div class="empty">' + ICONS.empty + '<div>' + esc(text) + '</div></div>'; }
-function renderModule(mod) { switch (mod) { case 'settings': return renderSettings(); case 'ledger': return renderLedger(); case 'countdown': return renderCountdown(); case 'counter': return renderCounter(); case 'memo': return renderMemo(); default: return ''; } }
+var contentEl = $('#content'), navLeftEl = $('#navLeft'), fabAddEl = $('#fabAdd');
+var currentTab = 'home';
 
-function renderSettings() { var th = S.settings.theme; var langs = [['zh', '中文'], ['en', 'English'], ['it', 'Italiano']]; var fonts = [['source', '思源黑体'], ['nunito', 'Nunito'], ['inter', 'Inter']];
-  return '<div class="card"><h3>' + esc(t('s_language')) + '</h3><div class="segmented" data-set="lang">' + langs.map(function (x) { return '<button data-val="' + x[0] + '" class="' + (S.settings.lang === x[0] ? 'on' : '') + '">' + x[1] + '</button>'; }).join('') + '</div></div>' +
-    '<div class="card"><h3>' + esc(t('s_font')) + '</h3><div class="segmented" data-set="font">' + fonts.map(function (x) { return '<button data-val="' + x[0] + '" class="' + (S.settings.font === x[0] ? 'on' : '') + '" style="font-family:' + FONTS[x[0]] + '">' + x[1] + '</button>'; }).join('') + '</div></div>' +
-    '<div class="card"><h3>' + esc(t('s_theme')) + '</h3><div class="color-grid">' + colorCell('lightPrimary', t('s_light_primary'), th.lightPrimary) + colorCell('lightBg', t('s_light_bg'), th.lightBg) + colorCell('darkPrimary', t('s_dark_primary'), th.darkPrimary) + colorCell('darkBg', t('s_dark_bg'), th.darkBg) + '</div><button class="btn ghost" style="margin-top:14px" data-act="reset-theme">' + esc(t('s_reset_theme')) + '</button></div>' +
-    '<div class="card"><h3>' + esc(t('s_appicon')) + '</h3><div class="photo-row"><label class="photo-pick" style="flex-direction:row;padding:10px"><span>' + esc(t('s_uploadicon')) + '</span><input type="file" accept="image/*" hidden id="iconInput"></label><button class="btn ghost" style="flex:1;padding:10px" data-act="reset-icon">' + esc(t('s_reseticon')) + '</button></div><p style="font-size:12px;color:var(--text-dim);margin:10px 0 0">上传图标后，请删除桌面旧图标并重新“添加到主屏幕”</p></div>' +
-    '<div class="card"><h3>' + esc(t('s_account')) + '</h3><div class="acct-row"><button class="acct ' + (S.settings.account === 'wechat' ? 'on' : '') + '" data-act="account" data-val="wechat">' + esc(t('s_wechat')) + '</button><button class="acct ' + (S.settings.account === 'google' ? 'on' : '') + '" data-act="account" data-val="google">' + esc(t('s_google')) + '</button></div></div>' +
-    '<div class="card"><h3>' + esc(t('s_share')) + '</h3><div class="photo-row"><button class="photo-pick" data-act="share-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13.5a4 4 0 0 0 5.7 0l2.8-2.8a4 4 0 1 0-5.7-5.7L11.5 6.3"/><path d="M14 10.5a4 4 0 0 0-5.7 0L5.5 13.3a4 4 0 1 0 5.7 5.7l1.3-1.3"/></svg><span>' + esc(t('s_share_link')) + '</span></button><button class="photo-pick" data-act="share-qr"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM20 14h1M14 20h3M20 18v3"/></svg><span>' + esc(t('s_share_qr')) + '</span></button></div></div>' +
-    '<div class="card"><h3>' + esc(t('s_save')) + '</h3><div class="photo-row"><button class="photo-pick" data-act="download-html">' + ICONS.download + '<span>' + esc(t('s_download')) + '</span></button><button class="photo-pick" data-act="add-home">' + ICONS.addhome + '<span>' + esc(t('s_add_home')) + '</span></button></div></div><div style="height:14px"></div>'; }
-function colorCell(key, label, val) { return '<label class="color-cell"><input type="color" data-theme="' + key + '" value="' + val + '"><span>' + esc(label) + '</span></label>'; }
+function render() {
+  applyTheme();
+  var modDef = MODULES.filter(function (m) { return m.key === S.currentModule; })[0];
+  $('#topTitle').textContent = modDef.label;
+  renderDrawer();
+  renderNav();
+  renderContent();
+}
 
-var CD_TYPES = ['birthday', 'countdown', 'countup'];
-function cdInfo(item) { var today = startOfDay(new Date()); var d = new Date(item.date + 'T00:00:00'); if (isNaN(d.getTime())) return { n: 0, label: '', emoji: '📅' }; if (item.type === 'birthday') { var next = new Date(today.getFullYear(), d.getMonth(), d.getDate()); if (next < today) next = new Date(today.getFullYear() + 1, d.getMonth(), d.getDate()); var n = daysBetween(today, next); return { n: n, label: n === 0 ? t('cd_today') : t('cd_days_until'), emoji: '🎂' }; } if (item.type === 'countdown') { var n2 = daysBetween(today, d); return { n: Math.abs(n2), label: n2 >= 0 ? t('cd_days_until') : t('cd_days_since'), emoji: '⏳' }; } var n3 = daysBetween(d, today); return { n: Math.abs(n3), label: t('cd_days_since'), emoji: '⏱️' }; }
-function renderCountdown() { var tab = S.countdown.tab || 'home'; if (tab === 'add') return cdForm(); var list = tab === 'archive' ? S.countdown.archived : S.countdown.items; if (!list.length) return emptyBox(t(tab === 'archive' ? 'empty_archive' : 'empty')); var sortable = tab === 'archive' ? '' : 'data-sortable="countdown"'; return '<div class="list" ' + sortable + '>' + list.map(function (it) { return cdItemHTML(it, tab === 'archive'); }).join('') + '</div>'; }
-function cdItemHTML(it, archived) { var info = cdInfo(it); return '<div class="item cd-item" data-sortable-item data-id="' + it.id + '" ' + (archived ? 'data-archived="1"' : '') + '><div class="cd-emoji">' + info.emoji + '</div><div class="cd-main"><div class="cd-title">' + esc(it.title) + '</div><div class="cd-sub">' + esc(t('cd_' + it.type)) + ' · ' + esc(it.date) + (it.note ? ' · ' + esc(it.note) : '') + '</div></div><div class="cd-days"><small>' + esc(info.label) + '</small><b>' + info.n + '</b><span>' + esc(t('cd_day')) + '</span></div></div>'; }
-function cdForm() { return '<form class="form" data-form="countdown"><div class="field"><label>' + esc(t('cd_type')) + '</label><div class="segmented" data-pick="type">' + CD_TYPES.map(function (x) { return '<button type="button" data-val="' + x + '" class="' + (x === 'countdown' ? 'on' : '') + '">' + esc(t('cd_' + x)) + '</button>'; }).join('') + '</div></div><div class="field"><label>' + esc(t('title')) + '</label><input class="input" name="title" required maxlength="40" placeholder="' + esc(t('cd_title_ph')) + '" autofocus></div><div class="field"><label>' + esc(t('date')) + '</label><input class="input" type="date" name="date" required value="' + todayStr() + '"></div><div class="field"><label>' + esc(t('note')) + '</label><input class="input" name="note" maxlength="60" placeholder="' + esc(t('note')) + '"></div><button class="btn" type="submit">' + esc(t('save')) + '</button></form>'; }
+function renderNav() {
+  if (S.currentModule === 'settings') { $('.nav-container').style.display = 'none'; return; }
+  $('.nav-container').style.display = 'flex';
+  
+  var tabs = [];
+  if (S.currentModule === 'ledger') tabs = [{ key: 'home', icon: 'home', label: '主页' }, { key: 'stats', icon: 'stats', label: '统计' }];
+  else tabs = [{ key: 'home', icon: 'home', label: '主页' }, { key: 'archive', icon: 'archive', label: '存档' }];
+  
+  if (S[S.currentModule].tab === 'add') S[S.currentModule].tab = 'home';
+  currentTab = S[S.currentModule].tab || 'home';
 
-var LED_CATS = { expense: [['food', '🍜'], ['transport', '🚌'], ['shopping', '🛍️'], ['daily', '🧴'], ['fun', '🎬'], ['medical', '💊'], ['other', '📦']], income: [['salary', '💰'], ['other', '✨']] };
-function catInfo(kind, key) { var arr = LED_CATS[kind] || LED_CATS.expense; return arr.filter(function (x) { return x[0] === key; })[0] || arr[arr.length - 1]; }
-function ledgerTotals() { var inc = 0, exp = 0; S.ledger.items.forEach(function (it) { if (it.kind === 'income') inc += Number(it.amount) || 0; else exp += Number(it.amount) || 0; }); return { inc: inc, exp: exp, net: inc - exp, balance: (Number(S.ledger.initial) || 0) + inc - exp }; }
-function renderLedger() { var tab = S.ledger.tab || 'home'; if (tab === 'add') return ledgerForm(); if (tab === 'stats') return ledgerStats(); return ledgerHome(); }
-function ledgerHome() { var tt = ledgerTotals(); var list = S.ledger.items; return '<div class="balance-card"><div class="lbl">' + esc(t('led_balance')) + '</div><div class="amt">' + cur() + ' ' + fmtMoney(tt.balance) + '</div><div class="row"><div>' + esc(t('led_income')) + '<b>+' + fmtMoney(tt.inc) + '</b></div><div>' + esc(t('led_expense')) + '<b>-' + fmtMoney(tt.exp) + '</b></div></div><button class="edit" data-act="set-initial">' + esc(t('led_modify_initial')) + '</button></div>' + (list.length ? '<div class="list" data-sortable="ledger" style="margin-top:14px">' + list.map(ledItemHTML).join('') + '</div>' : emptyBox(t('led_no_record'))); }
-function ledItemHTML(it) { var info = catInfo(it.kind, it.cat); var sign = it.kind === 'income' ? '+' : '-'; return '<div class="item led-item" data-sortable-item data-id="' + it.id + '"><div class="led-ico">' + info[1] + '</div><div class="led-main"><div class="led-cat">' + esc(t('cat_' + info[0])) + '</div>' + (it.note ? '<div class="led-note">' + esc(it.note) + '</div>' : '') + '<div class="led-time">' + esc((it.time || '').replace('T', ' ')) + '</div></div>' + (it.photo ? '<img class="led-thumb" src="' + it.photo + '" alt="">' : '') + '<div class="led-amt ' + (it.kind === 'income' ? 'in' : 'out') + '">' + sign + cur() + fmtMoney(it.amount) + '</div></div>'; }
-function ledgerStats() { var tt = ledgerTotals(); var groups = {}; S.ledger.items.forEach(function (it) { if (it.kind !== 'expense') return; groups[it.cat] = (groups[it.cat] || 0) + Number(it.amount || 0); }); var arr = Object.keys(groups).map(function (k) { return [k, groups[k]]; }).sort(function (a, b) { return b[1] - a[1]; }); var max = arr.length ? arr[0][1] : 1; return '<div class="stat-grid"><div class="stat-box"><div class="k">' + esc(t('led_total_in')) + '</div><div class="v" style="color:var(--primary)">' + cur() + fmtMoney(tt.inc) + '</div></div><div class="stat-box"><div class="k">' + esc(t('led_total_out')) + '</div><div class="v" style="color:#E05B4B">' + cur() + fmtMoney(tt.exp) + '</div></div><div class="stat-box wide"><div class="k">' + esc(t('led_net')) + '</div><div class="v">' + cur() + fmtMoney(tt.net) + '</div></div></div>' + (arr.length ? '<div class="card"><h3>' + esc(t('led_detail')) + '</h3>' + arr.map(function (item) { var k = item[0], v = item[1]; var emoji = catInfo('expense', k)[1]; return '<div style="padding:6px 0"><div class="cat-row" style="border:none;padding:2px 0"><span>' + emoji + ' ' + esc(t('cat_' + k)) + '</span><b>' + cur() + fmtMoney(v) + '</b></div><div class="cat-bar"><i style="width:' + Math.max(4, (v / max) * 100) + '%"></i></div></div>'; }).join('') + '</div>' : ''); }
-function ledgerForm() { return '<form class="form" data-form="ledger"><div class="segmented" data-pick="kind"><button type="button" data-val="expense" class="on">' + esc(t('led_expense')) + '</button><button type="button" data-val="income">' + esc(t('led_income')) + '</button></div><input class="big-input" type="number" inputmode="decimal" step="0.01" name="amount" required placeholder="' + esc(t('led_amount_ph')) + '" autofocus><div class="field"><label>' + esc(t('led_category')) + '</label><div class="chips" data-pick="cat">' + LED_CATS.expense.map(function (x, i) { return '<button type="button" class="chip ' + (i === 0 ? 'on' : '') + '" data-val="' + x[0] + '">' + x[1] + ' ' + esc(t('cat_' + x[0])) + '</button>'; }).join('') + '</div></div><div class="field"><label>' + esc(t('time')) + '</label><input class="input" type="datetime-local" name="time" value="' + nowLocalInput() + '"></div><div class="field"><label>' + esc(t('note')) + '</label><input class="input" name="note" maxlength="60" placeholder="' + esc(t('led_note_ph')) + '"></div><div class="field"><label>' + esc(t('photo')) + '</label><div class="photo-row"><label class="photo-pick">' + ICONS.camera + '<span>' + esc(t('take_photo')) + '</span><input type="file" accept="image/*" capture="environment" hidden data-photo-input></label><label class="photo-pick">' + ICONS.image + '<span>' + esc(t('choose_photo')) + '</span><input type="file" accept="image/*" hidden data-photo-input></label></div><div data-photo-preview></div></div><button class="btn" type="submit">' + esc(t('save')) + '</button></form>'; }
+  navLeftEl.innerHTML = '<div class="pill"></div>' + tabs.map(function(tb) {
+    return '<button class="tab ' + (tb.key === currentTab ? 'active' : '') + '" data-tab="' + tb.key + '"><span class="tab-icon">' + ICONS[tb.icon] + '</span><span class="tab-label">' + tb.label + '</span></button>';
+  }).join('');
+  
+  fabAddEl.innerHTML = ICONS.plus;
+  
+  requestAnimationFrame(function() {
+    var idx = tabs.findIndex(function(t){ return t.key === currentTab; });
+    var pill = $('.pill', navLeftEl), tabEls = $$('.tab', navLeftEl);
+    if (idx >= 0 && pill && tabEls[idx]) {
+      pill.style.width = (tabEls[idx].offsetWidth - 6) + 'px'; 
+      pill.style.transform = 'translateX(' + (tabEls[idx].offsetLeft + 3) + 'px)';
+    }
+  });
+}
 
-function ctValue(it) { if (it.mode === 'daily') return it.lastDate === todayStr() ? (it.todayCount || 0) : 0; return it.total || 0; }
-function renderCounter() { var tab = S.counter.tab || 'home'; if (tab === 'add') return counterForm(); var list = tab === 'archive' ? S.counter.archived : S.counter.items; if (!list.length) return emptyBox(t(tab === 'archive' ? 'empty_archive' : 'empty')); var sortable = tab === 'archive' ? '' : 'data-sortable="counter"'; return '<div class="list" ' + sortable + '>' + list.map(function (it) { return counterItemHTML(it, tab === 'archive'); }).join('') + '</div>'; }
-function counterItemHTML(it, archived) { var v = ctValue(it); var sub = it.mode === 'daily' ? t('ct_today') + ' · ' + v + ' ' + t('ct_times') : t('ct_total') + ' · ' + (it.total || 0) + ' ' + t('ct_times'); return '<div class="item counter-item" data-sortable-item data-id="' + it.id + '" ' + (archived ? 'data-archived="1"' : '') + '><div class="ct-info"><div class="ct-title">' + esc(it.title) + '</div><div class="ct-sub">' + esc(sub) + '</div></div>' + (archived ? '' : '<div class="ct-num" data-num="' + it.id + '">' + v + '</div><button class="plus-btn" data-act="inc" data-id="' + it.id + '">' + ICONS.plusBold + '</button>') + '</div>'; }
-function counterForm() { return '<form class="form" data-form="counter"><div class="field"><label>' + esc(t('title')) + '</label><input class="input" name="title" required maxlength="30" placeholder="' + esc(t('ct_title_ph')) + '" autofocus></div><div class="field"><label>' + esc(t('ct_mode')) + '</label><div class="toggle-row" style="background:var(--surface);border-radius:14px;padding:12px 14px;border:1.5px solid var(--border)"><span id="modeLabel" style="font-size:14px;font-weight:600">' + esc(t('ct_mode_daily')) + '</span><button type="button" class="toggle on" data-pick="mode"><span class="knob"></span></button></div></div><div class="field"><label>' + esc(t('ct_capture')) + '</label><div class="toggle-row" style="background:var(--surface);border-radius:14px;padding:12px 14px;border:1.5px solid var(--border)"><span style="font-size:12px;color:var(--text-dim);line-height:1.4">' + esc(t('ct_photo_tip')) + '</span><button type="button" class="toggle" data-pick="capture"><span class="knob"></span></button></div></div><div class="field"><label>' + esc(t('photo')) + '</label><div class="photo-row"><label class="photo-pick">' + ICONS.camera + '<span>' + esc(t('take_photo')) + '</span><input type="file" accept="image/*" capture="environment" hidden data-photo-input></label><label class="photo-pick">' + ICONS.image + '<span>' + esc(t('choose_photo')) + '</span><input type="file" accept="image/*" hidden data-photo-input></label></div><div data-photo-preview></div></div><button class="btn" type="submit">' + esc(t('save')) + '</button></form>'; }
-
-function renderMemo() { var tab = S.memo.tab || 'home'; if (tab === 'add') return memoForm(); var list = tab === 'archive' ? S.memo.archived : S.memo.items; if (!list.length) return emptyBox(t(tab === 'archive' ? 'empty_archive' : 'empty')); var sortable = tab === 'archive' ? '' : 'data-sortable="memo"'; return '<div class="list" ' + sortable + '>' + list.map(function (it) { return memoItemHTML(it, tab === 'archive'); }).join('') + '</div>'; }
-function memoItemHTML(it, archived) { return '<div class="item memo-item" data-sortable-item data-id="' + it.id + '" ' + (archived ? 'data-archived="1"' : '') + '><button class="checkbox ' + (it.done ? 'checked' : '') + '" data-act="toggle-done" data-id="' + it.id + '" ' + (archived ? 'disabled' : '') + '>' + ICONS.check + '</button><div class="memo-text ' + (it.done ? 'done' : '') + '">' + esc(it.text) + '</div></div>'; }
-function memoForm() { return '<form class="form" data-form="memo"><div class="field"><label>' + esc(t('note')) + '</label><textarea class="textarea" name="text" required placeholder="' + esc(t('memo_ph')) + '" style="min-height:140px" autofocus></textarea></div><button class="btn" type="submit">' + esc(t('save')) + '</button></form>'; }
-
-var press = null, dragRAF = null, lastMoveEvent = null;
-function bindSortables() { $$('[data-sortable]').forEach(function (list) { list.addEventListener('pointerdown', onPointerDown); }); $$('.list').forEach(function (list) { if (list.dataset.sortable) return; list.addEventListener('pointerdown', onPointerDown); }); }
-function onPointerDown(e) { if (press) return; if (e.pointerType === 'mouse' && e.button !== 0) return; var item = e.target.closest('[data-sortable-item]'); if (!item) return; if (e.target.closest('button, a, input, textarea, select, label')) return; press = { item: item, archived: item.dataset.archived === '1', list: item.parentElement, startX: e.clientX, startY: e.clientY, armed: false, dragging: false, timer: setTimeout(armPress, 300) }; window.addEventListener('pointermove', onPointerMove, { passive: false }); window.addEventListener('pointerup', onPointerUp); window.addEventListener('pointercancel', onPointerCancel); }
-function armPress() { if (!press) return; press.armed = true; press.item.classList.add('pressed'); try { navigator.vibrate && navigator.vibrate(12); } catch (e) {} }
-function onPointerMove(e) { var ps = press; if (!ps) return; var dx = e.clientX - ps.startX, dy = e.clientY - ps.startY; if (!ps.armed) { if (Math.hypot(dx, dy) > 8) { clearTimeout(ps.timer); endPress(); } return; } if (ps.archived) return; if (!ps.dragging) { if (Math.hypot(dx, dy) > 4) beginDrag(e); else return; } lastMoveEvent = e; if (!dragRAF) dragRAF = requestAnimationFrame(processDragMove); }
-function beginDrag(e) { var ps = press, item = ps.item; var rect = item.getBoundingClientRect(); var ph = document.createElement('div'); ph.className = 'placeholder'; ph.style.height = rect.height + 'px'; item.parentNode.insertBefore(ph, item); item.style.position = 'fixed'; item.style.left = rect.left + 'px'; item.style.top = rect.top + 'px'; item.style.width = rect.width + 'px'; item.style.height = rect.height + 'px'; item.style.margin = '0'; item.style.zIndex = '900'; item.classList.add('dragging'); ps.dragging = true; ps.placeholder = ph; ps.offsetX = ps.startX - rect.left; ps.offsetY = ps.startY - rect.top; document.addEventListener('touchmove', preventScroll, { passive: false }); }
-function preventScroll(e) { e.preventDefault(); }
-function processDragMove() { dragRAF = null; var ps = press, e = lastMoveEvent; if (!ps || !ps.dragging || !e) return; var item = ps.item; var dx = e.clientX - ps.startX, dy = e.clientY - ps.startY; item.style.transform = 'translate(' + dx + 'px, ' + dy + 'px)'; var list = ps.list, ph = ps.placeholder; var siblings = Array.prototype.slice.call(list.querySelectorAll('[data-sortable-item]')).filter(function (el) { return el !== item; }); var target = null; for (var i = 0; i < siblings.length; i++) { var r = siblings[i].getBoundingClientRect(); if (e.clientY < r.top + r.height / 2) { target = siblings[i]; break; } } if (target) { if (ph.nextElementSibling !== target) flipMove(function () { list.insertBefore(ph, target); }); } else if (list.lastElementChild !== ph) flipMove(function () { list.appendChild(ph); }); }
-function flipMove(mutate) { var ps = press, list = ps.list; var els = Array.prototype.slice.call(list.children).filter(function (el) { return el !== ps.item && el !== ps.placeholder; }); var first = els.map(function (el) { return el.getBoundingClientRect(); }); mutate(); els.forEach(function (el, i) { var last = el.getBoundingClientRect(); var dy = first[i].top - last.top, dx = first[i].left - last.left; if (dx || dy) el.animate([{ transform: 'translate(' + dx + 'px, ' + dy + 'px)' }, { transform: 'none' }], { duration: 200, easing: 'ease-out' }); }); }
-function onPointerUp(e) { var ps = press; if (!ps) return; clearTimeout(ps.timer); if (ps.dragging) finishDrag(); else if (ps.armed) { ps.item.classList.remove('pressed'); openItemMenu(ps.item, e.clientX, e.clientY, ps.archived); } endPress(); }
-function onPointerCancel() { var ps = press; if (!ps) return; clearTimeout(ps.timer); if (ps.dragging) finishDrag(); else ps.item.classList.remove('pressed'); endPress(); }
-function endPress() { press = null; if (dragRAF) { cancelAnimationFrame(dragRAF); dragRAF = null; } window.removeEventListener('pointermove', onPointerMove); window.removeEventListener('pointerup', onPointerUp); window.removeEventListener('pointercancel', onPointerCancel); document.removeEventListener('touchmove', preventScroll); }
-function finishDrag() { var ps = press; if (!ps || !ps.dragging) return; var item = ps.item, ph = ps.placeholder; var rect = item.getBoundingClientRect(); ph.parentNode.insertBefore(item, ph); ph.remove(); item.style.position = ''; item.style.left = ''; item.style.top = ''; item.style.width = ''; item.style.height = ''; item.style.margin = ''; item.style.zIndex = ''; item.style.transform = ''; item.classList.remove('dragging', 'pressed'); var newRect = item.getBoundingClientRect(); var dx = rect.left - newRect.left, dy = rect.top - newRect.top; if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) { item.animate([{ transform: 'translate(' + dx + 'px, ' + dy + 'px)', boxShadow: '0 16px 36px rgba(0,0,0,.28)' }, { transform: 'none', boxShadow: 'var(--shadow)' }], { duration: 200, easing: 'ease-out' }); } var list = ps.list; var type = list.dataset.sortable; if (type) { var ids = Array.prototype.slice.call(list.querySelectorAll('[data-sortable-item]')).map(function (el) { return el.dataset.id; }); S[type].items = ids.map(function (id) { return S[type].items.filter(function (x) { return x.id === id; })[0]; }).filter(Boolean); save(); } }
-
-var menuOutside = null;
-function openItemMenu(itemEl, x, y, archived) { closeItemMenu(); var id = itemEl.dataset.id; var list = itemEl.closest('[data-sortable]') || itemEl.parentElement; var type = list.dataset.sortable || detectType(itemEl); if (!type) return; var menu = document.createElement('div'); menu.className = 'ctx-menu'; menu.innerHTML = archived ? '<button data-mact="restore">' + ICONS.restore + '<span>' + esc(t('restore')) + '</span></button><button data-mact="delete" class="danger">' + ICONS.trash + '<span>' + esc(t('delete')) + '</span></button>' : '<button data-mact="archive">' + ICONS.archive + '<span>' + esc(t('archive')) + '</span></button><button data-mact="delete" class="danger">' + ICONS.trash + '<span>' + esc(t('delete')) + '</span></button>'; document.body.appendChild(menu); var mw = menu.offsetWidth, mh = menu.offsetHeight; menu.style.left = Math.max(12, Math.min(x, window.innerWidth - mw - 12)) + 'px'; menu.style.top = Math.max(12, Math.min(y, window.innerHeight - mh - 12)) + 'px'; menu.addEventListener('click', function (ev) { var btn = ev.target.closest('[data-mact]'); if (!btn) return; doItemAction(type, id, btn.dataset.mact, archived); closeItemMenu(); }); menuOutside = function (ev) { if (!menu.contains(ev.target)) closeItemMenu(); }; setTimeout(function () { document.addEventListener('pointerdown', menuOutside, true); }, 0); }
-function detectType(itemEl) { var c = itemEl.className; if (c.indexOf('cd-item') >= 0) return 'countdown'; if (c.indexOf('counter-item') >= 0) return 'counter'; if (c.indexOf('memo-item') >= 0) return 'memo'; return null; }
-function closeItemMenu() { var m = document.querySelector('.ctx-menu'); if (!m) return; if (menuOutside) { document.removeEventListener('pointerdown', menuOutside, true); menuOutside = null; } m.remove(); }
-function doItemAction(type, id, action, fromArchive) { var store = S[type]; if (!store) return; if (action === 'archive') { var idx = store.items.findIndex(function (x) { return x.id === id; }); if (idx < 0) return; var it = store.items.splice(idx, 1)[0]; it.archivedAt = Date.now(); store.archived.unshift(it); toast(t('archive_ok')); } else if (action === 'restore') { var idx2 = store.archived.findIndex(function (x) { return x.id === id; }); if (idx2 < 0) return; var it2 = store.archived.splice(idx2, 1)[0]; delete it2.archivedAt; if (type === 'memo') it2.done = false; store.items.unshift(it2); toast(t('restore_ok')); } else if (action === 'delete') { var arr = fromArchive ? store.archived : store.items; var idx3 = arr.findIndex(function (x) { return x.id === id; }); if (idx3 < 0) return; arr.splice(idx3, 1); toast(t('delete_ok')); } save(); renderContent({ animate: false }); }
-
-var pendingPhoto = null;
-function bindPhotoInputs() { $$('[data-photo-input]').forEach(function (inp) { inp.addEventListener('change', function () { var f = inp.files && inp.files[0]; if (!f) return; compressImage(f).then(function (dataUrl) { if (!dataUrl) return; pendingPhoto = dataUrl; var wrap = inp.closest('.field').querySelector('[data-photo-preview]'); if (wrap) wrap.innerHTML = '<div class="photo-preview"><img src="' + dataUrl + '" alt=""><button type="button" data-act="remove-photo">✕</button></div>'; }); }); }); }
-
-document.addEventListener('click', function (e) { var tabBtn = e.target.closest('.tab'); if (tabBtn) { switchTab(tabBtn.dataset.tab); return; } var seg = e.target.closest('.segmented button'); if (seg && seg.parentElement.dataset.set) { var set = seg.parentElement.dataset.set; if (S.settings[set] === seg.dataset.val) return; S.settings[set] = seg.dataset.val; save(); applyTheme(); render({ animate: false }); return; } var pickBtn = e.target.closest('[data-pick] button[data-val]'); if (pickBtn && pickBtn.closest('[data-pick]')) { var wrap = pickBtn.closest('[data-pick]'); $$('button', wrap).forEach(function (b) { b.classList.remove('on'); }); pickBtn.classList.add('on'); if (wrap.dataset.pick === 'kind') { var kind = pickBtn.dataset.val; var catWrap = wrap.closest('form').querySelector('[data-pick="cat"]'); if (catWrap) { catWrap.innerHTML = LED_CATS[kind].map(function (x, i) { return '<button type="button" class="chip ' + (i === 0 ? 'on' : '') + '" data-val="' + x[0] + '">' + x[1] + ' ' + esc(t('cat_' + x[0])) + '</button>'; }).join(''); } } return; } var chip = e.target.closest('.chip'); if (chip) { $$('.chip', chip.parentElement).forEach(function (c) { c.classList.remove('on'); }); chip.classList.add('on'); return; } var toggle = e.target.closest('.toggle'); if (toggle) { var knob = toggle.querySelector('.knob'); toggle.classList.toggle('on'); var on = toggle.classList.contains('on'); toggle.setAttribute('aria-checked', on ? 'true' : 'false'); knob.classList.remove('stretch'); void knob.offsetWidth; knob.classList.add('stretch'); setTimeout(function () { knob.classList.remove('stretch'); }, 380); if (toggle.dataset.pick === 'mode') { var lbl = document.getElementById('modeLabel'); if (lbl) lbl.textContent = on ? t('ct_mode_daily') : t('ct_mode_plain'); } return; } var actEl = e.target.closest('[data-act]'); if (actEl) handleAction(actEl); });
-
-document.addEventListener('change', function (e) { 
-  var inp = e.target.closest('input[type=color][data-theme]'); 
-  if (inp) { S.settings.theme[inp.dataset.theme] = inp.value; save(); applyTheme(); return; }
-  if (e.target.id === 'iconInput') {
-    var f = e.target.files[0];
-    if (f) { compressImage(f, 512, 0.9).then(function(url){ if(url){ S.settings.appIcon = url; save(); setupPWA(); toast('图标已更新，请重新添加到主屏幕'); } }); }
+function renderContent() {
+  var mod = S.currentModule, tab = S[mod].tab || 'home';
+  if (tab === 'add') {
+    if (mod === 'ledger') contentEl.innerHTML = renderLedgerForm();
+    if (mod === 'countdown') contentEl.innerHTML = renderCountdownForm();
+    if (mod === 'counter') contentEl.innerHTML = renderCounterForm();
+    if (mod === 'memo') contentEl.innerHTML = renderMemoForm();
+  } else {
+    if (mod === 'ledger') contentEl.innerHTML = tab === 'stats' ? renderLedgerStats() : renderLedgerHome();
+    if (mod === 'countdown') contentEl.innerHTML = renderCountdownList(tab === 'archive' ? S.countdown.archived : S.countdown.items, tab === 'archive');
+    if (mod === 'counter') contentEl.innerHTML = renderCounterList(tab === 'archive' ? S.counter.archived : S.counter.items, tab === 'archive');
+    if (mod === 'memo') contentEl.innerHTML = renderMemoList(tab === 'archive' ? S.memo.archived : S.memo.items, tab === 'archive');
+    if (mod === 'settings') contentEl.innerHTML = renderSettings();
   }
-});
+  pendingPhoto = null; pendingCatIcon = null; pendingCdBg = null; pendingBg = null;
+  bindDrag();
+}
 
-function handleAction(el) { var act = el.dataset.act; if (act === 'remove-photo') { pendingPhoto = null; var wrap = el.closest('[data-photo-preview]'); if (wrap) wrap.innerHTML = ''; return; } if (act === 'reset-theme') { S.settings.theme = Object.assign({}, DEFAULT_THEME); save(); applyTheme(); render({ animate: false }); toast('OK'); return; } if (act === 'reset-icon') { S.settings.appIcon = null; save(); setupPWA(); render({ animate: false }); toast('已恢复默认图标'); return; } if (act === 'account') { S.settings.account = S.settings.account === el.dataset.val ? null : el.dataset.val; save(); render({ animate: false }); return; } if (act === 'set-initial') { openInitialModal(); return; } if (act === 'share-link') { copyShareLink(); return; } if (act === 'share-qr') { openQRModal(); return; } if (act === 'download-html') { downloadHTML(); return; } if (act === 'add-home') { showAddToHome(); return; } if (act === 'inc') { handleInc(el.dataset.id); return; } if (act === 'toggle-done') { handleDone(el.dataset.id, el); return; } }
+/* ---------------- 记账模块 (双主题结构) ---------------- */
+var expandedLedgerIds = new Set();
+function renderLedgerHome() {
+  var inc = 0, exp = 0;
+  S.ledger.items.forEach(function (it) { if (it.kind === 'income') inc += Number(it.amount); else exp += Number(it.amount); });
+  var balance = (Number(S.ledger.initial) || 0) + inc - exp;
+  var style = S.settings.style || 'cream';
 
-function handleInc(id) { var it = S.counter.items.filter(function (x) { return x.id === id; })[0]; if (!it) return; if (it.captureEach) { var inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*'; inp.capture = 'environment'; inp.onchange = function () { if (!inp.files || !inp.files[0]) { toast(t('ct_cancel_capture')); return; } compressImage(inp.files[0]).then(function (photo) { if (!photo) { toast(t('ct_cancel_capture')); return; } it.lastPhoto = photo; incrementCounter(it); }); }; inp.click(); } else incrementCounter(it); }
-function incrementCounter(it) { if (it.mode === 'daily') { if (it.lastDate !== todayStr()) { it.lastDate = todayStr(); it.todayCount = 0; } it.todayCount = (it.todayCount || 0) + 1; it.total = (it.total || 0) + 1; } else it.total = (it.total || 0) + 1; save(); var num = document.querySelector('[data-num="' + it.id + '"]'); if (num) { num.textContent = ctValue(it); num.classList.remove('bump'); void num.offsetWidth; num.classList.add('bump'); var sub = num.closest('.counter-item').querySelector('.ct-sub'); if (sub) sub.textContent = it.mode === 'daily' ? t('ct_today') + ' · ' + ctValue(it) + ' ' + t('ct_times') : t('ct_total') + ' · ' + it.total + ' ' + t('ct_times'); } try { navigator.vibrate && navigator.vibrate(8); } catch (e) {} }
-function handleDone(id, el) { var idx = S.memo.items.findIndex(function (x) { return x.id === id; }); if (idx < 0) return; var it = S.memo.items[idx]; it.done = !it.done; save(); var card = el.closest('.memo-item'); var txt = card.querySelector('.memo-text'); el.classList.toggle('checked', it.done); txt.classList.toggle('done', it.done); if (it.done) { setTimeout(function () { var i2 = S.memo.items.findIndex(function (x) { return x.id === id; }); if (i2 < 0) return; var moved = S.memo.items.splice(i2, 1)[0]; moved.archivedAt = Date.now(); S.memo.archived.unshift(moved); save(); renderContent({ animate: false }); }, 620); } }
+  var html = '';
+  if (style === 'cream') {
+    // 奶油风布局
+    var recentCats = [];
+    var catMap = {};
+    S.ledger.items.slice(0, 5).forEach(function(it) {
+      if(!catMap[it.cat]) { catMap[it.cat] = true; recentCats.push(it); }
+    });
+    
+    html += '<div class="cream-header"><h2>记账本</h2><p>记录每一笔，生活更有条理</p></div>';
+    html += '<div class="cream-main-card"><div><div class="lbl">本月总消费 👁️</div><div class="amt"><span>¥</span>' + fmtMoney(exp) + '</div></div><div class="cream-illustration">🐹</div></div>';
+    html += '<div class="cream-sub-cards">' +
+      '<div class="cream-sub-card"><div class="k">📘 本月收入</div><div class="v" style="color:var(--primary)">¥' + fmtMoney(inc) + '</div></div>' +
+      '<div class="cream-sub-card"><div class="k">🟡 初始资金</div><div class="v">¥' + fmtMoney(S.ledger.initial||0) + '</div></div>' +
+      '<div class="cream-sub-card"><div class="k">💚 剩余余额</div><div class="v">¥' + fmtMoney(balance) + '</div></div></div>';
+    
+    html += '<div class="cream-cats">';
+    recentCats.forEach(function(it) {
+      var icon = it.catIcon ? '<img src="' + it.catIcon + '">' : '🍔';
+      html += '<div class="cream-cat-item"><div class="cream-cat-ico">' + icon + '</div><div class="cream-cat-name">' + esc(it.cat) + '</div></div>';
+    });
+    html += '<div class="cream-cat-item" onclick="document.getElementById(\'fabAdd\').click()"><div class="cream-cat-ico" style="background:var(--surface-2);color:var(--text-dim);font-size:20px;">+</div><div class="cream-cat-name">全部</div></div></div>';
+    
+    html += '<div class="cream-recent-header"><h3>最近记录</h3><span>全部账单 ></span></div>';
+  } else {
+    // 玻璃态布局
+    html += '<div class="glass-balance-card" id="balanceCard"><div class="lbl">余额</div><div class="amt">¥ ' + fmtMoney(balance) + '</div><div class="row"><div>收入<b>+' + fmtMoney(inc) + '</b></div><div>支出<b>-' + fmtMoney(exp) + '</b></div></div></div>';
+  }
 
-document.addEventListener('submit', function (e) { var form = e.target.closest('form[data-form]'); if (!form) return; e.preventDefault(); var kind = form.dataset.form; try { if (kind === 'countdown') { var fd = new FormData(form); var typeBtn = form.querySelector('[data-pick="type"] button.on'); var item = { id: uid(), title: (fd.get('title') || '').toString().trim(), type: typeBtn ? typeBtn.dataset.val : 'countdown', date: fd.get('date'), note: (fd.get('note') || '').toString().trim(), createdAt: Date.now() }; if (!item.title || !item.date) return; S.countdown.items.unshift(item); S.countdown.tab = 'home'; save(); render({ push: -18 }); toast(t('saved')); return; } if (kind === 'ledger') { var fd2 = new FormData(form); var kindBtn = form.querySelector('[data-pick="kind"] button.on'); var catBtn = form.querySelector('[data-pick="cat"] .chip.on'); var amount = parseFloat(fd2.get('amount')); if (!isFinite(amount) || amount <= 0) return; S.ledger.items.unshift({ id: uid(), kind: kindBtn ? kindBtn.dataset.val : 'expense', cat: catBtn ? catBtn.dataset.val : 'other', amount: Math.round(amount * 100) / 100, note: (fd2.get('note') || '').toString().trim(), time: fd2.get('time') || nowLocalInput(), photo: pendingPhoto || null, createdAt: Date.now() }); S.ledger.tab = 'home'; pendingPhoto = null; save(); render({ push: -18 }); toast(t('saved')); return; } if (kind === 'counter') { var fd3 = new FormData(form); var modeBtn = form.querySelector('[data-pick="mode"]'); var capBtn = form.querySelector('[data-pick="capture"]'); var item2 = { id: uid(), title: (fd3.get('title') || '').toString().trim(), mode: modeBtn && modeBtn.classList.contains('on') ? 'daily' : 'plain', captureEach: !!(capBtn && capBtn.classList.contains('on')), total: 0, todayCount: 0, lastDate: todayStr(), photo: pendingPhoto || null, createdAt: Date.now() }; if (!item2.title) return; S.counter.items.unshift(item2); S.counter.tab = 'home'; pendingPhoto = null; save(); render({ push: -18 }); toast(t('saved')); return; } if (kind === 'memo') { var fd4 = new FormData(form); var text = (fd4.get('text') || '').toString().trim(); if (!text) return; S.memo.items.unshift({ id: uid(), text: text, done: false, createdAt: Date.now() }); S.memo.tab = 'home'; save(); render({ push: -18 }); toast(t('saved')); } } catch (err) { console.error('submit error:', err); } });
+  if (!S.ledger.items.length) return html + '<div class="empty">暂无记录</div>';
+  
+  html += '<div class="list" data-sortable="ledger">' + S.ledger.items.map(function(it) {
+    var isExp = expandedLedgerIds.has(it.id);
+    var icon = it.catIcon ? '<img src="' + it.catIcon + '">' : '📦';
+    var noteHtml = it.note ? (style === 'cream' ? '<div class="led-note-short" style="font-size:11px">' + esc(it.time.split('T')[0]) + ' · ' + esc(it.note) + '</div>' : '<div class="led-note-short">' + esc(it.note) + '</div>') : '';
+    if (style === 'cream' && !it.note) noteHtml = '<div class="led-note-short" style="font-size:11px">' + esc(it.time.split('T')[0]) + '</div>';
+    
+    return '<div class="item led-item ' + (isExp ? 'expanded' : '') + '" data-sortable-item data-id="' + it.id + '">' +
+      '<div class="led-header"><div class="led-ico">' + icon + '</div>' +
+      '<div class="led-main"><div class="led-cat">' + esc(it.cat) + '</div>' + noteHtml + '</div>' +
+      '<div class="led-amt ' + (it.kind === 'income' ? 'in' : 'out') + '">' + (it.kind === 'income' ? '+' : '-') + '¥' + fmtMoney(it.amount) + '</div></div>' +
+      '<div class="led-body"><div class="led-detail">' + (it.photo ? '<img class="led-detail-img" src="' + it.photo + '">' : '') +
+      (it.note ? '<div class="led-detail-note">' + esc(it.note) + '</div>' : '') +
+      '<div class="led-detail-row"><span>' + esc((it.time || '').replace('T', ' ')) + '</span><span>' + (it.kind === 'income' ? '收入' : '支出') + '</span></div></div></div></div>';
+  }).join('') + '</div>';
+  
+  return html;
+}
 
-var initialModalOpen = false;
-function checkInitialLedger() { if (S.currentModule !== 'ledger' || S.ledger.initial != null || initialModalOpen) return; setTimeout(function () { if (S.currentModule === 'ledger' && S.ledger.initial == null) openInitialModal(); }, 420); }
-function openInitialModal() { if (initialModalOpen) return; initialModalOpen = true; var val = S.ledger.initial != null ? S.ledger.initial : ''; openModal('<h2>' + esc(S.ledger.initial == null ? t('led_set_initial') : t('led_modify_initial')) + '</h2><p style="font-size:13px;color:var(--text-dim);margin:0 0 14px;line-height:1.5">' + esc(t('led_initial_hint')) + '</p><input class="input" type="number" inputmode="decimal" step="0.01" id="initialInput" value="' + val + '" placeholder="0.00"><div class="actions"><button class="btn ghost" data-m="cancel">' + esc(t('cancel')) + '</button><button class="btn" data-m="ok">' + esc(t('confirm')) + '</button></div>', function (m) { var inp = m.querySelector('#initialInput'); setTimeout(function () { inp.focus(); }, 60); m.querySelector('[data-m=cancel]').onclick = function () { initialModalOpen = false; closeModal(); }; m.querySelector('[data-m=ok]').onclick = function () { var v = parseFloat(inp.value); S.ledger.initial = isFinite(v) ? Math.round(v * 100) / 100 : 0; initialModalOpen = false; save(); closeModal(); renderContent({ animate: false }); }; inp.addEventListener('keydown', function (ev) { if (ev.key === 'Enter') m.querySelector('[data-m=ok]').click(); }); }); }
+var calDate = new Date();
+function renderLedgerStats() {
+  var dStr = S.ledger.selectedDate;
+  var dayItems = S.ledger.items.filter(function (it) { return (it.time || '').indexOf(dStr) === 0; });
+  var inc = 0, exp = 0;
+  dayItems.forEach(function (it) { if (it.kind === 'income') inc += Number(it.amount); else exp += Number(it.amount); });
+  
+  var html = '<div style="display:flex;justify-content:space-between;align-items:center;margin:10px 0 16px;">' +
+    '<div style="font-size:20px;font-weight:800">' + dStr + '</div>' +
+    '<button class="stat-date-btn" onclick="openCalendarModal()" style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--primary);background:rgba(var(--primary-rgb), .1);padding:10px 16px;border-radius:14px;">' + ICONS.calendar + ' 选择日期</button></div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">' +
+    '<div class="card" style="margin-top:0;padding:16px;"><div style="font-size:12px;color:var(--text-dim);font-weight:600">总收入</div><div style="font-size:22px;font-weight:800;margin-top:6px;color:var(--primary)">¥' + fmtMoney(inc) + '</div></div>' +
+    '<div class="card" style="margin-top:0;padding:16px;"><div style="font-size:12px;color:var(--text-dim);font-weight:600">总支出</div><div style="font-size:22px;font-weight:800;margin-top:6px;color:var(--danger)">¥' + fmtMoney(exp) + '</div></div></div>' +
+    '<div style="margin-top:24px;font-size:15px;font-weight:700;">当日明细</div>';
+    
+  if (!dayItems.length) return html + '<div class="empty">这天没有记账</div>';
+  return html + '<div class="list" style="margin-top:12px">' + dayItems.map(function(it) {
+    var icon = it.catIcon ? '<img src="' + it.catIcon + '">' : '📦';
+    return '<div class="item"><div class="led-ico">' + icon + '</div><div class="led-main"><div class="led-cat">' + esc(it.cat) + '</div></div>' +
+      '<div class="led-amt ' + (it.kind === 'income' ? 'in' : 'out') + '">' + (it.kind === 'income' ? '+' : '-') + '¥' + fmtMoney(it.amount) + '</div></div>';
+  }).join('') + '</div>';
+}
 
-function shareURL() { var url = location.href.split('#')[0]; if (url.indexOf('file:') === 0 || !/^https?:/.test(url)) url = 'https://wennote.app/'; return url; }
-function copyShareLink() { var url = shareURL(); if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(url).then(function () { toast(t('s_link_copied')); }, function () { showLinkFallback(url); }); } else showLinkFallback(url); }
-function showLinkFallback(url) { openModal('<h2>' + esc(t('s_share_link')) + '</h2><p style="font-size:13px;color:var(--text-dim);margin:0 0 12px">' + esc(t('share_unsupported')) + '</p><div class="link-box" style="user-select:text;-webkit-user-select:text">' + esc(url) + '</div><div class="actions"><button class="btn" data-m="close">' + esc(t('close')) + '</button></div>', function (m) { m.querySelector('[data-m=close]').onclick = closeModal; var box = m.querySelector('.link-box'); var range = document.createRange(); range.selectNodeContents(box); var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range); }); }
-function openQRModal() { var url = shareURL(); openModal('<h2>' + esc(t('s_share_qr')) + '</h2><div class="qr-wrap"><canvas id="qrCanvas" width="240" height="240"></canvas></div><div class="link-box">' + esc(url) + '</div><p style="font-size:12px;color:var(--text-dim);margin:10px 0 0;text-align:center;line-height:1.4">' + esc(t('s_qr_hint')) + '</p><div class="actions"><button class="btn ghost" data-m="close">' + esc(t('close')) + '</button></div>', function (m) { m.querySelector('[data-m=close]').onclick = closeModal; var cvs = m.querySelector('#qrCanvas'); if (!drawQR(url, cvs)) { var ctx = cvs.getContext('2d'); ctx.fillStyle = '#f0f0f0'; ctx.fillRect(0, 0, 240, 240); ctx.fillStyle = '#888'; ctx.font = '14px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('QR unavailable', 120, 124); } }); }
-function downloadHTML() { try { var clone = document.documentElement.cloneNode(true); var toClear = ['#content', '#tabbar', '#modal-root', '#drawerItems']; toClear.forEach(function (sel) { var el = clone.querySelector(sel); if (el) el.innerHTML = ''; }); var tb = clone.querySelector('#tabbar'); if (tb) { tb.setAttribute('hidden', ''); tb.removeAttribute('style'); } var toastEl = clone.querySelector('#toast'); if (toastEl) { toastEl.textContent = ''; toastEl.className = 'toast'; toastEl.removeAttribute('style'); } Array.prototype.slice.call(clone.querySelectorAll('.ctx-menu, .modal-scrim, .placeholder')).forEach(function (el) { el.remove(); }); var drawer = clone.querySelector('#drawer'); if (drawer) drawer.classList.remove('show'); var scrim = clone.querySelector('#scrim'); if (scrim) scrim.classList.remove('show'); var html = '<!DOCTYPE html>\n' + clone.outerHTML; var seedStr = JSON.stringify(S); var seedLiteral = JSON.stringify(seedStr); html = html.replace('"use strict";', '"use strict";\nwindow.__WENNOTE_SEED__=' + seedLiteral + ';'); var blob = new Blob([html], { type: 'text/html;charset=utf-8' }); var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'WenNote.html'; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1200); toast(t('dl_tip')); } catch (e) { console.error(e); toast('Download failed'); } }
-function showAddToHome() { var ua = navigator.userAgent || ''; var isIOS = /iPhone|iPad|iPod/i.test(ua) && !/MSStream/i.test(ua); var isAndroid = /Android/i.test(ua); var html = ''; if (isIOS) html = t('guide_ios'); else if (isAndroid) html = t('guide_android'); else html = t('guide_desktop'); openModal('<h2>' + esc(t('guide_title')) + '</h2><p class="guide-step">' + html + '</p><div class="actions"><button class="btn" data-m="close">' + esc(t('ok')) + '</button></div>', function (m) { m.querySelector('[data-m=close]').onclick = closeModal; }); }
+function openCalendarModal() {
+  var year = calDate.getFullYear(), month = calDate.getMonth();
+  var firstDay = new Date(year, month, 1).getDay(), daysInMonth = new Date(year, month + 1, 0).getDate();
+  var daysWithData = new Set();
+  S.ledger.items.forEach(function (it) { if (it.time) daysWithData.add(it.time.split('T')[0]); });
+  
+  var html = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-size:18px;font-weight:800;"><div>' + year + '年 ' + (month + 1) + '月</div><div style="display:flex;gap:16px;">' +
+    '<span onclick="calPrev()" style="cursor:pointer;color:var(--text-dim)">' + ICONS.left + '</span><span onclick="calNext()" style="cursor:pointer;color:var(--text-dim)">' + ICONS.right + '</span></div></div>' +
+    '<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;">';
+  ['日','一','二','三','四','五','六'].forEach(function(d){ html += '<div style="font-size:12px;color:var(--text-dim);font-weight:700;margin-bottom:4px;">' + d + '</div>'; });
+  
+  for (var i = 0; i < firstDay; i++) html += '<div></div>';
+  for (var d = 1; d <= daysInMonth; d++) {
+    var dStr = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+    var isSel = dStr === S.ledger.selectedDate ? 'background:var(--primary);color:var(--on-primary);' : '';
+    var hasDot = daysWithData.has(dStr) ? '<div style="width:4px;height:4px;border-radius:50%;background:' + (isSel?'#fff':'var(--primary)') + ';position:absolute;bottom:6px;"></div>' : '';
+    html += '<div onclick="selectDate(\'' + dStr + '\')" style="aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:12px;font-size:15px;font-weight:600;position:relative;cursor:pointer;' + isSel + '">' + d + hasDot + '</div>';
+  }
+  html += '</div>';
+  openModal(html);
+}
+window.calPrev = function() { calDate.setMonth(calDate.getMonth() - 1); openCalendarModal(); };
+window.calNext = function() { calDate.setMonth(calDate.getMonth() + 1); openCalendarModal(); };
+window.selectDate = function(d) { S.ledger.selectedDate = d; save(); closeModal(); render(); };
 
-function renderDrawer() { var box = $('#drawerItems'); if (!box) return; box.innerHTML = MODULES.map(function (m) { return '<button class="drawer-item ' + (S.currentModule === m.key ? 'active' : '') + '" data-module="' + m.key + '"><span class="di">' + ICONS[m.icon] + '</span><span>' + esc(t(m.label)) + '</span></button>'; }).join(''); $$('.drawer-item', box).forEach(function (btn) { btn.addEventListener('click', function () { var key = btn.dataset.module; closeDrawer(); if (S.currentModule === key) return; S.currentModule = key; save(); render({ push: 14 }); }); }); }
-function openDrawer() { renderDrawer(); $('#drawer').classList.add('show'); $('#scrim').classList.add('show'); }
-function closeDrawer() { $('#drawer').classList.remove('show'); $('#scrim').classList.remove('show'); }
-$('#menuBtn').addEventListener('click', openDrawer);
-$('#scrim').addEventListener('click', closeDrawer);
+var pendingPhoto = null, pendingCatIcon = null;
+function renderLedgerForm() {
+  var iconHtml = pendingCatIcon ? '<img src="' + pendingCatIcon + '">' : ICONS.image;
+  return '<form class="form" onsubmit="submitLedger(event)">' +
+    '<div class="segmented" id="ledKind"><button type="button" class="on" onclick="switchLedKind(this,\'expense\')">支出</button><button type="button" onclick="switchLedKind(this,\'income\')">收入</button></div>' +
+    '<input class="big-input" type="number" step="0.01" name="amount" required placeholder="0.00" autofocus>' +
+    '<div class="field"><label>分类</label><div class="upload-row">' +
+      '<label class="upload-box" for="catIcon">' + iconHtml + '</label><input type="file" id="catIcon" accept="image/*" hidden onchange="uploadCatIcon(this)">' +
+      '<input class="input" name="catName" required maxlength="10" placeholder="输入分类名称">' +
+    '</div></div>' +
+    '<div class="field"><label>时间</label><input class="input" type="datetime-local" name="time" value="' + nowLocalInput() + '"></div>' +
+    '<div class="field"><label>备注</label><input class="input" name="note" placeholder="选填"></div>' +
+    '<div class="field"><label>照片</label><label class="upload-box" style="width:100%;height:100px;" for="ledPhoto">' + (pendingPhoto ? '<img src="' + pendingPhoto + '">' : ICONS.image + ' 点击上传') + '</label><input type="file" id="ledPhoto" accept="image/*" hidden onchange="uploadLedPhoto(this)"></div>' +
+    '<button class="btn" type="submit" id="saveBtn">保存记录</button></form>';
+}
+window.switchLedKind = function(btn, kind) { $$('#ledKind button').forEach(function(b){ b.classList.remove('on'); }); btn.classList.add('on'); btn.parentElement.dataset.kind = kind; };
+window.uploadCatIcon = function(inp) { if(inp.files[0]) compressImage(inp.files[0], 120, 0.8).then(function(url){ pendingCatIcon = url; inp.previousElementSibling.innerHTML = '<img src="'+url+'">'; }); };
+window.uploadLedPhoto = function(inp) { if(inp.files[0]) compressImage(inp.files[0]).then(function(url){ pendingPhoto = url; inp.previousElementSibling.innerHTML = '<img src="'+url+'">'; }); };
+window.submitLedger = function(e) {
+  e.preventDefault(); var form = e.target, btn = $('#saveBtn'), fd = new FormData(form);
+  var kind = $('#ledKind').dataset.kind || 'expense', amt = parseFloat(fd.get('amount')), cat = fd.get('catName');
+  if(!amt || !cat) return;
+  btn.innerHTML = '...'; btn.disabled = true;
+  setTimeout(function() {
+    S.ledger.items.unshift({ id: uid(), kind: kind, cat: cat, catIcon: pendingCatIcon, amount: amt, note: fd.get('note'), time: fd.get('time'), photo: pendingPhoto });
+    save(); btn.innerHTML = '✅ 保存成功'; btn.classList.add('success'); showBanner('记账保存成功');
+    setTimeout(function() { S.ledger.tab = 'home'; render(); }, 600);
+  }, 400);
+};
 
-document.addEventListener('pointerdown', function (e) { if (!e.target.closest('.ctx-menu')) closeItemMenu(); }, true);
-applyTheme();
-setupPWA();
-render({ animate: true });
-window.addEventListener('resize', function () { var mod = S.currentModule; if (TABS[mod]) { var active = S[mod].tab || 'home'; var idx = TABS[mod].findIndex(function (x) { return x.key === active; }); var pill = $('.pill', tabbarEl); if (pill) pill.dataset.x = '-1'; requestAnimationFrame(function () { positionPill(idx); }); } });
+/* ---------------- 其它模块通用逻辑 (保持原样) ---------------- */
+var pendingCdBg = null;
+function renderCountdownList(list, isArchive) {
+  if (!list.length) return '<div class="empty">暂无内容</div>';
+  return '<div class="list" ' + (isArchive?'':'data-sortable="countdown"') + '>' + list.map(function(it) {
+    var d = new Date(it.date + 'T00:00:00'), today = startOfDay(new Date()), diff = 0;
+    if(it.type === 'birthday') { var next = new Date(today.getFullYear(), d.getMonth(), d.getDate()); if(next < today) next = new Date(today.getFullYear()+1, d.getMonth(), d.getDate()); diff = daysBetween(today, next); }
+    else if(it.type === 'countdown') diff = daysBetween(today, d);
+    else diff = daysBetween(d, today);
+    var bgStyle = it.bg ? 'background-image:url(' + it.bg + ');' : 'background:linear-gradient(135deg,var(--primary),#1A237E);';
+    var icon = it.icon ? '<img src="' + it.icon + '">' : '📅';
+    return '<div class="cd-card item" style="' + bgStyle + '" data-sortable-item data-id="' + it.id + '">' +
+      '<div style="position:absolute;top:16px;left:16px;width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,0.2);backdrop-filter:blur(4px);display:grid;place-items:center;z-index:2;overflow:hidden;">' + icon + '</div>' +
+      '<div class="cd-card-content"><div style="font-size:18px;font-weight:700;margin-bottom:8px;">' + esc(it.title) + '</div>' +
+      '<div style="font-size:46px;font-weight:900;line-height:1;display:flex;align-items:baseline;justify-content:center;gap:4px;">' + Math.abs(diff) + '<span style="font-size:16px;font-weight:600;">天</span></div>' +
+      '<div style="font-size:14px;margin-top:8px;opacity:0.8">' + (it.type==='countdown' ? (diff>=0?'还有':'已过去') : (it.type==='birthday'?'距离生日':'已经')) + '</div></div></div>';
+  }).join('') + '</div>';
+}
+var pendingCdIcon = null;
+function renderCountdownForm() {
+  return '<form class="form" onsubmit="submitCountdown(event)">' +
+    '<div class="segmented" id="cdType"><button type="button" class="on" onclick="switchCdType(this,\'countdown\')">倒数日</button><button type="button" onclick="switchCdType(this,\'birthday\')">生日</button><button type="button" onclick="switchCdType(this,\'countup\')">正数日</button></div>' +
+    '<div class="upload-row"><label class="upload-box" for="cdIcon">' + (pendingCdIcon ? '<img src="' + pendingCdIcon + '">' : ICONS.image) + '</label><input type="file" id="cdIcon" hidden onchange="uploadCdIcon(this)">' +
+    '<input class="input" name="title" required placeholder="事件名称（如：结婚纪念日）"></div>' +
+    '<div class="field"><label>日期</label><input class="input" type="date" name="date" required value="' + todayStr() + '"></div>' +
+    '<div class="field"><label>背景图片</label><label class="upload-box" style="width:100%;height:100px;" for="cdBg">' + (pendingCdBg ? '<img src="' + pendingCdBg + '">' : ICONS.image + ' 点击上传大背景') + '</label><input type="file" id="cdBg" hidden onchange="uploadCdBg(this)"></div>' +
+    '<button class="btn" type="submit" id="saveCdBtn">保存</button></form>';
+}
+window.switchCdType = function(btn, t) { $$('#cdType button').forEach(function(b){ b.classList.remove('on'); }); btn.classList.add('on'); btn.parentElement.dataset.type = t; };
+window.uploadCdIcon = function(inp) { if(inp.files[0]) compressImage(inp.files[0],120,0.8).then(function(u){ pendingCdIcon=u; inp.previousElementSibling.innerHTML='<img src="'+u+'">'; }); };
+window.uploadCdBg = function(inp) { if(inp.files[0]) compressImage(inp.files[0],800,0.6).then(function(u){ pendingCdBg=u; inp.previousElementSibling.innerHTML='<img src="'+u+'">'; }); };
+window.submitCountdown = function(e) {
+  e.preventDefault(); var form = e.target, btn = $('#saveCdBtn'), fd = new FormData(form);
+  var type = $('#cdType').dataset.type || 'countdown', title = fd.get('title');
+  if(!title) return;
+  btn.innerHTML = '...'; btn.disabled = true;
+  setTimeout(function() {
+    S.countdown.items.unshift({ id: uid(), type: type, title: title, date: fd.get('date'), icon: pendingCdIcon, bg: pendingCdBg });
+    save(); btn.innerHTML = '✅ 成功'; btn.classList.add('success'); showBanner('倒数日保存成功');
+    setTimeout(function() { S.countdown.tab = 'home'; render(); }, 400);
+  }, 400);
+};
+
+function renderCounterList(list, isArchive) {
+  if (!list.length) return '<div class="empty">暂无内容</div>';
+  return '<div class="list" ' + (isArchive?'':'data-sortable="counter"') + '>' + list.map(function(it) {
+    var val = it.count || 0, target = it.target || 10;
+    var pct = Math.min(100, (val / target) * 100);
+    var dashoffset = 339 - (339 * pct / 100);
+    return '<div class="card item ct-card" data-sortable-item data-id="' + it.id + '">' +
+      '<div style="font-size:18px;font-weight:800;margin-bottom:20px;">' + esc(it.title) + '</div>' +
+      '<div class="ct-circle-wrap"><svg class="ct-circle-svg" viewBox="0 0 120 120"><circle class="ct-circle-bg" cx="60" cy="60" r="54"></circle>' +
+      '<circle class="ct-circle-progress" cx="60" cy="60" r="54" stroke-dasharray="339" stroke-dashoffset="' + dashoffset + '"></circle></svg>' +
+      '<div style="font-size:40px;font-weight:900;height:48px;overflow:hidden;position:relative;display:flex;justify-content:center;align-items:center;"><div id="num_' + it.id + '" style="transition:transform .22s cubic-bezier(.34,1.56,.64,1);display:flex;flex-direction:column;"><span style="height:48px;line-height:48px;">' + val + '</span><span style="height:48px;line-height:48px;">' + (val+1) + '</span></div></div></div>' +
+      (isArchive ? '' : '<button style="background:var(--primary);color:var(--on-primary);padding:12px 30px;border-radius:30px;font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px;" onclick="incCounter(\'' + it.id + '\', this)">' + ICONS.plus + ' 记录</button>') +
+      '</div>';
+  }).join('') + '</div>';
+}
+function renderCounterForm() {
+  return '<form class="form" onsubmit="submitCounter(event)">' +
+    '<div class="field"><label>项目名称</label><input class="input" name="title" required placeholder="例如：喝水、健身、抽烟" autofocus></div>' +
+    '<div class="field"><label>目标次数 (用于圆环进度)</label><input class="input" type="number" name="target" value="8" required></div>' +
+    '<button class="btn" type="submit" id="saveCtBtn">保存</button></form>';
+}
+window.incCounter = function(id, btn) {
+  var it = S.counter.items.filter(function(x){return x.id===id;})[0]; if(!it) return;
+  it.count = (it.count || 0) + 1; save();
+  var inner = document.getElementById('num_' + id);
+  inner.style.transform = 'translateY(-48px)';
+  setTimeout(function() {
+    inner.style.transition = 'none'; inner.style.transform = 'translateY(0)';
+    inner.children[0].textContent = it.count; inner.children[1].textContent = it.count + 1;
+    void inner.offsetWidth; inner.style.transition = 'transform .22s cubic-bezier(.34,1.56,.64,1)';
+  }, 220);
+  var target = it.target || 10, pct = Math.min(100, (it.count / target) * 100);
+  btn.closest('.ct-card').querySelector('.ct-circle-progress').style.strokeDashoffset = 339 - (339 * pct / 100);
+  if(navigator.vibrate) navigator.vibrate(10);
+};
+window.submitCounter = function(e) {
+  e.preventDefault(); var form=e.target, btn=$('#saveCtBtn'), fd=new FormData(form);
+  if(!fd.get('title')) return;
+  btn.innerHTML = '...'; btn.disabled = true;
+  setTimeout(function() {
+    S.counter.items.unshift({ id: uid(), title: fd.get('title'), target: parseInt(fd.get('target')), count: 0 });
+    save(); btn.innerHTML = '✅ 成功'; btn.classList.add('success'); showBanner('项目添加成功');
+    setTimeout(function() { S.counter.tab = 'home'; render(); }, 400);
+  }, 400);
+};
+
+function renderMemoList(list, isArchive) {
+  if (!list.length) return '<div class="empty">暂无内容</div>';
+  return '<div class="list" ' + (isArchive?'':'data-sortable="memo"') + '>' + list.map(function(it) {
+    return '<div class="card item memo-item" data-sortable-item data-id="' + it.id + '">' +
+      '<div class="checkbox ' + (it.done?'checked':'') + '" onclick="toggleMemo(\'' + it.id + '\', this)">' + (it.done?ICONS.check:'') + '</div>' +
+      '<div style="flex:1;font-size:16px;line-height:1.5;padding-top:2px;' + (it.done?'text-decoration:line-through;color:var(--text-dim)':'') + '">' + esc(it.text) + '</div></div>';
+  }).join('') + '</div>';
+}
+function renderMemoForm() {
+  return '<form class="form" onsubmit="submitMemo(event)">' +
+    '<div class="field"><label>待办事项</label><textarea class="textarea" name="text" required placeholder="准备做点什么..." oninput="this.style.height=\'\';this.style.height=this.scrollHeight+\'px\'"></textarea></div>' +
+    '<button class="btn" type="submit" id="saveMemoBtn">保存</button></form>';
+}
+window.toggleMemo = function(id, el) {
+  var it = S.memo.items.filter(function(x){return x.id===id;})[0]; if(!it) return;
+  it.done = !it.done; save();
+  el.classList.toggle('checked', it.done); el.innerHTML = it.done ? ICONS.check : '';
+  el.nextElementSibling.style.textDecoration = it.done ? 'line-through' : 'none';
+  el.nextElementSibling.style.color = it.done ? 'var(--text-dim)' : 'inherit';
+  if(it.done) {
+    setTimeout(function() {
+      S.memo.items = S.memo.items.filter(function(x){return x.id!==id;});
+      S.memo.archived = S.memo.archived || []; S.memo.archived.unshift(it); save(); render();
+    }, 600);
+  }
+};
+window.submitMemo = function(e) {
+  e.preventDefault(); var form=e.target, btn=$('#saveMemoBtn'), fd=new FormData(form);
+  if(!fd.get('text')) return;
+  btn.innerHTML = '...'; btn.disabled = true;
+  setTimeout(function() {
+    S.memo.items.unshift({ id: uid(), text: fd.get('text'), done: false });
+    save(); btn.innerHTML = '✅ 成功'; btn.classList.add('success'); showBanner('待办已添加');
+    setTimeout(function() { S.memo.tab = 'home'; render(); }, 400);
+  }, 400);
+};
+
+/* ---------------- 设置模块 (支持双主题配置) ---------------- */
+var pendingBg = null;
+function renderSettings() {
+  var th = S.settings.theme, style = S.settings.style || 'cream';
+  return '<div class="card"><h3 style="margin:0 0 12px;font-size:13px;color:var(--text-dim)">主题风格</h3>' +
+    '<div class="segmented">' +
+      '<button class="' + (style === 'cream' ? 'on' : '') + '" onclick="switchStyle(\'cream\')">奶油卡片风</button>' +
+      '<button class="' + (style === 'glass' ? 'on' : '') + '" onclick="switchStyle(\'glass\')">液态玻璃风</button>' +
+    '</div></div>' +
+    '<div class="card"><h3 style="margin:0 0 12px;font-size:13px;color:var(--text-dim)">颜色定制</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">' +
+      colorCell('lightPrimary','浅色主色',th.lightPrimary) + colorCell('lightBg','浅色背景',th.lightBg) + colorCell('darkPrimary','深色主色',th.darkPrimary) + colorCell('darkBg','深色背景',th.darkBg) + '</div>' +
+      '<button class="btn ghost" style="margin-top:16px;" onclick="resetTheme(event)">恢复默认主题</button></div>' +
+    '<div class="card"><h3 style="margin:0 0 12px;font-size:13px;color:var(--text-dim)">全局背景图</h3>' +
+      '<label class="upload-box" style="width:100%;height:80px;flex-direction:row;gap:10px;" for="bgImageInput">' + (S.settings.bgImage ? '<img src="'+S.settings.bgImage+'" style="width:60px;height:60px;border-radius:10px;object-fit:cover;"> 点击更换背景' : '点击上传背景图片') + '</label><input type="file" id="bgImageInput" hidden accept="image/*" onchange="uploadBgImage(this)">' +
+      (S.settings.bgImage ? '<button class="btn ghost" style="margin-top:12px;" onclick="removeBg()">移除背景图</button>' : '') +
+    '</div>' +
+    '<div class="card"><h3 style="margin:0 0 12px;font-size:13px;color:var(--text-dim)">应用图标</h3><label class="upload-box" style="width:100%;height:60px;flex-direction:row;gap:10px;" for="appIconInput">' + (S.settings.appIcon ? '<img src="'+S.settings.appIcon+'" style="width:40px;height:40px;border-radius:8px;">' : '点击上传图标') + '</label><input type="file" id="appIconInput" hidden accept="image/*" onchange="uploadAppIcon(this)"></div>';
+}
+function colorCell(k, l, v) { return '<label style="display:flex;align-items:center;gap:10px;background:var(--surface-2);padding:12px;border-radius:14px;"><input type="color" value="'+v+'" onchange="changeTheme(\''+k+'\',this.value)" style="width:36px;height:36px;border:none;border-radius:8px;"><span style="font-size:13px;font-weight:700;">'+l+'</span></label>'; }
+window.switchStyle = function(s) { S.settings.style = s; save(); render(); };
+window.changeTheme = function(k, v) { S.settings.theme[k] = v; save(); applyTheme(); };
+window.resetTheme = function() {
+  S.settings.theme = { lightPrimary: '#FFC107', lightBg: '#F9F6EE', darkPrimary: '#FFD54F', darkBg: '#121212' };
+  save(); applyTheme(); renderSettings();
+};
+window.uploadBgImage = function(inp) { if(inp.files[0]) compressImage(inp.files[0], 1080, 0.7).then(function(u){ S.settings.bgImage=u; save(); applyTheme(); renderSettings(); }); };
+window.removeBg = function() { S.settings.bgImage = null; save(); applyTheme(); renderSettings(); };
+window.uploadAppIcon = function(inp) { if(inp.files[0]) compressImage(inp.files[0],512,0.9).then(function(u){ S.settings.appIcon=u; save(); setupPWA(); render(); }); };
+
+/* ---------------- 交互逻辑 (拖拽、长按、弹窗) ---------------- */
+var press = null, dragRAF = null, lastMoveEvent = null;
+function bindDrag() {
+  $$('.list').forEach(function(list) { list.addEventListener('pointerdown', onPointerDown); });
+  var bc = $('#balanceCard');
+  if(bc) bc.addEventListener('pointerdown', function(){ setTimeout(openInitialModal, 600); });
+}
+function onPointerDown(e) {
+  if (press) return;
+  if (e.pointerType === 'mouse' && e.button !== 0) return;
+  var item = e.target.closest('[data-sortable-item]');
+  if (!item) return;
+  if (e.target.closest('button, input, textarea, .checkbox')) return;
+  
+  press = { item: item, list: item.parentElement, startX: e.clientX, startY: e.clientY, armed: false, dragging: false, moved: false, timer: setTimeout(armPress, 400) };
+  window.addEventListener('pointermove', onPointerMove, { passive: false });
+  window.addEventListener('pointerup', onPointerUp);
+  window.addEventListener('pointercancel', onPointerCancel);
+}
+function armPress() {
+  if (!press) return; press.armed = true; press.item.style.transform = 'scale(1.05)'; press.item.style.boxShadow = 'var(--shadow-lg)'; press.item.style.zIndex = '5';
+  try { navigator.vibrate && navigator.vibrate(15); } catch (e) {}
+}
+function onPointerMove(e) {
+  var ps = press; if (!ps) return;
+  var dx = e.clientX - ps.startX, dy = e.clientY - ps.startY;
+  if (Math.hypot(dx, dy) > 4) ps.moved = true;
+  if (!ps.armed) { if (Math.hypot(dx, dy) > 10) { clearTimeout(ps.timer); endPress(); } return; }
+  if (!ps.dragging && ps.moved) beginDrag(e);
+  if (ps.dragging) { lastMoveEvent = e; if (!dragRAF) dragRAF = requestAnimationFrame(processDragMove); }
+}
+function beginDrag(e) {
+  var ps = press, item = ps.item; var rect = item.getBoundingClientRect();
+  var ph = document.createElement('div'); ph.className = 'placeholder'; ph.style.height = rect.height + 'px'; item.parentNode.insertBefore(ph, item);
+  item.style.position = 'fixed'; item.style.left = rect.left + 'px'; item.style.top = rect.top + 'px'; item.style.width = rect.width + 'px'; item.style.margin = '0'; item.style.zIndex = '900';
+  ps.dragging = true; ps.placeholder = ph; ps.offsetX = ps.startX - rect.left; ps.offsetY = ps.startY - rect.top;
+  document.addEventListener('touchmove', function(ev){ev.preventDefault();}, { passive: false });
+}
+function processDragMove() {
+  dragRAF = null; var ps = press, e = lastMoveEvent; if (!ps || !ps.dragging || !e) return;
+  var item = ps.item, dx = e.clientX - ps.startX, dy = e.clientY - ps.startY;
+  item.style.transform = 'scale(1.05) translate(' + dx + 'px, ' + dy + 'px)';
+  var ph = ps.placeholder, siblings = Array.prototype.slice.call(ps.list.children).filter(function(el){return el!==item && el!==ph;});
+  var target = null;
+  for (var i=0; i<siblings.length; i++) { var r = siblings[i].getBoundingClientRect(); if (e.clientY < r.top + r.height/2) { target = siblings[i]; break; } }
+  if (target) { if (ph.nextElementSibling !== target) ps.list.insertBefore(ph, target); }
+  else if (ps.list.lastElementChild !== ph) ps.list.appendChild(ph);
+}
+function onPointerUp(e) {
+  var ps = press; if (!ps) return; clearTimeout(ps.timer);
+  if (ps.dragging) {
+    var item = ps.item; ps.placeholder.parentNode.insertBefore(item, ps.placeholder); ps.placeholder.remove();
+    item.style.cssText = ''; var ids = Array.prototype.slice.call(ps.list.children).map(function(el){return el.dataset.id;});
+    var type = ps.list.dataset.sortable; S[type].items = ids.map(function(id){ return S[type].items.filter(function(x){return x.id===id;})[0]; }).filter(Boolean); save(); render();
+  } else if (ps.armed) {
+    openCtxMenu(ps.item, e.clientX, e.clientY);
+  } else if (!ps.moved && ps.item.classList.contains('led-item')) {
+    var id = ps.item.dataset.id;
+    if (expandedLedgerIds.has(id)) expandedLedgerIds.delete(id); else expandedLedgerIds.add(id);
+    ps.item.classList.toggle('expanded');
+  }
+  endPress();
+}
+function onPointerCancel() { endPress(); }
+function endPress() {
+  press = null; if (dragRAF) { cancelAnimationFrame(dragRAF); dragRAF = null; }
+  window.removeEventListener('pointermove', onPointerMove); window.removeEventListener('pointerup', onPointerUp); window.removeEventListener('pointercancel', onPointerCancel);
+}
+
+function openCtxMenu(itemEl, x, y) {
+  var list = itemEl.closest('[data-sortable]'); if(!list) return;
+  var type = list.dataset.sortable, id = itemEl.dataset.id;
+  var menu = document.createElement('div'); menu.className = 'ctx-menu';
+  menu.innerHTML = '<button class="danger" onclick="confirmDelete(\''+type+'\',\''+id+'\')">' + ICONS.trash + ' 删除</button>';
+  document.body.appendChild(menu);
+  menu.style.left = Math.max(12, Math.min(x, window.innerWidth - menu.offsetWidth - 12)) + 'px';
+  menu.style.top = Math.max(12, Math.min(y, window.innerHeight - menu.offsetHeight - 12)) + 'px';
+  setTimeout(function(){ document.addEventListener('pointerdown', function close(ev){ if(!menu.contains(ev.target)){ menu.remove(); document.removeEventListener('pointerdown', close); } }, true); }, 10);
+}
+window.confirmDelete = function(type, id) {
+  document.querySelector('.ctx-menu').remove();
+  openModal('<h2>确认删除</h2><p style="color:var(--text-dim);line-height:1.5;margin-bottom:20px;">此操作无法撤销，确定要永久删除吗？</p><div class="actions"><button class="btn ghost" onclick="closeModal()">取消</button><button class="btn" style="background:var(--danger)" onclick="doDelete(\''+type+'\',\''+id+'\')">删除</button></div>');
+};
+window.doDelete = function(type, id) { S[type].items = S[type].items.filter(function(x){return x.id!==id;}); save(); closeModal(); render(); showBanner('已删除'); };
+
+function openModal(html) { $('#modal-root').innerHTML = '<div class="modal-scrim" onclick="if(event.target===this)closeModal()"><div class="modal">' + html + '</div></div>'; }
+window.closeModal = function() { $('#modal-root').innerHTML = ''; };
+function openInitialModal() {
+  if ($('.modal-scrim')) return;
+  openModal('<h2>设置初始金额</h2><input class="input" type="number" id="initAmt" value="' + (S.ledger.initial||'') + '" placeholder="0.00" style="margin-bottom:20px;"><div class="actions"><button class="btn ghost" onclick="closeModal()">取消</button><button class="btn" onclick="saveInit()">确定</button></div>');
+}
+window.saveInit = function() { var v = parseFloat($('#initAmt').value); S.ledger.initial = isFinite(v) ? v : 0; save(); closeModal(); render(); showBanner('初始金额已更新'); };
+
+/* ---------------- 抽屉与导航事件 ---------------- */
+function renderDrawer() {
+  $('#drawerItems').innerHTML = MODULES.map(function (m) {
+    return '<button class="drawer-item ' + (S.currentModule === m.key ? 'active' : '') + '" onclick="switchModule(\'' + m.key + '\')"><span style="width:32px;height:32px;border-radius:10px;background:var(--surface);display:grid;place-items:center;color:var(--primary);">' + ICONS[m.icon] + '</span><span>' + m.label + '</span></button>';
+  }).join('');
+}
+window.switchModule = function(key) { if(S.currentModule === key) { closeDrawer(); return; } S.currentModule = key; save(); closeDrawer(); render(); };
+
+$('#menuBtn').onclick = function(){ renderDrawer(); $('#drawer').classList.add('show'); $('#scrim').classList.add('show'); };
+window.closeDrawer = function(){ $('#drawer').classList.remove('show'); $('#scrim').classList.remove('show'); };
+$('#scrim').onclick = closeDrawer;
+
+$('#navLeft').onclick = function(e) {
+  var tab = e.target.closest('.tab'); if(!tab) return;
+  var key = tab.dataset.tab; if(S[S.currentModule].tab === key) return;
+  S[S.currentModule].tab = key; save();
+  $$('.tab', $('#navLeft')).forEach(function(t){t.classList.toggle('active', t.dataset.tab===key);});
+  var pill = $('.pill', $('#navLeft'));
+  pill.style.width = (tab.offsetWidth - 6) + 'px'; pill.style.transform = 'translateX(' + (tab.offsetLeft + 3) + 'px)';
+  renderContent();
+};
+
+$('#fabAdd').onclick = function() {
+  if(S[S.currentModule].tab === 'add') return;
+  S[S.currentModule].tab = 'add'; save(); renderNav(); renderContent();
+};
+
+applyTheme(); setupPWA(); render();
 </script>
 </body>
 </html>
