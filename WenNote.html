@@ -18,28 +18,34 @@
   --shadow: 0 2px 14px rgba(20,32,31,.07); --shadow-lg: 0 14px 40px rgba(20,32,31,.22);
   --radius: 22px; --font: "Source Han Sans SC","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
   --safe-b: env(safe-area-inset-bottom,0px); --safe-t: env(safe-area-inset-top,0px);
-  
-  /* 默认：玻璃态变量 */
-  --glass-bg: rgba(255, 255, 255, 0.75); --glass-border: rgba(255, 255, 255, 0.9); --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.65); --glass-border: rgba(255, 255, 255, 0.9); --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   --danger: #FF5252;
 }
 html[data-dark="true"] {
   --surface: #1e1e1e; --surface-2: #282828; --text: #e8efee; --text-dim: rgba(232,239,238,.55);
   --border: rgba(255,255,255,.09); --shadow: 0 2px 14px rgba(0,0,0,.45); --shadow-lg: 0 14px 40px rgba(0,0,0,.65);
-  --glass-bg: rgba(30, 30, 30, 0.7); --glass-border: rgba(255, 255, 255, 0.12); --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --glass-bg: rgba(30, 30, 30, 0.6); --glass-border: rgba(255, 255, 255, 0.12); --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-/* 奶油风专属变量覆盖 */
+/* 奶油风变量 */
 html[data-style="cream"] {
-  --radius: 26px;
-  --shadow: 0 4px 20px rgba(0,0,0,0.04);
-  --glass-bg: rgba(255, 255, 255, 0.9);
-  --glass-border: rgba(255, 255, 255, 0.5);
-  --glass-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  --radius: 26px; --shadow: 0 4px 20px rgba(0,0,0,0.04);
+  --glass-bg: rgba(255, 255, 255, 0.9); --glass-border: rgba(255, 255, 255, 0.5);
 }
 html[data-style="cream"][data-dark="true"] {
   --surface: #2a2a2a; --surface-2: #333; --bg: #1a1a1a; --text: #fff;
   --glass-bg: rgba(42, 42, 42, 0.9); --glass-border: rgba(255,255,255,0.1);
+}
+
+/* 液态玻璃变量 - 深度透明版 */
+html[data-style="glass"] {
+  --glass-bg: rgba(255, 255, 255, 0.25);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+html[data-style="glass"][data-dark="true"] {
+  --glass-bg: rgba(20, 20, 20, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.15);
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -65,15 +71,13 @@ button { cursor: pointer; }
 .nav-container { position: fixed; bottom: calc(16px + var(--safe-b)); left: 16px; right: 16px; display: flex; gap: 12px; z-index: 100; }
 .nav-left {
   flex: 1; display: flex; position: relative; padding: 6px;
-  background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
   border-radius: 24px; box-shadow: var(--glass-shadow); overflow: hidden;
 }
-.pill { position: absolute; top: 6px; left: 0; height: 44px; border-radius: 18px; background: var(--primary); z-index: 1; will-change: transform; }
+.pill { position: absolute; top: 6px; left: 0; height: 44px; border-radius: 18px; background: var(--primary); z-index: 1; will-change: transform, opacity; transition: transform .3s, width .3s, opacity .3s; }
 .tab { flex: 1; position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; gap: 6px; height: 44px; font-size: 13px; font-weight: 700; color: var(--text-dim); border-radius: 18px; overflow: hidden; transition: color .28s; }
 .tab.active { color: var(--on-primary); }
 .tab .tab-icon { display: flex; align-items: center; justify-content: center; }
-.tab.active .tab-icon { animation: iconPop .4s cubic-bezier(.34, 1.56, .64, 1); }
-@keyframes iconPop { 0% { transform: scale(1); } 32% { transform: scale(.78); } 66% { transform: scale(1.14); } 100% { transform: scale(1); } }
 .tab .tab-label { max-width: 90px; opacity: .9; white-space: nowrap; overflow: hidden; display: inline-block; transition: max-width .35s, opacity .22s; }
 .tab.active .tab-label { max-width: 0; opacity: 0; }
 .fab-add {
@@ -89,23 +93,71 @@ button { cursor: pointer; }
 .empty { text-align: center; color: var(--text-dim); font-size: 14px; padding: 56px 0; display: flex; flex-direction: column; align-items: center; gap: 14px; }
 .empty svg { opacity: .4; }
 
-/* ================= 主题1: 玻璃态记账首页 ================= */
-.glass-balance-card {
-  background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.9), rgba(var(--primary-rgb), 0.6));
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.3); border-radius: 24px; padding: 24px; color: var(--on-primary);
-  margin-top: 10px; box-shadow: 0 10px 26px rgba(var(--primary-rgb), .3); position: relative; overflow: hidden; transition: transform .2s;
-}
-.glass-balance-card:active { transform: scale(0.98); }
-.glass-balance-card::after { content: ''; position: absolute; right: -40px; top: -50px; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,.15); }
-.glass-balance-card .lbl { font-size: 13px; opacity: .9; }
-.glass-balance-card .amt { font-size: 38px; font-weight: 800; margin-top: 6px; letter-spacing: -.02em; }
-.glass-balance-card .row { display: flex; gap: 24px; margin-top: 14px; font-size: 13px; opacity: .9; }
-.glass-balance-card .row b { font-weight: 700; font-size: 16px; display: block; margin-top: 2px; }
+/* ================= 记账主页：共享结构 ================= */
+.ledger-header { padding: 10px 0 16px; }
+.ledger-header h2 { margin: 0 0 6px; font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
+.ledger-header p { margin: 0; font-size: 13px; color: var(--text-dim); }
 
-/* 记账流水卡片 (通用) */
+.main-card {
+  border-radius: 28px; padding: 24px;
+  position: relative; overflow: hidden;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.main-card .lbl { font-size: 13px; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.main-card .amt { font-size: 40px; font-weight: 900; letter-spacing: -1px; }
+.main-card .amt span { font-size: 20px; font-weight: 800; margin-right: 4px; }
+.main-illustration { width: 80px; height: 80px; border-radius: 20px; display: grid; place-items: center; font-size: 40px; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+/* 奶油风特定样式 */
+html[data-style="cream"] .main-card { background: linear-gradient(135deg, #FFF6E5, #FFEAC5); box-shadow: 0 10px 30px rgba(255, 200, 100, 0.15); }
+html[data-style="cream"] .main-card .lbl { color: #8C7A5B; }
+html[data-style="cream"] .main-card .amt { color: #2C2416; }
+html[data-style="cream"] .main-illustration { background: rgba(255,255,255,0.6); }
+html[data-dark="true"][data-style="cream"] .main-card { background: linear-gradient(135deg, #332f27, #28241c); box-shadow: none; }
+html[data-dark="true"][data-style="cream"] .main-card .lbl { color: #b0a58a; }
+html[data-dark="true"][data-style="cream"] .main-card .amt { color: #fff; }
+
+/* 液态玻璃特定样式 */
+html[data-style="glass"] .main-card {
+  background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.8), rgba(var(--primary-rgb), 0.4));
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border); color: #fff;
+  box-shadow: 0 10px 26px rgba(var(--primary-rgb), .3);
+}
+html[data-style="glass"] .main-card::after { content: ''; position: absolute; right: -40px; top: -50px; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,.15); }
+html[data-style="glass"] .main-card .lbl { color: #fff; opacity: .9; }
+html[data-style="glass"] .main-card .amt { color: #fff; }
+html[data-style="glass"] .main-illustration { background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); }
+
+.sub-cards { display: flex; gap: 10px; margin-top: -20px; padding: 0 10px; position: relative; z-index: 2; }
+.sub-card { flex: 1; border-radius: 20px; padding: 14px; display: flex; flex-direction: column; gap: 6px; }
+.sub-card .k { font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+.sub-card .v { font-size: 14px; font-weight: 800; }
+
+html[data-style="cream"] .sub-card { background: var(--surface); box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
+html[data-style="cream"] .sub-card .k { color: var(--text-dim); }
+html[data-style="glass"] .sub-card { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); }
+html[data-style="glass"] .sub-card .k { color: var(--text); opacity: .7; }
+
+.cat-list { display: flex; gap: 16px; margin-top: 24px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; }
+.cat-list::-webkit-scrollbar { display: none; }
+.cat-item { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 0 0 auto; }
+.cat-ico { width: 52px; height: 52px; border-radius: 18px; display: grid; place-items: center; font-size: 24px; overflow: hidden; }
+.cat-name { font-size: 12px; font-weight: 600; }
+
+html[data-style="cream"] .cat-ico { background: var(--surface); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+html[data-style="cream"] .cat-name { color: var(--text-dim); }
+html[data-style="glass"] .cat-ico { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); }
+html[data-style="glass"] .cat-name { color: var(--text); }
+
+.recent-header { display: flex; justify-content: space-between; align-items: center; margin: 24px 0 12px; }
+.recent-header h3 { margin: 0; font-size: 18px; font-weight: 800; }
+.recent-header span { font-size: 12px; color: var(--text-dim); }
+
+/* 记账流水卡片 */
 .led-item { padding: 0; display: flex; flex-direction: column; overflow: hidden; cursor: pointer; }
-.led-header { display: flex; align-items: center; gap: 12px; padding: 16px; }
+.led-header-row { display: flex; align-items: center; gap: 12px; padding: 16px; }
 .led-ico { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; font-size: 20px; background: rgba(var(--primary-rgb), .12); flex: 0 0 auto; overflow: hidden; }
 .led-ico img { width: 100%; height: 100%; object-fit: cover; }
 .led-main { flex: 1; min-width: 0; }
@@ -119,42 +171,7 @@ button { cursor: pointer; }
 .led-detail-img { width: 100%; border-radius: 14px; max-height: 260px; object-fit: cover; }
 .led-detail-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-dim); }
 
-/* ================= 主题2: 奶油风记账首页 ================= */
-.cream-header { padding: 10px 0 16px; }
-.cream-header h2 { margin: 0 0 6px; font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
-.cream-header p { margin: 0; font-size: 13px; color: var(--text-dim); }
-
-.cream-main-card {
-  background: linear-gradient(135deg, #FFF6E5, #FFEAC5); border-radius: 28px; padding: 24px;
-  box-shadow: 0 10px 30px rgba(255, 200, 100, 0.15); position: relative; overflow: hidden;
-  display: flex; justify-content: space-between; align-items: center;
-}
-html[data-dark="true"] .cream-main-card { background: linear-gradient(135deg, #332f27, #28241c); box-shadow: none; }
-.cream-main-card .lbl { font-size: 13px; font-weight: 600; color: #8C7A5B; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-html[data-dark="true"] .cream-main-card .lbl { color: #b0a58a; }
-.cream-main-card .amt { font-size: 40px; font-weight: 900; color: #2C2416; letter-spacing: -1px; }
-html[data-dark="true"] .cream-main-card .amt { color: #fff; }
-.cream-main-card .amt span { font-size: 20px; font-weight: 800; margin-right: 4px; }
-.cream-illustration { width: 80px; height: 80px; border-radius: 20px; background: rgba(255,255,255,0.6); display: grid; place-items: center; font-size: 40px; animation: float 3s ease-in-out infinite; }
-@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-
-.cream-sub-cards { display: flex; gap: 10px; margin-top: -20px; padding: 0 10px; position: relative; z-index: 2; }
-.cream-sub-card { flex: 1; background: var(--surface); border-radius: 20px; padding: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); display: flex; flex-direction: column; gap: 6px; }
-.cream-sub-card .k { font-size: 11px; color: var(--text-dim); font-weight: 600; display: flex; align-items: center; gap: 4px; }
-.cream-sub-card .v { font-size: 14px; font-weight: 800; }
-
-.cream-cats { display: flex; gap: 16px; margin-top: 24px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; }
-.cream-cats::-webkit-scrollbar { display: none; }
-.cream-cat-item { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 0 0 auto; }
-.cream-cat-ico { width: 52px; height: 52px; border-radius: 18px; display: grid; place-items: center; font-size: 24px; background: var(--surface); box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
-.cream-cat-ico img { width: 100%; height: 100%; object-fit: cover; }
-.cream-cat-name { font-size: 12px; font-weight: 600; color: var(--text-dim); }
-
-.cream-recent-header { display: flex; justify-content: space-between; align-items: center; margin: 24px 0 12px; }
-.cream-recent-header h3 { margin: 0; font-size: 18px; font-weight: 800; }
-.cream-recent-header span { font-size: 12px; color: var(--text-dim); }
-
-/* 表单与通用组件 */
+/* 表单与其它组件 */
 .form { display: flex; flex-direction: column; gap: 16px; padding-top: 8px; }
 .field label { display: block; font-size: 13px; font-weight: 700; color: var(--text-dim); margin-bottom: 8px; }
 .input, .textarea { width: 100%; border: 1.5px solid var(--border); background: var(--surface); border-radius: 16px; padding: 14px; font-size: 16px; outline: none; transition: border-color .2s; }
@@ -174,10 +191,8 @@ html[data-dark="true"] .cream-main-card .amt { color: #fff; }
 .upload-box img { width: 100%; height: 100%; object-fit: cover; }
 .upload-row .input { flex: 1; }
 
-/* 其它模块卡片 (倒数日、计数器等复用) */
 .cd-card { height: 180px; border-radius: 24px; margin-top: 12px; position: relative; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.4); background-size: cover; background-position: center; }
 .cd-card::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.35); backdrop-filter: blur(2px); }
-.cd-card-content { position: relative; z-index: 2; text-align: center; }
 .ct-card { display: flex; flex-direction: column; align-items: center; padding: 24px 16px; }
 .ct-circle-wrap { position: relative; width: 120px; height: 120px; display: grid; place-items: center; margin-bottom: 20px; }
 .ct-circle-svg { transform: rotate(-90deg); position: absolute; inset: 0; }
@@ -187,19 +202,22 @@ html[data-dark="true"] .cream-main-card .amt { color: #fff; }
 .checkbox { width: 26px; height: 26px; border-radius: 10px; border: 2px solid rgba(var(--primary-rgb),.4); display: grid; place-items: center; flex: 0 0 auto; transition: all .2s; }
 .checkbox.checked { background: var(--primary); border-color: var(--primary); }
 
-/* 弹窗与菜单 */
+/* 菜单 & 弹窗 */
 .scrim { position: fixed; inset: 0; background: rgba(0,0,0,.4); opacity: 0; pointer-events: none; transition: opacity .3s; z-index: 40; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
 .scrim.show { opacity: 1; pointer-events: auto; }
-.drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background: var(--glass-bg); border-right: 1px solid var(--glass-border); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); z-index: 50; transform: translateX(-102%); transition: transform .38s cubic-bezier(.32,.72,0,1); display: flex; flex-direction: column; padding: calc(20px + var(--safe-t)) 12px; }
+.drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background: var(--glass-bg); border-right: 1px solid var(--glass-border); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); z-index: 50; transform: translateX(-102%); transition: transform .38s cubic-bezier(.32,.72,0,1); display: flex; flex-direction: column; padding: calc(20px + var(--safe-t)) 12px calc(20px + var(--safe-b)); }
 .drawer.show { transform: none; }
-.drawer-item { display: flex; align-items: center; gap: 12px; padding: 12px 10px; border-radius: 14px; font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.drawer-item { display: flex; align-items: center; gap: 12px; padding: 12px 10px; border-radius: 14px; font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px; transition: background .2s; }
 .drawer-item.active { background: rgba(var(--primary-rgb), .15); color: var(--primary); }
+.drawer-item .di { width: 32px; height: 32px; border-radius: 10px; background: var(--surface); display: grid; place-items: center; color: var(--primary); }
+.drawer-item.active .di { background: var(--primary); color: var(--on-primary); }
+
 .ctx-menu { position: fixed; z-index: 200; min-width: 150px; background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(24px); border-radius: 16px; box-shadow: var(--glass-shadow); padding: 6px; display: flex; flex-direction: column; gap: 2px; animation: popIn .25s cubic-bezier(.34,1.56,.64,1); }
 @keyframes popIn { 0% { opacity: 0; transform: scale(.8); } 100% { opacity: 1; transform: scale(1); } }
 .ctx-menu button { padding: 12px 14px; border-radius: 10px; font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
 .ctx-menu button.danger { color: var(--danger); }
 .modal-scrim { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 300; display: grid; place-items: center; padding: 20px; backdrop-filter: blur(4px); animation: fadeIn .2s; }
-.modal { background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(24px); border-radius: 24px; padding: 24px; width: 100%; max-width: 340px; box-shadow: var(--glass-shadow); animation: popIn .3s cubic-bezier(.34,1.56,.64,1); }
+.modal { background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(30px); border-radius: 24px; padding: 24px; width: 100%; max-width: 340px; box-shadow: var(--glass-shadow); animation: popIn .3s cubic-bezier(.34,1.56,.64,1); }
 .banner { position: fixed; top: calc(-100px - var(--safe-t)); left: 50%; transform: translateX(-50%); background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(20px); padding: 14px 24px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,.15); z-index: 1000; display: flex; align-items: center; gap: 10px; font-weight: 700; transition: top .4s cubic-bezier(.34,1.56,.64,1); }
 .banner.show { top: calc(10px + var(--safe-t)); }
 </style>
@@ -217,7 +235,10 @@ html[data-dark="true"] .cream-main-card .amt { color: #fff; }
   </div>
 </div>
 <div class="scrim" id="scrim"></div>
-<aside class="drawer" id="drawer"><div style="font-size:22px;font-weight:800;padding:0 10px 20px;color:var(--primary)">WenNote</div><div id="drawerItems"></div></aside>
+<aside class="drawer" id="drawer">
+  <div style="font-size:22px;font-weight:800;padding:0 10px 20px;color:var(--primary)">WenNote</div>
+  <div id="drawerItems" style="display:flex;flex-direction:column;flex:1;gap:2px;"></div>
+</aside>
 <div id="modal-root"></div>
 <div class="banner" id="banner"></div>
 
@@ -239,11 +260,11 @@ function startOfDay(d) { var t = new Date(d); t.setHours(0, 0, 0, 0); return t; 
 function daysBetween(a, b) { return Math.round((startOfDay(b) - startOfDay(a)) / 86400000); }
 function compressImage(file, maxSize, quality) { maxSize = maxSize || 900; quality = quality || 0.72; return new Promise(function (resolve) { var reader = new FileReader(); reader.onload = function () { var img = new Image(); img.onload = function () { var w = img.width, h = img.height; var scale = Math.min(1, maxSize / Math.max(w, h)); w = Math.round(w * scale); h = Math.round(h * scale); var cvs = document.createElement('canvas'); cvs.width = w; cvs.height = h; cvs.getContext('2d').drawImage(img, 0, 0, w, h); resolve(cvs.toDataURL('image/jpeg', quality)); }; img.onerror = function () { resolve(null); }; img.src = reader.result; }; reader.onerror = function () { resolve(null); }; reader.readAsDataURL(file); }); }
 
-var S = JSON.parse(localStorage.getItem('wennote_v3') || '{}');
+var S = JSON.parse(localStorage.getItem('wennote_v4') || '{}');
 if (!S.settings) {
   S = {
     currentModule: 'ledger',
-    settings: { lang: 'zh', style: 'cream', theme: { lightPrimary: '#FFC107', lightBg: '#F9F6EE', darkPrimary: '#FFD54F', darkBg: '#121212' }, bgImage: null, appIcon: null },
+    settings: { lang: 'zh', style: 'glass', theme: { lightPrimary: '#26A69A', lightBg: '#F2FBF9', darkPrimary: '#4DB6AC', darkBg: '#121212' }, bgImage: null, appIcon: null },
     ledger: { initial: 0, items: [], tab: 'home', selectedDate: todayStr() },
     countdown: { items: [], tab: 'home' },
     counter: { items: [], tab: 'home' },
@@ -251,14 +272,13 @@ if (!S.settings) {
   };
 }
 if (!S.ledger.selectedDate) S.ledger.selectedDate = todayStr();
-function save() { localStorage.setItem('wennote_v3', JSON.stringify(S)); }
+function save() { localStorage.setItem('wennote_v4', JSON.stringify(S)); }
 
 var mql = window.matchMedia('(prefers-color-scheme: dark)');
 function isDark() { return mql.matches; }
 function applyTheme() { 
-  var dark = isDark(), th = S.settings.theme, style = S.settings.style || 'cream'; 
-  var bg = dark ? th.darkBg : th.lightBg; 
-  var primary = dark ? th.darkPrimary : th.lightPrimary; 
+  var dark = isDark(), th = S.settings.theme, style = S.settings.style || 'glass'; 
+  var bg = dark ? th.darkBg : th.lightBg; var primary = dark ? th.darkPrimary : th.lightPrimary; 
   var root = document.documentElement; 
   root.dataset.dark = dark ? 'true' : 'false'; 
   root.dataset.style = style;
@@ -275,9 +295,20 @@ function applyTheme() {
     root.style.setProperty('--surface-2', style === 'cream' ? '#f5f5f5' : mixHex(bg, '#ffffff', 0.5)); 
   } 
   
-  if (S.settings.bgImage) { document.body.classList.add('custom-bg'); document.body.style.backgroundImage = 'url(' + S.settings.bgImage + ')'; document.body.style.backgroundColor = bg; }
-  else { document.body.classList.remove('custom-bg'); document.body.style.backgroundImage = 'none'; }
-  
+  // 背景处理
+  if (S.settings.bgImage) { 
+    document.body.classList.add('custom-bg'); 
+    document.body.style.backgroundImage = 'url(' + S.settings.bgImage + ')'; 
+    document.body.style.backgroundColor = bg; 
+  } else { 
+    document.body.classList.remove('custom-bg'); 
+    if (style === 'glass') {
+      document.body.style.backgroundImage = dark ? 'linear-gradient(135deg, #121212, #004d40, #1a237e)' : 'linear-gradient(135deg, #f2fbf9, #b2dfdb, #e1f5fe)';
+    } else {
+      document.body.style.backgroundImage = 'none'; 
+      document.body.style.backgroundColor = bg;
+    }
+  }
   var meta = document.querySelector('meta[name=theme-color]'); if (meta) meta.setAttribute('content', bg); 
 }
 mql.addEventListener('change', applyTheme);
@@ -339,7 +370,7 @@ function renderNav() {
   if (S.currentModule === 'ledger') tabs = [{ key: 'home', icon: 'home', label: '主页' }, { key: 'stats', icon: 'stats', label: '统计' }];
   else tabs = [{ key: 'home', icon: 'home', label: '主页' }, { key: 'archive', icon: 'archive', label: '存档' }];
   
-  if (S[S.currentModule].tab === 'add') S[S.currentModule].tab = 'home';
+  // 修复：移除强制重置 tab 的逻辑
   currentTab = S[S.currentModule].tab || 'home';
 
   navLeftEl.innerHTML = '<div class="pill"></div>' + tabs.map(function(tb) {
@@ -352,8 +383,11 @@ function renderNav() {
     var idx = tabs.findIndex(function(t){ return t.key === currentTab; });
     var pill = $('.pill', navLeftEl), tabEls = $$('.tab', navLeftEl);
     if (idx >= 0 && pill && tabEls[idx]) {
+      pill.style.opacity = '1';
       pill.style.width = (tabEls[idx].offsetWidth - 6) + 'px'; 
       pill.style.transform = 'translateX(' + (tabEls[idx].offsetLeft + 3) + 'px)';
+    } else if (pill) {
+      pill.style.opacity = '0'; // 进入添加页时隐藏滑块
     }
   });
 }
@@ -372,61 +406,62 @@ function renderContent() {
     if (mod === 'memo') contentEl.innerHTML = renderMemoList(tab === 'archive' ? S.memo.archived : S.memo.items, tab === 'archive');
     if (mod === 'settings') contentEl.innerHTML = renderSettings();
   }
-  pendingPhoto = null; pendingCatIcon = null; pendingCdBg = null; pendingBg = null;
+  pendingPhoto = null; pendingCatIcon = null; pendingCdBg = null;
   bindDrag();
 }
 
-/* ---------------- 记账模块 (双主题结构) ---------------- */
+/* ---------------- 记账模块 (双主题功能同步) ---------------- */
 var expandedLedgerIds = new Set();
 function renderLedgerHome() {
   var inc = 0, exp = 0;
   S.ledger.items.forEach(function (it) { if (it.kind === 'income') inc += Number(it.amount); else exp += Number(it.amount); });
   var balance = (Number(S.ledger.initial) || 0) + inc - exp;
-  var style = S.settings.style || 'cream';
+  var style = S.settings.style || 'glass';
 
   var html = '';
+  
+  // 头部
   if (style === 'cream') {
-    // 奶油风布局
-    var recentCats = [];
-    var catMap = {};
-    S.ledger.items.slice(0, 5).forEach(function(it) {
-      if(!catMap[it.cat]) { catMap[it.cat] = true; recentCats.push(it); }
-    });
-    
-    html += '<div class="cream-header"><h2>记账本</h2><p>记录每一笔，生活更有条理</p></div>';
-    html += '<div class="cream-main-card"><div><div class="lbl">本月总消费 👁️</div><div class="amt"><span>¥</span>' + fmtMoney(exp) + '</div></div><div class="cream-illustration">🐹</div></div>';
-    html += '<div class="cream-sub-cards">' +
-      '<div class="cream-sub-card"><div class="k">📘 本月收入</div><div class="v" style="color:var(--primary)">¥' + fmtMoney(inc) + '</div></div>' +
-      '<div class="cream-sub-card"><div class="k">🟡 初始资金</div><div class="v">¥' + fmtMoney(S.ledger.initial||0) + '</div></div>' +
-      '<div class="cream-sub-card"><div class="k">💚 剩余余额</div><div class="v">¥' + fmtMoney(balance) + '</div></div></div>';
-    
-    html += '<div class="cream-cats">';
-    recentCats.forEach(function(it) {
-      var icon = it.catIcon ? '<img src="' + it.catIcon + '">' : '🍔';
-      html += '<div class="cream-cat-item"><div class="cream-cat-ico">' + icon + '</div><div class="cream-cat-name">' + esc(it.cat) + '</div></div>';
-    });
-    html += '<div class="cream-cat-item" onclick="document.getElementById(\'fabAdd\').click()"><div class="cream-cat-ico" style="background:var(--surface-2);color:var(--text-dim);font-size:20px;">+</div><div class="cream-cat-name">全部</div></div></div>';
-    
-    html += '<div class="cream-recent-header"><h3>最近记录</h3><span>全部账单 ></span></div>';
-  } else {
-    // 玻璃态布局
-    html += '<div class="glass-balance-card" id="balanceCard"><div class="lbl">余额</div><div class="amt">¥ ' + fmtMoney(balance) + '</div><div class="row"><div>收入<b>+' + fmtMoney(inc) + '</b></div><div>支出<b>-' + fmtMoney(exp) + '</b></div></div></div>';
+    html += '<div class="ledger-header"><h2>记账本</h2><p>记录每一笔，生活更有条理</p></div>';
   }
+
+  // 主卡
+  html += '<div class="main-card" id="balanceCard">' +
+    '<div><div class="lbl">本月总消费 👁️</div><div class="amt"><span>¥</span>' + fmtMoney(exp) + '</div></div>' +
+    '<div class="main-illustration">🐹</div></div>';
+    
+  // 副卡
+  html += '<div class="sub-cards">' +
+    '<div class="sub-card"><div class="k">📘 本月收入</div><div class="v" style="color:var(--primary)">¥' + fmtMoney(inc) + '</div></div>' +
+    '<div class="sub-card"><div class="k">🟡 初始资金</div><div class="v">¥' + fmtMoney(S.ledger.initial||0) + '</div></div>' +
+    '<div class="sub-card"><div class="k">💚 剩余余额</div><div class="v">¥' + fmtMoney(balance) + '</div></div></div>';
+  
+  // 快捷分类 (两个主题共享)
+  var recentCats = [], catMap = {};
+  S.ledger.items.slice(0, 5).forEach(function(it) { if(!catMap[it.cat]) { catMap[it.cat] = true; recentCats.push(it); } });
+  html += '<div class="cat-list">';
+  recentCats.forEach(function(it) {
+    var icon = it.catIcon ? '<img src="' + it.catIcon + '">' : '🍔';
+    html += '<div class="cat-item"><div class="cat-ico">' + icon + '</div><div class="cat-name">' + esc(it.cat) + '</div></div>';
+  });
+  html += '<div class="cat-item" onclick="document.getElementById(\'fabAdd\').click()"><div class="cat-ico" style="font-size:20px;">+</div><div class="cat-name">全部</div></div></div>';
+  
+  // 最近记录
+  html += '<div class="recent-header"><h3>最近记录</h3><span>全部账单 ></span></div>';
 
   if (!S.ledger.items.length) return html + '<div class="empty">暂无记录</div>';
   
   html += '<div class="list" data-sortable="ledger">' + S.ledger.items.map(function(it) {
     var isExp = expandedLedgerIds.has(it.id);
     var icon = it.catIcon ? '<img src="' + it.catIcon + '">' : '📦';
-    var noteHtml = it.note ? (style === 'cream' ? '<div class="led-note-short" style="font-size:11px">' + esc(it.time.split('T')[0]) + ' · ' + esc(it.note) + '</div>' : '<div class="led-note-short">' + esc(it.note) + '</div>') : '';
-    if (style === 'cream' && !it.note) noteHtml = '<div class="led-note-short" style="font-size:11px">' + esc(it.time.split('T')[0]) + '</div>';
+    var noteHtml = it.note ? '<div class="led-note-short">' + esc(it.note) + '</div>' : '<div class="led-note-short">' + esc(it.time.split('T')[0]) + '</div>';
     
     return '<div class="item led-item ' + (isExp ? 'expanded' : '') + '" data-sortable-item data-id="' + it.id + '">' +
-      '<div class="led-header"><div class="led-ico">' + icon + '</div>' +
+      '<div class="led-header-row"><div class="led-ico">' + icon + '</div>' +
       '<div class="led-main"><div class="led-cat">' + esc(it.cat) + '</div>' + noteHtml + '</div>' +
       '<div class="led-amt ' + (it.kind === 'income' ? 'in' : 'out') + '">' + (it.kind === 'income' ? '+' : '-') + '¥' + fmtMoney(it.amount) + '</div></div>' +
       '<div class="led-body"><div class="led-detail">' + (it.photo ? '<img class="led-detail-img" src="' + it.photo + '">' : '') +
-      (it.note ? '<div class="led-detail-note">' + esc(it.note) + '</div>' : '') +
+      (it.note ? '<div style="font-size:15px;line-height:1.5;">' + esc(it.note) + '</div>' : '') +
       '<div class="led-detail-row"><span>' + esc((it.time || '').replace('T', ' ')) + '</span><span>' + (it.kind === 'income' ? '收入' : '支出') + '</span></div></div></div></div>';
   }).join('') + '</div>';
   
@@ -511,7 +546,7 @@ window.submitLedger = function(e) {
   }, 400);
 };
 
-/* ---------------- 其它模块通用逻辑 (保持原样) ---------------- */
+/* ---------------- 倒数日模块 ---------------- */
 var pendingCdBg = null;
 function renderCountdownList(list, isArchive) {
   if (!list.length) return '<div class="empty">暂无内容</div>';
@@ -554,6 +589,7 @@ window.submitCountdown = function(e) {
   }, 400);
 };
 
+/* ---------------- 次数记录器模块 ---------------- */
 function renderCounterList(list, isArchive) {
   if (!list.length) return '<div class="empty">暂无内容</div>';
   return '<div class="list" ' + (isArchive?'':'data-sortable="counter"') + '>' + list.map(function(it) {
@@ -600,6 +636,7 @@ window.submitCounter = function(e) {
   }, 400);
 };
 
+/* ---------------- 备忘录模块 ---------------- */
 function renderMemoList(list, isArchive) {
   if (!list.length) return '<div class="empty">暂无内容</div>';
   return '<div class="list" ' + (isArchive?'':'data-sortable="memo"') + '>' + list.map(function(it) {
@@ -637,10 +674,9 @@ window.submitMemo = function(e) {
   }, 400);
 };
 
-/* ---------------- 设置模块 (支持双主题配置) ---------------- */
-var pendingBg = null;
+/* ---------------- 设置模块 ---------------- */
 function renderSettings() {
-  var th = S.settings.theme, style = S.settings.style || 'cream';
+  var th = S.settings.theme, style = S.settings.style || 'glass';
   return '<div class="card"><h3 style="margin:0 0 12px;font-size:13px;color:var(--text-dim)">主题风格</h3>' +
     '<div class="segmented">' +
       '<button class="' + (style === 'cream' ? 'on' : '') + '" onclick="switchStyle(\'cream\')">奶油卡片风</button>' +
@@ -658,10 +694,7 @@ function renderSettings() {
 function colorCell(k, l, v) { return '<label style="display:flex;align-items:center;gap:10px;background:var(--surface-2);padding:12px;border-radius:14px;"><input type="color" value="'+v+'" onchange="changeTheme(\''+k+'\',this.value)" style="width:36px;height:36px;border:none;border-radius:8px;"><span style="font-size:13px;font-weight:700;">'+l+'</span></label>'; }
 window.switchStyle = function(s) { S.settings.style = s; save(); render(); };
 window.changeTheme = function(k, v) { S.settings.theme[k] = v; save(); applyTheme(); };
-window.resetTheme = function() {
-  S.settings.theme = { lightPrimary: '#FFC107', lightBg: '#F9F6EE', darkPrimary: '#FFD54F', darkBg: '#121212' };
-  save(); applyTheme(); renderSettings();
-};
+window.resetTheme = function() { S.settings.theme = { lightPrimary: '#26A69A', lightBg: '#F2FBF9', darkPrimary: '#4DB6AC', darkBg: '#121212' }; save(); applyTheme(); renderSettings(); };
 window.uploadBgImage = function(inp) { if(inp.files[0]) compressImage(inp.files[0], 1080, 0.7).then(function(u){ S.settings.bgImage=u; save(); applyTheme(); renderSettings(); }); };
 window.removeBg = function() { S.settings.bgImage = null; save(); applyTheme(); renderSettings(); };
 window.uploadAppIcon = function(inp) { if(inp.files[0]) compressImage(inp.files[0],512,0.9).then(function(u){ S.settings.appIcon=u; save(); setupPWA(); render(); }); };
@@ -761,9 +794,20 @@ window.saveInit = function() { var v = parseFloat($('#initAmt').value); S.ledger
 
 /* ---------------- 抽屉与导航事件 ---------------- */
 function renderDrawer() {
-  $('#drawerItems').innerHTML = MODULES.map(function (m) {
-    return '<button class="drawer-item ' + (S.currentModule === m.key ? 'active' : '') + '" onclick="switchModule(\'' + m.key + '\')"><span style="width:32px;height:32px;border-radius:10px;background:var(--surface);display:grid;place-items:center;color:var(--primary);">' + ICONS[m.icon] + '</span><span>' + m.label + '</span></button>';
+  var topMods = MODULES.slice(0, 4);
+  var bottomMods = MODULES.slice(4);
+  
+  var html = topMods.map(function (m) {
+    return '<button class="drawer-item ' + (S.currentModule === m.key ? 'active' : '') + '" onclick="switchModule(\'' + m.key + '\')"><span class="di">' + ICONS[m.icon] + '</span><span>' + m.label + '</span></button>';
   }).join('');
+  
+  html += '<div style="flex:1;"></div>'; // 将设置推到底部
+  
+  html += bottomMods.map(function (m) {
+    return '<button class="drawer-item ' + (S.currentModule === m.key ? 'active' : '') + '" onclick="switchModule(\'' + m.key + '\')"><span class="di">' + ICONS[m.icon] + '</span><span>' + m.label + '</span></button>';
+  }).join('');
+  
+  $('#drawerItems').innerHTML = html;
 }
 window.switchModule = function(key) { if(S.currentModule === key) { closeDrawer(); return; } S.currentModule = key; save(); closeDrawer(); render(); };
 
@@ -783,7 +827,9 @@ $('#navLeft').onclick = function(e) {
 
 $('#fabAdd').onclick = function() {
   if(S[S.currentModule].tab === 'add') return;
-  S[S.currentModule].tab = 'add'; save(); renderNav(); renderContent();
+  S[S.currentModule].tab = 'add'; save();
+  renderNav(); // 刷新导航栏状态
+  renderContent(); // 显示表单
 };
 
 applyTheme(); setupPWA(); render();
