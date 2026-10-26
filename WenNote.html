@@ -37,7 +37,7 @@ html[data-style="cream"][data-dark="true"] {
   --glass-bg: rgba(42, 42, 42, 0.9); --glass-border: rgba(255,255,255,0.1);
 }
 
-/* 液态玻璃变量 - 深度透明 */
+/* 液态玻璃变量 */
 html[data-style="glass"] {
   --glass-bg: rgba(255, 255, 255, 0.25);
   --glass-border: rgba(255, 255, 255, 0.6);
@@ -137,16 +137,6 @@ html[data-style="cream"] .sub-card .k { color: var(--text-dim); }
 html[data-style="glass"] .sub-card { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); }
 html[data-style="glass"] .sub-card .k { color: var(--text); opacity: .7; }
 
-.cat-list { display: flex; gap: 16px; margin-top: 24px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; }
-.cat-list::-webkit-scrollbar { display: none; }
-.cat-item { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 0 0 auto; }
-.cat-ico { width: 52px; height: 52px; border-radius: 18px; display: grid; place-items: center; font-size: 24px; overflow: hidden; }
-.cat-name { font-size: 12px; font-weight: 600; }
-html[data-style="cream"] .cat-ico { background: var(--surface); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-html[data-style="cream"] .cat-name { color: var(--text-dim); }
-html[data-style="glass"] .cat-ico { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); }
-html[data-style="glass"] .cat-name { color: var(--text); }
-
 .recent-header { display: flex; justify-content: space-between; align-items: center; margin: 24px 0 12px; }
 .recent-header h3 { margin: 0; font-size: 18px; font-weight: 800; }
 .recent-header span { font-size: 12px; color: var(--text-dim); }
@@ -192,20 +182,20 @@ html[data-style="glass"] .cat-name { color: var(--text); }
 .upload-box img { width: 100%; height: 100%; object-fit: cover; }
 .upload-row .input { flex: 1; }
 
-/* 倒数日 (修复了背景模糊问题) */
+/* 倒数日 */
 .cd-card { height: 180px; border-radius: 24px; margin-top: 12px; position: relative; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.4); background-size: cover; background-position: center; }
-.cd-card::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.4); /* 去掉滤镜保留纯色遮罩，避免模糊文字 */ }
+.cd-card::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.4); }
 .cd-card-content { position: relative; z-index: 2; text-align: center; width: 100%; }
 
-/* 次数记录器 (修复翻页数字错位) */
+/* 次数记录器 */
 .ct-card { display: flex; flex-direction: column; align-items: center; padding: 24px 16px; }
-.ct-circle-wrap { position: relative; width: 120px; height: 120px; display: grid; place-items: center; margin-bottom: 20px; }
-.ct-circle-svg { transform: rotate(-90deg); position: absolute; inset: 0; }
+.ct-circle-wrap { position: relative; width: 120px; height: 120px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+.ct-circle-svg { transform: rotate(-90deg); position: absolute; inset: 0; width: 100%; height: 100%; }
 .ct-circle-bg { fill: none; stroke: var(--surface-2); stroke-width: 8; }
 .ct-circle-progress { fill: none; stroke: var(--primary); stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset .3s ease; }
-.ct-num-wrap { font-size: 40px; font-weight: 900; height: 48px; overflow: hidden; position: relative; display: flex; justify-content: center; align-items: center; width: 48px; }
+.ct-num-wrap { font-size: 40px; font-weight: 900; height: 48px; overflow: hidden; display: flex; justify-content: center; align-items: flex-start; width: 80px; }
 .ct-num-inner { transition: transform .22s cubic-bezier(.34,1.56,.64,1); display: flex; flex-direction: column; }
-.ct-num-inner span { height: 48px; line-height: 48px; text-align: center; }
+.ct-num-inner span { height: 48px; line-height: 48px; display: block; text-align: center; }
 
 /* 备忘录 */
 .memo-item { display: flex; align-items: flex-start; gap: 12px; padding: 16px; }
@@ -274,13 +264,13 @@ function compressImage(file, maxSize, quality) { maxSize = maxSize || 900; quali
 
 /* ---------------- 国际化字典 ---------------- */
 var I18N = {
-  zh: { title_ledger: '记账', title_countdown: '倒数日', title_counter: '次数记录器', title_memo: '备忘录', title_settings: '设置', tab_home: '主页', tab_stats: '统计', tab_archive: '存档', balance: '本月总消费', income: '本月收入', initial: '初始资金', remain: '剩余余额', recent: '最近记录', all_bill: '全部账单', save: '保存', delete: '删除', cancel: '取消', lang: '语言', style: '主题风格', theme_color: '颜色定制', wallpaper: '全局壁纸', app_icon: '应用图标', currency: '币种', glass: '液态玻璃风', cream: '奶油卡片风', today: '今日', times: '次', memo_ph: '准备做点什么...', count_target: '目标次数', cate_ph: '输入分类名称', amount_ph: '0.00', note_ph: '备注', choose_photo: '照片', cd_event: '事件名称', cd_date: '日期', cd_bg: '背景图片', today_detail: '当日明细', total_in: '总收入', total_out: '总支出' },
-  en: { title_ledger: 'Ledger', title_countdown: 'Countdown', title_counter: 'Counter', title_memo: 'Memo', title_settings: 'Settings', tab_home: 'Home', tab_stats: 'Stats', tab_archive: 'Archive', balance: 'Monthly Expense', income: 'Monthly Income', initial: 'Initial Funds', remain: 'Remaining', recent: 'Recent', all_bill: 'All Bills', save: 'Save', delete: 'Delete', cancel: 'Cancel', lang: 'Language', style: 'Theme Style', theme_color: 'Colors', wallpaper: 'Wallpaper', app_icon: 'App Icon', currency: 'Currency', glass: 'Glass', cream: 'Creamy', today: 'Today', times: 'times', memo_ph: 'What to do...', count_target: 'Target Count', cate_ph: 'Category Name', amount_ph: '0.00', note_ph: 'Note', choose_photo: 'Photo', cd_event: 'Event Name', cd_date: 'Date', cd_bg: 'Background', today_detail: 'Details', total_in: 'Total In', total_out: 'Total Out' },
-  it: { title_ledger: 'Conti', title_countdown: 'Countdown', title_counter: 'Contatore', title_memo: 'Promemoria', title_settings: 'Impostazioni', tab_home: 'Home', tab_stats: 'Statistiche', tab_archive: 'Archivio', balance: 'Spesa Mensile', income: 'Entrate Mensili', initial: 'Fondi Iniziali', remain: 'Rimanente', recent: 'Recenti', all_bill: 'Tutte le bollette', save: 'Salva', delete: 'Elimina', cancel: 'Annulla', lang: 'Lingua', style: 'Stile Tema', theme_color: 'Colori', wallpaper: 'Sfondo', app_icon: 'Icona App', currency: 'Valuta', glass: 'Vetro', cream: 'Crema', today: 'Oggi', times: 'volte', memo_ph: 'Cosa fare...', count_target: 'Obiettivo', cate_ph: 'Categoria', amount_ph: '0.00', note_ph: 'Nota', choose_photo: 'Foto', cd_event: 'Nome Evento', cd_date: 'Data', cd_bg: 'Sfondo', today_detail: 'Dettagli', total_in: 'Totale In', total_out: 'Totale Out' }
+  zh: { title_ledger: '记账', title_countdown: '倒数日', title_counter: '次数记录器', title_memo: '备忘录', title_settings: '设置', tab_home: '主页', tab_stats: '统计', tab_archive: '存档', balance: '本月总消费', income: '本月收入', initial: '初始资金', remain: '剩余余额', recent: '最近记录', all_bill: '全部账单', save: '保存', delete: '删除', cancel: '取消', lang: '语言', style: '主题风格', theme_color: '颜色定制', wallpaper: '全局壁纸', app_icon: '应用图标', currency: '币种', glass: '液态玻璃风', cream: '奶油卡片风', today: '今日', times: '次', memo_ph: '准备做点什么...', count_target: '目标次数', cate_ph: '输入分类名称', amount_ph: '0.00', note_ph: '备注', choose_photo: '照片', cd_event: '事件名称', cd_date: '日期', cd_bg: '背景图片', today_detail: '当日明细', total_in: '总收入', total_out: '总支出', record: '记录', share: '分享', save_desktop: '保存到桌面', share_copied: '链接已复制', download_started: '已开始下载 HTML 文件' },
+  en: { title_ledger: 'Ledger', title_countdown: 'Countdown', title_counter: 'Counter', title_memo: 'Memo', title_settings: 'Settings', tab_home: 'Home', tab_stats: 'Stats', tab_archive: 'Archive', balance: 'Monthly Expense', income: 'Monthly Income', initial: 'Initial Funds', remain: 'Remaining', recent: 'Recent', all_bill: 'All Bills', save: 'Save', delete: 'Delete', cancel: 'Cancel', lang: 'Language', style: 'Theme Style', theme_color: 'Colors', wallpaper: 'Wallpaper', app_icon: 'App Icon', currency: 'Currency', glass: 'Glass', cream: 'Creamy', today: 'Today', times: 'times', memo_ph: 'What to do...', count_target: 'Target Count', cate_ph: 'Category Name', amount_ph: '0.00', note_ph: 'Note', choose_photo: 'Photo', cd_event: 'Event Name', cd_date: 'Date', cd_bg: 'Background', today_detail: 'Details', total_in: 'Total In', total_out: 'Total Out', record: 'Record', share: 'Share', save_desktop: 'Save to Desktop', share_copied: 'Link copied', download_started: 'Download started' },
+  it: { title_ledger: 'Conti', title_countdown: 'Countdown', title_counter: 'Contatore', title_memo: 'Promemoria', title_settings: 'Impostazioni', tab_home: 'Home', tab_stats: 'Statistiche', tab_archive: 'Archivio', balance: 'Spesa Mensile', income: 'Entrate Mensili', initial: 'Fondi Iniziali', remain: 'Rimanente', recent: 'Recenti', all_bill: 'Tutte le bollette', save: 'Salva', delete: 'Elimina', cancel: 'Annulla', lang: 'Lingua', style: 'Stile Tema', theme_color: 'Colori', wallpaper: 'Sfondo', app_icon: 'Icona App', currency: 'Valuta', glass: 'Vetro', cream: 'Crema', today: 'Oggi', times: 'volte', memo_ph: 'Cosa fare...', count_target: 'Obiettivo', cate_ph: 'Categoria', amount_ph: '0.00', note_ph: 'Nota', choose_photo: 'Foto', cd_event: 'Nome Evento', cd_date: 'Data', cd_bg: 'Sfondo', today_detail: 'Dettagli', total_in: 'Totale In', total_out: 'Totale Out', record: 'Registra', share: 'Condividi', save_desktop: 'Salva sul desktop', share_copied: 'Link copiato', download_started: 'Download avviato' }
 };
 function t(k) { return (I18N[S.settings.lang] && I18N[S.settings.lang][k]) || I18N['zh'][k] || k; }
 
-var S = JSON.parse(localStorage.getItem('wennote_v6') || '{}');
+var S = JSON.parse(localStorage.getItem('wennote_v8') || '{}');
 if (!S.settings) {
   S = {
     currentModule: 'ledger',
@@ -293,7 +283,7 @@ if (!S.settings) {
 }
 if (!S.ledger.selectedDate) S.ledger.selectedDate = todayStr();
 if (!S.settings.currency) S.settings.currency = '€';
-function save() { localStorage.setItem('wennote_v6', JSON.stringify(S)); }
+function save() { localStorage.setItem('wennote_v8', JSON.stringify(S)); }
 
 var mql = window.matchMedia('(prefers-color-scheme: dark)');
 function isDark() { return mql.matches; }
@@ -358,7 +348,9 @@ var ICONS = {
   calendar: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/></svg>',
   left: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>',
   right: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>',
-  check: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2"><path d="M4.5 12.5 9.5 17.5 19.5 7"/></svg>' // 补上了缺失的 check 图标
+  check: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2"><path d="M4.5 12.5 9.5 17.5 19.5 7"/></svg>',
+  share: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M10 13.5a4 4 0 0 0 5.7 0l2.8-2.8a4 4 0 1 0-5.7-5.7L11.5 6.3"/><path d="M14 10.5a4 4 0 0 0-5.7 0L5.5 13.3a4 4 0 1 0 5.7 5.7l1.3-1.3"/></svg>',
+  download: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 4v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>'
 };
 
 var MODULES = [
@@ -454,17 +446,7 @@ function renderLedgerHome() {
     '<div class="sub-card"><div class="k">📘 ' + t('income') + '</div><div class="v" style="color:var(--primary)">' + cur + fmtMoney(inc) + '</div></div>' +
     '<div class="sub-card"><div class="k">🟡 ' + t('initial') + '</div><div class="v">' + cur + fmtMoney(S.ledger.initial||0) + '</div></div>' +
     '<div class="sub-card"><div class="k">💚 ' + t('remain') + '</div><div class="v">' + cur + fmtMoney(balance) + '</div></div></div>';
-  
-  var recentCats = [], catMap = {};
-  S.ledger.items.slice(0, 5).forEach(function(it) { if(!catMap[it.cat]) { catMap[it.cat] = true; recentCats.push(it); } });
-  html += '<div class="cat-list">';
-  recentCats.forEach(function(it) {
-    var icon = it.catIcon ? '<img src="' + it.catIcon + '">' : '🍔';
-    html += '<div class="cat-item"><div class="cat-ico">' + icon + '</div><div class="cat-name">' + esc(it.cat) + '</div></div>';
-  });
-  // 去掉了这里的“全部+”按钮
-  html += '</div>';
-  
+
   html += '<div class="recent-header"><h3>' + t('recent') + '</h3><span>' + t('all_bill') + ' ></span></div>';
 
   if (!S.ledger.items.length) return html + '<div class="empty">暂无记录</div>';
@@ -503,12 +485,11 @@ function renderLedgerStats() {
     
   if (!dayItems.length) return html + '<div class="empty">这天没有记账</div>';
   
-  // 一栏一栏干净对齐的列表
   return html + '<div class="card" style="padding:0;margin-top:12px;overflow:hidden;">' + dayItems.map(function(it) {
     var icon = it.catIcon ? '<img src="' + it.catIcon + '" style="width:36px;height:36px;border-radius:10px;object-fit:cover;">' : '📦';
     return '<div class="stat-row">' +
       '<div class="left"><div style="width:36px;height:36px;display:grid;place-items:center;font-size:20px;background:var(--surface-2);border-radius:10px;overflow:hidden;">' + icon + '</div><div style="font-size:15px;font-weight:700;">' + esc(it.cat) + '</div></div>' +
-      '<div class="right ' + (it.kind === 'income' ? '' : 'text-danger') + '" style="color:' + (it.kind==='income'?'var(--primary)':'var(--danger)') + ';">' + (it.kind === 'income' ? '+' : '-') + cur + fmtMoney(it.amount) + '</div>' +
+      '<div class="right" style="color:' + (it.kind==='income'?'var(--primary)':'var(--danger)') + ';">' + (it.kind === 'income' ? '+' : '-') + cur + fmtMoney(it.amount) + '</div>' +
     '</div>';
   }).join('') + '</div>';
 }
@@ -568,7 +549,7 @@ window.submitLedger = function(e) {
   }, 400);
 };
 
-/* ---------------- 倒数日模块 (修复模糊) ---------------- */
+/* ---------------- 倒数日模块 ---------------- */
 var pendingCdBg = null;
 function renderCountdownList(list, isArchive) {
   if (!list.length) return '<div class="empty">暂无内容</div>';
@@ -611,7 +592,7 @@ window.submitCountdown = function(e) {
   }, 400);
 };
 
-/* ---------------- 次数记录器模块 (修复数字错位) ---------------- */
+/* ---------------- 次数记录器模块 ---------------- */
 function renderCounterList(list, isArchive) {
   if (!list.length) return '<div class="empty">暂无内容</div>';
   return '<div class="list" ' + (isArchive?'':'data-sortable="counter"') + '>' + list.map(function(it) {
@@ -622,44 +603,66 @@ function renderCounterList(list, isArchive) {
       '<div style="font-size:18px;font-weight:800;margin-bottom:20px;">' + esc(it.title) + '</div>' +
       '<div class="ct-circle-wrap"><svg class="ct-circle-svg" viewBox="0 0 120 120"><circle class="ct-circle-bg" cx="60" cy="60" r="54"></circle>' +
       '<circle class="ct-circle-progress" cx="60" cy="60" r="54" stroke-dasharray="339" stroke-dashoffset="' + dashoffset + '"></circle></svg>' +
-      // 修复了内层容器高度，防止上下数字同时漏出
       '<div class="ct-num-wrap"><div class="ct-num-inner" id="num_' + it.id + '"><span>' + val + '</span><span>' + (val+1) + '</span></div></div></div>' +
-      (isArchive ? '' : '<button style="background:var(--primary);color:var(--on-primary);padding:12px 30px;border-radius:30px;font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px;" onclick="incCounter(\'' + it.id + '\', this)">' + ICONS.plus + ' ' + t('save') + '</button>') +
+      (isArchive ? '' : '<button style="background:var(--primary);color:var(--on-primary);padding:12px 30px;border-radius:30px;font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px;" onclick="incCounter(\'' + it.id + '\', this)">' + ICONS.plus + ' ' + t('record') + '</button>') +
       '</div>';
   }).join('') + '</div>';
 }
+var pendingCtPhoto = null;
 function renderCounterForm() {
   return '<form class="form" onsubmit="submitCounter(event)">' +
     '<div class="field"><label>项目名称</label><input class="input" name="title" required placeholder="例如：喝水、健身、抽烟" autofocus></div>' +
     '<div class="field"><label>' + t('count_target') + '</label><input class="input" type="number" name="target" value="8" required></div>' +
+    '<div class="field"><label>每次计数是否强制拍照</label><div class="toggle-row" style="background:var(--surface);border-radius:14px;padding:12px 14px;border:1.5px solid var(--border)"><span style="font-size:13px;color:var(--text-dim);">开启后每次点击 + 先拍照记录</span><button type="button" class="toggle" id="captureToggle" onclick="this.classList.toggle(\'on\')"><span class="knob"></span></button></div></div>' +
     '<button class="btn" type="submit" id="saveCtBtn">' + t('save') + '</button></form>';
 }
 window.incCounter = function(id, btn) {
   var it = S.counter.items.filter(function(x){return x.id===id;})[0]; if(!it) return;
-  it.count = (it.count || 0) + 1; save();
-  var inner = document.getElementById('num_' + id);
-  inner.style.transform = 'translateY(-48px)';
-  setTimeout(function() {
-    inner.style.transition = 'none'; inner.style.transform = 'translateY(0)';
-    inner.children[0].textContent = it.count; inner.children[1].textContent = it.count + 1;
-    void inner.offsetWidth; inner.style.transition = 'transform .22s cubic-bezier(.34,1.56,.64,1)';
-  }, 220);
-  var target = it.target || 10, pct = Math.min(100, (it.count / target) * 100);
-  btn.closest('.ct-card').querySelector('.ct-circle-progress').style.strokeDashoffset = 339 - (339 * pct / 100);
-  if(navigator.vibrate) navigator.vibrate(10);
+  
+  var doIncrement = function(photoUrl) {
+    it.count = (it.count || 0) + 1; 
+    if(photoUrl) {
+      it.photos = it.photos || [];
+      it.photos.unshift(photoUrl);
+    }
+    save();
+    var inner = document.getElementById('num_' + id);
+    inner.style.transform = 'translateY(-48px)';
+    setTimeout(function() {
+      inner.style.transition = 'none'; inner.style.transform = 'translateY(0)';
+      inner.children[0].textContent = it.count; inner.children[1].textContent = it.count + 1;
+      void inner.offsetWidth; inner.style.transition = 'transform .22s cubic-bezier(.34,1.56,.64,1)';
+    }, 220);
+    var target = it.target || 10, pct = Math.min(100, (it.count / target) * 100);
+    btn.closest('.ct-card').querySelector('.ct-circle-progress').style.strokeDashoffset = 339 - (339 * pct / 100);
+    if(navigator.vibrate) navigator.vibrate(10);
+  };
+
+  if (it.captureEach) {
+    var inp = document.createElement('input');
+    inp.type = 'file'; inp.accept = 'image/*'; inp.capture = 'environment';
+    inp.onchange = function() {
+      if(!inp.files[0]) return;
+      compressImage(inp.files[0], 600, 0.6).then(function(url){ doIncrement(url); });
+    };
+    inp.click();
+  } else {
+    doIncrement(null);
+  }
 };
 window.submitCounter = function(e) {
   e.preventDefault(); var form=e.target, btn=$('#saveCtBtn'), fd=new FormData(form);
   if(!fd.get('title')) return;
+  var captureEach = $('#captureToggle').classList.contains('on');
   btn.innerHTML = '...'; btn.disabled = true;
   setTimeout(function() {
-    S.counter.items.unshift({ id: uid(), title: fd.get('title'), target: parseInt(fd.get('target')), count: 0 });
+    S.counter.items.unshift({ id: uid(), title: fd.get('title'), target: parseInt(fd.get('target')), count: 0, captureEach: captureEach, photos: [] });
     save(); btn.innerHTML = '✅ ' + t('save'); btn.classList.add('success'); showBanner('项目添加成功');
     setTimeout(function() { S.counter.tab = 'home'; render(); }, 400);
   }, 400);
 };
 
-/* ---------------- 备忘录模块 (修复 undefined) ---------------- */
+/* ---------------- 备忘录模块 ---------------- */
 function renderMemoList(list, isArchive) {
   if (!list.length) return '<div class="empty">暂无内容</div>';
   return '<div class="list" ' + (isArchive?'':'data-sortable="memo"') + '>' + list.map(function(it) {
@@ -697,7 +700,7 @@ window.submitMemo = function(e) {
   }, 400);
 };
 
-/* ---------------- 设置模块 (新增语言和币种) ---------------- */
+/* ---------------- 设置模块 ---------------- */
 function renderSettings() {
   var th = S.settings.theme, style = S.settings.style || 'glass';
   var langs = [['zh','中文'],['en','English'],['it','Italiano']];
@@ -722,7 +725,11 @@ function renderSettings() {
       '<label class="upload-box" style="width:100%;height:80px;flex-direction:row;gap:10px;" for="bgImageInput">' + (S.settings.bgImage ? '<img src="'+S.settings.bgImage+'" style="width:60px;height:60px;border-radius:10px;object-fit:cover;"> 点击更换壁纸' : '点击上传图片作为全局壁纸') + '</label><input type="file" id="bgImageInput" hidden accept="image/*" onchange="uploadBgImage(this)">' +
       (S.settings.bgImage ? '<button class="btn ghost" style="margin-top:12px;" onclick="removeBg()">移除壁纸</button>' : '') +
     '</div>' +
-    '<div class="card"><h3 style="margin:0 0 12px;font-size:13px;color:var(--text-dim)">' + t('app_icon') + '</h3><label class="upload-box" style="width:100%;height:60px;flex-direction:row;gap:10px;" for="appIconInput">' + (S.settings.appIcon ? '<img src="'+S.settings.appIcon+'" style="width:40px;height:40px;border-radius:8px;">' : '点击上传图标') + '</label><input type="file" id="appIconInput" hidden accept="image/*" onchange="uploadAppIcon(this)"></div>';
+    '<div class="card"><h3 style="margin:0 0 12px;font-size:13px;color:var(--text-dim)">' + t('app_icon') + '</h3><label class="upload-box" style="width:100%;height:60px;flex-direction:row;gap:10px;" for="appIconInput">' + (S.settings.appIcon ? '<img src="'+S.settings.appIcon+'" style="width:40px;height:40px;border-radius:8px;">' : '点击上传图标') + '</label><input type="file" id="appIconInput" hidden accept="image/*" onchange="uploadAppIcon(this)"></div>' +
+    
+    '<div class="card"><h3 style="margin:0 0 12px;font-size:13px;color:var(--text-dim)">其他</h3>' +
+    '<div class="photo-row"><button class="photo-pick" onclick="doShare()" style="flex-direction:row;gap:8px;padding:14px;">' + ICONS.share + ' <span>' + t('share') + '</span></button>' +
+    '<button class="photo-pick" onclick="doDownload()" style="flex-direction:row;gap:8px;padding:14px;">' + ICONS.download + ' <span>' + t('save_desktop') + '</span></button></div></div>';
 }
 function colorCell(k, l, v) { return '<label style="display:flex;align-items:center;gap:10px;background:var(--surface-2);padding:12px;border-radius:14px;"><input type="color" value="'+v+'" onchange="changeTheme(\''+k+'\',this.value)" style="width:36px;height:36px;border:none;border-radius:8px;"><span style="font-size:13px;font-weight:700;">'+l+'</span></label>'; }
 window.changeLang = function(l) { S.settings.lang = l; save(); render(); };
@@ -732,6 +739,29 @@ window.changeTheme = function(k, v) { S.settings.theme[k] = v; save(); applyThem
 window.uploadBgImage = function(inp) { if(inp.files[0]) compressImage(inp.files[0], 1080, 0.7).then(function(u){ S.settings.bgImage=u; save(); applyTheme(); renderSettings(); }); };
 window.removeBg = function() { S.settings.bgImage = null; save(); applyTheme(); renderSettings(); };
 window.uploadAppIcon = function(inp) { if(inp.files[0]) compressImage(inp.files[0],512,0.9).then(function(u){ S.settings.appIcon=u; save(); setupPWA(); render(); }); };
+
+window.doShare = function() {
+  var url = location.href.split('#')[0];
+  if(navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(url).then(function(){ showBanner(t('share_copied')); });
+  } else {
+    showBanner(url);
+  }
+};
+window.doDownload = function() {
+  try {
+    var clone = document.documentElement.cloneNode(true);
+    ['#content','#tabbar','#modal-root','#drawerItems'].forEach(function(sel){ var el = clone.querySelector(sel); if(el) el.innerHTML=''; });
+    Array.prototype.slice.call(clone.querySelectorAll('.ctx-menu, .modal-scrim, .placeholder, .banner')).forEach(function(el){ el.remove(); });
+    var seedStr = JSON.stringify(S); var seedLiteral = JSON.stringify(seedStr);
+    var html = '<!DOCTYPE html>\n' + clone.outerHTML.replace('"use strict";', '"use strict";\nwindow.__WENNOTE_SEED__=' + seedLiteral + ';');
+    var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'WenNote.html';
+    document.body.appendChild(a); a.click();
+    setTimeout(function() { URL.revokeObjectURL(a.href); a.remove(); }, 1200);
+    showBanner(t('download_started'));
+  } catch (e) { console.error(e); }
+};
 
 /* ---------------- 交互逻辑 ---------------- */
 var press = null, dragRAF = null, lastMoveEvent = null;
